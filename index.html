@@ -608,22 +608,44 @@ body.dark .icon-btn {
 
 .contacts-section {
     margin-bottom: 8px;
+    background: var(--panel);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    border: 1px solid var(--border);
 }
 
 .section-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 8px 14px 4px;
-    color: var(--section-header);
-    font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
+    padding: 16px 16px 12px;
+    background: linear-gradient(135deg, var(--soft) 0%, var(--panel) 100%);
+    border-bottom: 1px solid var(--border);
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.3px;
 }
 
 .section-header strong {
-    font-weight: 600;
+    font-weight: 700;
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.section-header strong::before {
+    content: '';
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2366786f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2'%3E%3C/path%3E%3Ccircle cx='9' cy='7' r='4'%3E%3C/circle%3E%3Cpath d='M23 21v-2a4 4 0 0 0-3-3.87'%3E%3C/path%3E%3Cpath d='M16 3.13a4 4 0 0 1 0 7.75'%3E%3C/path%3E%3C/svg%3E");
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 .section-header .icon-btn {
@@ -640,76 +662,113 @@ body.dark .icon-btn {
 
 .contact-actions {
     display: flex;
-    gap: 4px;
+    gap: 6px;
+    flex-wrap: wrap;
+    max-width: 280px;
 }
 
 .contact-search-box {
-    padding: 8px 14px;
+    padding: 12px 16px;
     border-bottom: 1px solid var(--border);
+    background: var(--soft);
 }
 
 .contact-search-box input {
     width: 100%;
-    padding: 8px 12px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
+    padding: 10px 14px;
+    border: 2px solid var(--border);
+    border-radius: 8px;
     background: var(--input);
     color: var(--text);
     font-size: 14px;
     outline: none;
+    transition: all 0.2s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .contact-search-box input:focus {
     border-color: var(--green);
+    box-shadow: 0 0 0 3px rgba(0, 168, 132, 0.1);
+    transform: translateY(-1px);
 }
 
 .contact-filters {
     display: flex;
-    padding: 8px 14px;
-    gap: 4px;
+    padding: 12px 16px;
+    gap: 8px;
     border-bottom: 1px solid var(--border);
+    background: var(--panel);
+    flex-wrap: wrap;
 }
 
 .filter-btn {
-    padding: 4px 8px;
-    border: 1px solid var(--border);
-    border-radius: 4px;
+    padding: 6px 12px;
+    border: 2px solid var(--border);
+    border-radius: 20px;
     background: var(--panel);
     color: var(--muted);
     font-size: 12px;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
 .filter-btn.active {
-    background: var(--green);
+    background: linear-gradient(135deg, var(--green) 0%, var(--green-dark) 100%);
     color: white;
     border-color: var(--green);
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0, 168, 132, 0.3);
 }
 
 .filter-btn:hover:not(.active) {
     background: var(--hover);
     color: var(--text);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .contacts-list {
-    max-height: 200px;
+    max-height: 300px;
     overflow-y: auto;
+    background: var(--panel);
+}
+
+.contacts-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+.contacts-list::-webkit-scrollbar-track {
+    background: var(--soft);
+}
+
+.contacts-list::-webkit-scrollbar-thumb {
+    background: var(--muted);
+    border-radius: 3px;
+}
+
+.contacts-list::-webkit-scrollbar-thumb:hover {
+    background: var(--text);
 }
 
 .sidebar-contact-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    padding: 8px 14px;
+    padding: 12px 16px;
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: all 0.3s ease;
     border-radius: 0;
+    position: relative;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
 }
 
 .sidebar-contact-item:hover {
-    background: var(--hover);
+    background: linear-gradient(90deg, rgba(102, 126, 234, 0.05) 0%, rgba(118, 75, 162, 0.05) 100%);
+    transform: translateX(4px);
+    border-left: 3px solid var(--green);
+    padding-left: 13px;
 }
 
 .sidebar-contact-item .avatar {
@@ -747,6 +806,35 @@ body.dark .icon-btn {
 }
 
 .sidebar-contact-item .contact-status {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 4px;
+}
+
+.sidebar-contact-item .contact-status-text {
+    font-size: 11px;
+    color: var(--muted);
+    font-weight: 500;
+}
+
+.sidebar-contact-item .contact-status .status-indicator {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.sidebar-contact-item .contact-status .status-indicator.online {
+    background: #25d366;
+    box-shadow: 0 0 6px rgba(37, 211, 102, 0.4);
+}
+
+.sidebar-contact-item .contact-status .status-indicator.offline {
+    background: #8696a0;
+}
+
+.sidebar-contact-item .contact-status {
     font-size: 12px;
     color: var(--muted);
     font-weight: 500;
@@ -776,11 +864,23 @@ body.dark .icon-btn {
 }
 
 .empty-contacts {
-    padding: 20px 14px;
+    padding: 40px 20px;
     text-align: center;
     color: var(--muted);
     font-size: 14px;
     font-style: italic;
+    background: var(--soft);
+    margin: 16px;
+    border-radius: 12px;
+    border: 2px dashed var(--border);
+}
+
+.empty-contacts::before {
+    content: '📭';
+    display: block;
+    font-size: 48px;
+    margin-bottom: 12px;
+    opacity: 0.5;
 }
 
 .contact-actions-small {
@@ -4112,7 +4212,7 @@ function updateChatHeader(chat) {
     const chatStatus = document.getElementById('chatStatus');
     
     chatName.textContent = chat.name;
-    chatAvatar.textContent = getAvatarInitials({ name: chat.name });
+    chatAvatar.textContent = getAvatarInitials({ name: chat.name }, false);
     chatStatus.textContent = 'online';
 }
 
@@ -4335,6 +4435,19 @@ function bindEvents() {
     if (bulkActionsButton) {
         bulkActionsButton.addEventListener("click", toggleBulkActions);
     }
+    
+    // Contact filter buttons
+    const filterButtons = document.querySelectorAll('.filter-btn');
+    filterButtons.forEach(button => {
+        button.addEventListener('click', function() {
+            // Remove active class from all buttons
+            filterButtons.forEach(btn => btn.classList.remove('active'));
+            // Add active class to clicked button
+            this.classList.add('active');
+            // Apply filter
+            filterContacts();
+        });
+    });
     
     // Live features
     const liveSearchButton = document.getElementById("liveSearchButton");
@@ -5612,53 +5725,170 @@ function renderContacts() {
 }
 
 function startDirectChat(contact) {
+    // Add to recent contacts
+    addToRecentContacts(contact.id);
+    
     // Check if chat already exists
     const existingChat = userChats.find(chat => 
         chat.type === 'direct' && 
-        chat.participants.includes(contact.id) && 
-        chat.participants.includes(currentUser.id)
+        chat.participants && 
+        chat.participants.includes(contact.id)
     );
     
     if (existingChat) {
-        selectUserChat(existingChat.id);
+        // Open existing chat
+        currentChatId = existingChat.id;
+        renderChat();
     } else {
-        createDirectChat(contact.id);
+        // Create new chat
+        const newChat = {
+            id: Date.now().toString(),
+            type: 'direct',
+            participants: [contact.id],
+            createdAt: new Date().toISOString(),
+            messages: []
+        };
+        
+        userChats.push(newChat);
+        currentChatId = newChat.id;
+        renderChat();
     }
     
     closeContactsModal();
 }
 
 function loadSidebarContacts() {
-    // Load real users from the system
+    // Load real users from system
     try {
         apiRequest("getAllUsers", {}).then(response => {
             const allUsers = response.users || [];
             const contacts = allUsers.filter(user => user.id !== currentUser?.id);
             renderSidebarContacts(contacts);
         }).catch(() => {
-            // Show empty state if API fails
-            renderSidebarContacts([]);
+            // Load sample contacts if API fails
+            loadSampleContacts();
         });
     } catch (error) {
-        // Show empty state if API fails
-        renderSidebarContacts([]);
+        // Load sample contacts if API fails
+        loadSampleContacts();
     }
+}
+
+function loadSampleContacts() {
+    // Check if sample contacts already exist
+    const existingContacts = JSON.parse(localStorage.getItem('trioai_contacts') || '[]');
+    if (existingContacts.length > 0) {
+        renderSidebarContacts(existingContacts);
+        return;
+    }
+    
+    // Create sample contacts
+    const sampleContacts = [
+        {
+            id: '1',
+            name: 'Alice Johnson',
+            email: 'alice.johnson@example.com',
+            avatarUrl: '',
+            favorite: true,
+            lastSeen: new Date(Date.now() - 5 * 60 * 1000).toISOString(), // 5 minutes ago
+            phone: '+1-555-0101',
+            company: 'Tech Corp',
+            role: 'Product Manager'
+        },
+        {
+            id: '2',
+            name: 'Bob Smith',
+            email: 'bob.smith@example.com',
+            avatarUrl: '',
+            favorite: false,
+            lastSeen: new Date(Date.now() - 30 * 60 * 1000).toISOString(), // 30 minutes ago
+            phone: '+1-555-0102',
+            company: 'Design Studio',
+            role: 'UI Designer'
+        },
+        {
+            id: '3',
+            name: 'Carol Williams',
+            email: 'carol.williams@example.com',
+            avatarUrl: '',
+            favorite: true,
+            lastSeen: new Date().toISOString(), // Online
+            phone: '+1-555-0103',
+            company: 'Marketing Agency',
+            role: 'Marketing Director'
+        },
+        {
+            id: '4',
+            name: 'David Brown',
+            email: 'david.brown@example.com',
+            avatarUrl: '',
+            favorite: false,
+            lastSeen: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(), // 2 hours ago
+            phone: '+1-555-0104',
+            company: 'Startup Inc',
+            role: 'Developer'
+        },
+        {
+            id: '5',
+            name: 'Emma Davis',
+            email: 'emma.davis@example.com',
+            avatarUrl: '',
+            favorite: false,
+            lastSeen: new Date(Date.now() - 24 * 60 * 60 * 1000).toISOString(), // 1 day ago
+            phone: '+1-555-0105',
+            company: 'Freelance',
+            role: 'Content Writer'
+        },
+        {
+            id: '6',
+            name: 'Frank Miller',
+            email: 'frank.miller@example.com',
+            avatarUrl: '',
+            favorite: true,
+            lastSeen: new Date(Date.now() - 10 * 60 * 1000).toISOString(), // 10 minutes ago
+            phone: '+1-555-0106',
+            company: 'Consulting Firm',
+            role: 'Business Consultant'
+        }
+    ];
+    
+    // Save sample contacts to localStorage
+    localStorage.setItem('trioai_contacts', JSON.stringify(sampleContacts));
+    
+    // Render contacts
+    renderSidebarContacts(sampleContacts);
+    
+    // Show welcome message
+    showToast('👥 Sample contacts loaded for demonstration');
 }
 
 function renderSidebarContacts(contacts = []) {
     sidebarContactsList.innerHTML = '';
     
     if (!contacts || contacts.length === 0) {
-        sidebarContactsList.innerHTML = '<div class="empty-contacts">No contacts available</div>';
+        sidebarContactsList.innerHTML = '<div class="empty-contacts">No contacts available. Click refresh to load sample contacts.</div>';
         return;
     }
+    
+    // Sort contacts: favorites first, then by name
+    contacts.sort((a, b) => {
+        const aFavorite = favoriteContacts.includes(a.id) || a.favorite;
+        const bFavorite = favoriteContacts.includes(b.id) || b.favorite;
+        
+        if (aFavorite && !bFavorite) return -1;
+        if (!aFavorite && bFavorite) return 1;
+        
+        return a.name.localeCompare(b.name);
+    });
     
     contacts.forEach(contact => {
         const contactItem = document.createElement('div');
         contactItem.className = 'sidebar-contact-item';
         contactItem.dataset.contactId = contact.id;
         
-        const isFavorite = favoriteContacts.includes(contact.id);
+        const isFavorite = favoriteContacts.includes(contact.id) || contact.favorite;
+        const isOnline = isUserOnline(contact.lastSeen);
+        const lastSeenText = formatLastSeen(contact.lastSeen);
         
         contactItem.innerHTML = `
             <div class="avatar small">${getAvatarInitials(contact)}</div>
@@ -5679,6 +5909,11 @@ function renderSidebarContacts(contacts = []) {
         contactItem.onclick = () => showContactDetails(contact);
         sidebarContactsList.appendChild(contactItem);
     });
+    
+    // Reinitialize Lucide icons for new elements
+    if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+    }
 }
 
 function isUserOnline(lastSeen) {
@@ -5866,23 +6101,66 @@ function closeContactMenu() {
 // Contact action functions
 function viewContactProfile() {
     if (currentContactId) {
-        showToast('Opening contact profile...');
+        const contactItem = document.querySelector(`[data-contact-id="${currentContactId}"]`);
+        if (contactItem) {
+            const name = contactItem.querySelector('strong').textContent;
+            const email = contactItem.querySelector('.contact-email').textContent;
+            const isFavorite = contactItem.querySelector('.favorite-btn').classList.contains('active');
+            
+            // Show detailed profile
+            const profileInfo = `
+👤 Contact Profile
+━━━━━━━━━━━━━━━
+Name: ${name}
+Email: ${email}
+Status: ${isFavorite ? '⭐ Favorite' : '📋 General'}
+Contact ID: ${currentContactId}
+━━━━━━━━━━━━━━━`;
+            
+            alert(profileInfo);
+        }
         closeContactMenu();
     }
 }
 
 function sendEmail() {
     if (currentContactId) {
-        showToast('Opening email client...');
+        const contactItem = document.querySelector(`[data-contact-id="${currentContactId}"]`);
+        if (contactItem) {
+            const name = contactItem.querySelector('strong').textContent;
+            const email = contactItem.querySelector('.contact-email').textContent;
+            
+            // Open email client with pre-filled data
+            const subject = encodeURIComponent(`Hello from ${currentUser?.name || 'TrioAI User'}`);
+            const body = encodeURIComponent(`Hi ${name},\n\nI'm reaching out to you from TrioAI.\n\nBest regards,\n${currentUser?.name || 'TrioAI User'}`);
+            
+            window.location.href = `mailto:${email}?subject=${subject}&body=${body}`;
+            showToast(`📧 Opening email for ${name}`);
+        }
         closeContactMenu();
     }
 }
 
 function addContactNote() {
     if (currentContactId) {
-        const note = prompt('Add a note for this contact:');
-        if (note) {
-            showToast('Note added successfully');
+        const contactItem = document.querySelector(`[data-contact-id="${currentContactId}"]`);
+        if (contactItem) {
+            const name = contactItem.querySelector('strong').textContent;
+            const note = prompt(`Add a note for ${name}:`);
+            if (note) {
+                // Save note to localStorage
+                const contactNotes = JSON.parse(localStorage.getItem('contactNotes') || '{}');
+                if (!contactNotes[currentContactId]) {
+                    contactNotes[currentContactId] = [];
+                }
+                contactNotes[currentContactId].push({
+                    note: note,
+                    timestamp: new Date().toISOString(),
+                    addedBy: currentUser?.name || 'User'
+                });
+                localStorage.setItem('contactNotes', JSON.stringify(contactNotes));
+                showToast('📝 Note added successfully');
+            }
         }
         closeContactMenu();
     }
@@ -5956,10 +6234,34 @@ function shareContact() {
 
 function duplicateContact() {
     if (currentContactId) {
-        if (confirm('Create a duplicate of this contact?')) {
-            showToast('📋 Contact duplicated successfully');
-            closeContactMenu();
+        const contactItem = document.querySelector(`[data-contact-id="${currentContactId}"]`);
+        if (contactItem) {
+            const name = contactItem.querySelector('strong').textContent;
+            const email = contactItem.querySelector('.contact-email').textContent;
+            
+            if (confirm(`Create a duplicate of ${name}?`)) {
+                // Create duplicate with modified name
+                const duplicateName = `${name} (Copy)`;
+                const duplicateContact = {
+                    id: Date.now().toString(),
+                    name: duplicateName,
+                    email: email,
+                    favorite: false,
+                    createdAt: new Date().toISOString(),
+                    duplicatedFrom: currentContactId
+                };
+                
+                // Save to localStorage
+                const contacts = JSON.parse(localStorage.getItem('trioai_contacts') || '[]');
+                contacts.push(duplicateContact);
+                localStorage.setItem('trioai_contacts', JSON.stringify(contacts));
+                
+                // Refresh contact list
+                loadSidebarContacts();
+                showToast(`📋 ${duplicateName} created successfully`);
+            }
         }
+        closeContactMenu();
     }
 }
 
@@ -6644,34 +6946,107 @@ function aiSmartSearch() {
 }
 
 function toggleContactSearch() {
-    const isVisible = contactSearchBox.style.display !== 'none';
-    contactSearchBox.style.display = isVisible ? 'none' : 'block';
+    const searchBox = document.getElementById('contactSearchBox');
+    const searchInput = document.getElementById('contactSearchInput');
+    const isVisible = searchBox.style.display !== 'none';
+    
+    searchBox.style.display = isVisible ? 'none' : 'block';
     if (!isVisible) {
-        contactSearchInput.focus();
+        searchInput.focus();
+        searchInput.placeholder = '🔍 Search contacts by name or email...';
     } else {
-        contactSearchInput.value = '';
+        searchInput.value = '';
         filterContacts();
     }
 }
 
 function filterContacts() {
-    const searchTerm = contactSearchInput.value.toLowerCase();
+    const searchInput = document.getElementById('contactSearchInput');
+    const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
     const activeFilter = document.querySelector('.filter-btn.active').dataset.filter;
     const allContactItems = sidebarContactsList.querySelectorAll('.sidebar-contact-item');
     
+    let visibleCount = 0;
+    
     allContactItems.forEach(item => {
-        const name = item.querySelector('strong').textContent.toLowerCase();
-        const email = item.querySelector('.contact-email').textContent.toLowerCase();
-        const isFavorite = item.querySelector('.favorite-btn').classList.contains('active');
+        const nameElement = item.querySelector('strong');
+        const emailElement = item.querySelector('.contact-email');
+        const favoriteBtn = item.querySelector('.favorite-btn');
+        
+        if (!nameElement || !emailElement) {
+            item.style.display = 'none';
+            return;
+        }
+        
+        const name = nameElement.textContent.toLowerCase();
+        const email = emailElement.textContent.toLowerCase();
+        const isFavorite = favoriteBtn ? favoriteBtn.classList.contains('active') : false;
         const contactId = item.dataset.contactId;
         
-        const matchesSearch = !searchTerm || name.includes(searchTerm) || email.includes(searchTerm);
+        // Enhanced search with partial matching
+        const matchesSearch = !searchTerm || 
+                           name.includes(searchTerm) || 
+                           email.includes(searchTerm) ||
+                           name.startsWith(searchTerm) ||
+                           email.startsWith(searchTerm);
+        
+        // Enhanced filtering
         const matchesFilter = activeFilter === 'all' || 
                              (activeFilter === 'favorites' && isFavorite) ||
-                             (activeFilter === 'recent' && parseInt(contactId) % 3 === 0);
+                             (activeFilter === 'recent' && isRecentContact(contactId));
         
-        item.style.display = matchesSearch && matchesFilter ? 'flex' : 'none';
+        const shouldShow = matchesSearch && matchesFilter;
+        item.style.display = shouldShow ? 'flex' : 'none';
+        
+        if (shouldShow) visibleCount++;
     });
+    
+    // Show no results message if needed
+    showNoResultsMessage(visibleCount === 0 && searchTerm);
+}
+
+function isRecentContact(contactId) {
+    // Get recent contacts from localStorage
+    const recentContacts = JSON.parse(localStorage.getItem('recentContacts') || '[]');
+    return recentContacts.includes(contactId);
+}
+
+function addToRecentContacts(contactId) {
+    let recentContacts = JSON.parse(localStorage.getItem('recentContacts') || '[]');
+    
+    // Remove if already exists (to move to top)
+    recentContacts = recentContacts.filter(id => id !== contactId);
+    
+    // Add to beginning
+    recentContacts.unshift(contactId);
+    
+    // Keep only last 10 recent contacts
+    recentContacts = recentContacts.slice(0, 10);
+    
+    localStorage.setItem('recentContacts', JSON.stringify(recentContacts));
+}
+
+function clearRecentContacts() {
+    localStorage.removeItem('recentContacts');
+}
+
+function showNoResultsMessage(show) {
+    const existingMessage = sidebarContactsList.querySelector('.no-results-message');
+    
+    if (show && !existingMessage) {
+        const noResultsDiv = document.createElement('div');
+        noResultsDiv.className = 'no-results-message';
+        noResultsDiv.innerHTML = `
+            <div style="padding: 40px 20px; text-align: center; color: var(--muted);">
+                <div style="font-size: 48px; margin-bottom: 12px; opacity: 0.5;">🔍</div>
+                <div style="font-size: 16px; font-weight: 600; margin-bottom: 8px;">No contacts found</div>
+                <div style="font-size: 14px;">Try adjusting your search or filters</div>
+            </div>
+        `;
+        sidebarContactsList.appendChild(noResultsDiv);
+    } else if (!show && existingMessage) {
+        existingMessage.remove();
+    }
 }
 
 async function loadActivityData() {
@@ -6742,12 +7117,47 @@ function renderActivity(activities) {
     `).join('');
 }
 
-function getAvatarInitials(user) {
+function generateUserSvg(user, size = 40) {
+    // Generate a consistent color based on user name/email
+    const seed = (user.name || user.email || 'User').toLowerCase();
+    let hash = 0;
+    for (let i = 0; i < seed.length; i++) {
+        hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+    }
+    
+    // Use hash to select from a palette of stylish colors
+    const colors = [
+        '#667eea', '#764ba2', '#f093fb', '#f5576c', '#4facfe',
+        '#00f2fe', '#43e97b', '#38f9d7', '#fa709a', '#fee140',
+        '#30cfd0', '#a8edea', '#fed6e3', '#ff9a9e', '#fecfef'
+    ];
+    const color = colors[Math.abs(hash) % colors.length];
+    
+    // Generate initials
+    const name = user.name || user.email || 'U';
+    const initials = name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    
+    return `
+        <svg width="${size}" height="${size}" viewBox="0 0 ${size} ${size}" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <linearGradient id="grad-${seed.replace(/[^a-z0-9]/g, '')}" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" style="stop-color:${color};stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:${color};stop-opacity:0.8" />
+                </linearGradient>
+            </defs>
+            <circle cx="${size/2}" cy="${size/2}" r="${size/2}" fill="url(#grad-${seed.replace(/[^a-z0-9]/g, '')})" />
+            <text x="${size/2}" y="${size/2}" text-anchor="middle" dominant-baseline="middle" 
+                  fill="white" font-family="Inter, Arial, sans-serif" font-size="${size * 0.4}" 
+                  font-weight="600">${initials}</text>
+        </svg>
+    `;
+}
+
+function getAvatarInitials(user, isSmall = true) {
     if (user.avatarUrl && !user.avatarUrl.startsWith('live:')) {
         return `<img src="${user.avatarUrl}" alt="${user.name}">`;
     }
-    const name = user.name || user.email || 'U';
-    return name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2);
+    return generateUserSvg(user, isSmall ? 36 : 42); // 36px for small, 42px for regular
 }
 
 function formatRelativeTime(dateString) {
