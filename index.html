@@ -594,6 +594,441 @@ body.dark .countdown {
     text-overflow: ellipsis;
 }
 
+.app-clock {
+    margin: 8px 12px 10px;
+    padding: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    position: relative;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background:
+        linear-gradient(135deg, rgba(0, 168, 132, 0.1), rgba(52, 183, 241, 0.06)),
+        var(--soft);
+    box-shadow: 0 6px 18px rgba(17, 27, 33, 0.06);
+}
+
+.app-clock-analog {
+    flex: 0 0 auto;
+}
+
+.app-clock-face {
+    position: relative;
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    border: 2px solid rgba(0, 168, 132, 0.35);
+    background:
+        radial-gradient(circle at 50% 50%, var(--panel) 58%, var(--soft) 100%);
+    box-shadow:
+        inset 0 0 0 1px rgba(255, 255, 255, 0.5),
+        0 4px 14px rgba(0, 168, 132, 0.15);
+}
+
+.app-clock-face::before {
+    content: "";
+    position: absolute;
+    inset: 6px;
+    border-radius: 50%;
+    border: 1px dashed rgba(0, 168, 132, 0.2);
+    pointer-events: none;
+}
+
+.app-clock-mark {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 0;
+    width: 2px;
+    height: 5px;
+    margin: -2.5px 0 0 -1px;
+    border-radius: 999px;
+    background: rgba(0, 128, 105, 0.45);
+    transform-origin: 50% -30px;
+}
+
+.app-clock-hand {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    z-index: 1;
+    border-radius: 999px;
+    transform-origin: 50% 100%;
+    transition: transform 80ms linear;
+}
+
+.app-clock-hand.hour {
+    width: 3px;
+    height: 20px;
+    margin: -20px 0 0 -1.5px;
+    background: var(--text);
+    opacity: 0.88;
+}
+
+.app-clock-hand.minute {
+    width: 2px;
+    height: 26px;
+    margin: -26px 0 0 -1px;
+    background: var(--text);
+    opacity: 0.72;
+}
+
+.app-clock-hand.second {
+    width: 2px;
+    height: 30px;
+    margin: -30px 0 0 -1px;
+    background: var(--green);
+    box-shadow: 0 0 6px rgba(0, 168, 132, 0.45);
+    transition: none;
+}
+
+.app-clock-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 8px;
+    height: 8px;
+    margin: -4px 0 0 -4px;
+    border-radius: 50%;
+    background: var(--green);
+    border: 2px solid var(--panel);
+    z-index: 2;
+}
+
+.app-clock-digital {
+    min-width: 0;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.app-clock-time-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+}
+
+.app-clock-time {
+    color: var(--text);
+    font-size: 28px;
+    font-weight: 800;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.03em;
+    line-height: 1;
+}
+
+.app-clock-period {
+    color: var(--green-dark);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.04em;
+}
+
+.app-clock-seconds {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.app-clock-date {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+    line-height: 1.35;
+}
+
+.app-weather {
+    flex: 0 0 auto;
+    min-width: 132px;
+    padding-left: 12px;
+    margin-left: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    align-items: flex-end;
+    border-left: 1px solid rgba(0, 0, 0, 0.06);
+}
+
+body.dark .app-weather {
+    border-left-color: rgba(255, 255, 255, 0.08);
+}
+
+.app-weather-top {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.app-weather-icon {
+    width: 34px;
+    height: 34px;
+    border-radius: 12px;
+    display: grid;
+    place-items: center;
+    color: var(--green-dark);
+    background: rgba(0, 168, 132, 0.12);
+    border: 1px solid rgba(0, 168, 132, 0.18);
+}
+
+body.dark .app-weather-icon {
+    color: #5eead4;
+    background: rgba(94, 234, 212, 0.12);
+    border-color: rgba(94, 234, 212, 0.18);
+}
+
+.app-weather-icon svg {
+    width: 18px;
+    height: 18px;
+}
+
+.app-weather-temp {
+    color: var(--text);
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.02em;
+}
+
+.app-weather-meta {
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1.25;
+    text-align: right;
+}
+
+.app-weather-location {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 6px;
+    padding: 4px 8px;
+    border-radius: 999px;
+    color: var(--green-dark);
+    background: rgba(52, 183, 241, 0.08);
+    border: 1px solid rgba(52, 183, 241, 0.14);
+    font-size: 11px;
+    font-weight: 800;
+    max-width: 180px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    cursor: pointer;
+}
+
+.app-weather-location:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(52, 183, 241, 0.18);
+}
+
+body.dark .app-weather-location {
+    color: #bae6fd;
+    background: rgba(56, 189, 248, 0.08);
+    border-color: rgba(56, 189, 248, 0.14);
+}
+
+.app-weather-location svg {
+    width: 14px;
+    height: 14px;
+    flex: 0 0 auto;
+}
+
+.app-weather-picker {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 12px;
+    width: min(320px, calc(100vw - 48px));
+    z-index: 30;
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    background:
+        linear-gradient(135deg, rgba(0, 168, 132, 0.12), rgba(52, 183, 241, 0.08)),
+        var(--panel);
+    box-shadow: 0 16px 44px rgba(17, 27, 33, 0.18);
+}
+
+body.dark .app-weather-picker {
+    border-color: rgba(94, 234, 212, 0.18);
+    background:
+        linear-gradient(135deg, rgba(0, 168, 132, 0.16), rgba(52, 183, 241, 0.08)),
+        var(--panel);
+}
+
+.app-weather-picker-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.app-weather-picker-head strong {
+    font-size: 12px;
+    font-weight: 900;
+    color: var(--text);
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+}
+
+.app-weather-picker-close {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--soft);
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.app-weather-picker-close:hover,
+.app-weather-picker-close:focus-visible {
+    color: var(--text);
+    border-color: rgba(52, 183, 241, 0.25);
+    outline: none;
+}
+
+.app-weather-picker-search {
+    position: relative;
+    margin-bottom: 10px;
+}
+
+.app-weather-picker-search svg {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    width: 16px;
+    height: 16px;
+    transform: translateY(-50%);
+    color: var(--muted);
+    pointer-events: none;
+}
+
+.app-weather-picker-search input {
+    width: 100%;
+    min-height: 36px;
+    padding: 0 12px 0 36px;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    background: var(--input);
+    color: var(--text);
+    outline: none;
+}
+
+.app-weather-picker-search input:focus {
+    border-color: rgba(52, 183, 241, 0.6);
+    box-shadow: 0 0 0 3px rgba(52, 183, 241, 0.12);
+}
+
+.app-weather-picker-actions {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 10px;
+}
+
+.app-weather-picker-actions button {
+    flex: 1;
+    min-height: 34px;
+    padding: 0 10px;
+    border-radius: 12px;
+    border: 1px solid rgba(0, 168, 132, 0.18);
+    background: rgba(0, 168, 132, 0.12);
+    color: var(--green-dark);
+    font-weight: 800;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.app-weather-picker-actions button:hover,
+.app-weather-picker-actions button:focus-visible {
+    outline: none;
+    border-color: rgba(0, 168, 132, 0.3);
+    background: rgba(0, 168, 132, 0.16);
+}
+
+body.dark .app-weather-picker-actions button {
+    color: #5eead4;
+    border-color: rgba(94, 234, 212, 0.18);
+    background: rgba(94, 234, 212, 0.12);
+}
+
+.app-weather-picker-results {
+    max-height: 220px;
+    overflow: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-right: 2px;
+}
+
+.app-weather-picker-result {
+    width: 100%;
+    text-align: left;
+    padding: 10px 10px;
+    border-radius: 12px;
+    border: 1px solid var(--border);
+    background: var(--soft);
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 700;
+}
+
+.app-weather-picker-result span {
+    display: block;
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+.app-weather-picker-result:hover,
+.app-weather-picker-result:focus-visible {
+    outline: none;
+    border-color: rgba(52, 183, 241, 0.25);
+    background: rgba(52, 183, 241, 0.06);
+}
+
+.app-weather-picker-status {
+    padding: 10px;
+    border-radius: 12px;
+    border: 1px dashed rgba(52, 183, 241, 0.24);
+    color: var(--muted);
+    font-weight: 700;
+    font-size: 12px;
+}
+
+@media (max-width: 380px) {
+    .app-weather {
+        display: none;
+    }
+}
+
+body.dark .app-clock {
+    border-color: rgba(94, 234, 212, 0.18);
+    background:
+        linear-gradient(135deg, rgba(0, 168, 132, 0.14), rgba(52, 183, 241, 0.08)),
+        var(--soft);
+}
+
+body.dark .app-clock-face {
+    border-color: rgba(94, 234, 212, 0.35);
+}
+
+body.dark .app-clock-period {
+    color: #5eead4;
+}
+
+body.dark .app-clock-hand.hour,
+body.dark .app-clock-hand.minute {
+    background: #e9edef;
+}
+
 .icon-row {
     display: flex;
     align-items: center;
@@ -627,6 +1062,648 @@ body.dark .icon-btn {
 
 .menu-wrap {
     position: relative;
+}
+
+.notification-wrap {
+    position: relative;
+    --notif-accent: #00a884;
+    --notif-accent-deep: #008069;
+    --notif-accent-soft: rgba(0, 168, 132, 0.14);
+    --notif-accent-ring: rgba(0, 168, 132, 0.28);
+    --notif-info: #2563eb;
+    --notif-info-soft: rgba(37, 99, 235, 0.12);
+    --notif-success: #059669;
+    --notif-success-soft: rgba(5, 150, 105, 0.12);
+    --notif-warning: #d97706;
+    --notif-warning-soft: rgba(217, 119, 6, 0.14);
+    --notif-danger: #dc2626;
+    --notif-danger-soft: rgba(220, 38, 38, 0.12);
+    --notif-badge: linear-gradient(145deg, #ff6b6b, #e11d48);
+}
+
+.notification-badge {
+    position: absolute;
+    top: 3px;
+    right: 3px;
+    min-width: 17px;
+    height: 17px;
+    padding: 0 5px;
+    display: none;
+    place-items: center;
+    border: 2px solid var(--soft);
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    line-height: 1;
+    background: var(--notif-badge);
+    box-shadow: 0 2px 8px rgba(225, 29, 72, 0.35);
+}
+
+.notification-badge.show {
+    display: grid;
+}
+
+.notification-wrap.has-unread .icon-btn {
+    color: var(--notif-accent-deep);
+}
+
+body.dark .notification-wrap.has-unread .icon-btn {
+    color: #5eead4;
+}
+
+.notification-wrap.has-unread .icon-btn::after {
+    content: "";
+    position: absolute;
+    inset: 7px;
+    border-radius: 50%;
+    border: 1px solid var(--notif-accent-ring);
+    animation: notificationPulse 1800ms ease-out infinite;
+    pointer-events: none;
+}
+
+.notification-wrap.ringing .icon-btn svg {
+    transform-origin: 50% 6%;
+    animation: bellRing 900ms cubic-bezier(.36,.07,.19,.97) both;
+}
+
+.notification-wrap.ringing .notification-badge {
+    animation: badgePop 700ms ease both;
+}
+
+.notification-popover {
+    position: absolute;
+    top: 48px;
+    right: -48px;
+    z-index: 25;
+    width: min(390px, calc(100vw - 32px));
+    max-height: min(520px, calc(100vh - 120px));
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid var(--notif-accent-ring);
+    border-radius: 8px;
+    background:
+        linear-gradient(180deg, var(--notif-accent-soft) 0, transparent 88px),
+        var(--panel);
+    box-shadow: 0 18px 42px rgba(17, 27, 33, 0.22);
+}
+
+.notification-popover.open {
+    display: flex;
+}
+
+.notification-head {
+    min-height: 64px;
+    padding: 12px 13px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    border-bottom: 1px solid var(--border);
+    background: linear-gradient(135deg, var(--notif-accent-soft), rgba(52, 183, 241, 0.08)), var(--soft);
+}
+
+.notification-head strong {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 15px;
+    letter-spacing: 0;
+    color: var(--notif-accent-deep);
+}
+
+.notification-head strong svg {
+    width: 18px;
+    height: 18px;
+    color: var(--notif-accent);
+}
+
+.notification-actions {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.notification-head button,
+.notification-filter {
+    width: 34px;
+    height: 34px;
+    display: grid;
+    place-items: center;
+    flex: 0 0 auto;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--notif-accent-deep);
+    background: var(--panel);
+    cursor: pointer;
+    transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, color 140ms ease;
+}
+
+.notification-head button:hover,
+.notification-head button:focus-visible,
+.notification-filter:hover,
+.notification-filter:focus-visible {
+    border-color: var(--notif-accent-ring);
+    background: var(--notif-accent-soft);
+    color: var(--notif-accent-deep);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+.notification-filter {
+    color: var(--muted);
+}
+
+.notification-filter.active {
+    color: #ffffff;
+    border-color: var(--notif-accent);
+    background: linear-gradient(145deg, var(--notif-accent-deep), var(--notif-accent));
+}
+
+.notification-actions svg {
+    width: 17px;
+    height: 17px;
+}
+
+.notification-actions button.spinning svg {
+    animation: spin 700ms linear infinite;
+}
+
+body.dark .notification-head strong {
+    color: #99f6e4;
+}
+
+body.dark .notification-head strong svg {
+    color: #5eead4;
+}
+
+body.dark .notification-popover {
+    border-color: rgba(94, 234, 212, 0.22);
+    background:
+        linear-gradient(180deg, rgba(0, 168, 132, 0.12) 0, transparent 88px),
+        var(--panel);
+}
+
+body.dark .notification-head {
+    background: linear-gradient(135deg, rgba(0, 168, 132, 0.16), rgba(52, 183, 241, 0.08)), var(--soft);
+}
+
+body.dark .notification-head button,
+body.dark .notification-filter {
+    color: #5eead4;
+}
+
+body.dark .notification-head button,
+body.dark .notification-filter:not(.active) {
+    background: var(--panel);
+}
+
+body.dark .notification-head button:hover,
+body.dark .notification-filter:hover,
+body.dark .notification-head button:focus-visible,
+body.dark .notification-filter:focus-visible {
+    border-color: rgba(94, 234, 212, 0.35);
+    background: rgba(0, 168, 132, 0.16);
+}
+
+body.dark .notification-filter.active {
+    color: #ffffff;
+    border-color: transparent;
+    background: linear-gradient(145deg, #008069, #00a884);
+}
+
+.notification-list {
+    flex: 1 1 auto;
+    min-height: 0;
+    max-height: none;
+    overflow-y: auto;
+}
+
+.notification-search {
+    position: relative;
+    padding: 10px 12px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+}
+
+.notification-search svg {
+    position: absolute;
+    top: 50%;
+    left: 24px;
+    width: 17px;
+    height: 17px;
+    color: var(--muted);
+    transform: translateY(-50%);
+    pointer-events: none;
+}
+
+.notification-search input {
+    width: 100%;
+    min-height: 34px;
+    padding: 0 12px 0 38px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    outline: 0;
+    color: var(--text);
+    background: var(--input);
+}
+
+.notification-search input:focus {
+    border-color: var(--notif-accent);
+    box-shadow: 0 0 0 3px var(--notif-accent-soft);
+}
+
+.notification-search-clear {
+    position: absolute;
+    top: 50%;
+    right: 22px;
+    width: 26px;
+    height: 26px;
+    display: none;
+    place-items: center;
+    border: 0;
+    border-radius: 6px;
+    color: var(--muted);
+    background: transparent;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.notification-search-clear.show {
+    display: grid;
+}
+
+.notification-search-clear:hover,
+.notification-search-clear:focus-visible {
+    color: var(--text);
+    background: var(--hover);
+    outline: none;
+}
+
+.notification-search-clear svg {
+    width: 15px;
+    height: 15px;
+}
+
+.notification-toolbar {
+    padding: 8px 12px 10px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+}
+
+.notification-summary {
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.notification-summary strong {
+    color: var(--notif-accent-deep);
+}
+
+.notification-type-filters {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+
+.notification-type-chip {
+    min-height: 28px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--soft);
+    cursor: pointer;
+    transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+}
+
+.notification-type-chip:hover,
+.notification-type-chip:focus-visible {
+    border-color: var(--notif-accent-ring);
+    color: var(--notif-accent-deep);
+    outline: none;
+}
+
+.notification-type-chip.active {
+    color: #ffffff;
+    border-color: var(--notif-accent);
+    background: linear-gradient(145deg, var(--notif-accent-deep), var(--notif-accent));
+}
+
+.notification-type-chip[data-type="success"].active {
+    border-color: var(--notif-success);
+    background: linear-gradient(145deg, #34d399, var(--notif-success));
+}
+
+.notification-type-chip[data-type="warning"].active {
+    border-color: var(--notif-warning);
+    background: linear-gradient(145deg, #fbbf24, var(--notif-warning));
+}
+
+.notification-type-chip[data-type="danger"].active {
+    border-color: var(--notif-danger);
+    background: linear-gradient(145deg, #f87171, var(--notif-danger));
+}
+
+.notification-type-chip[data-type="info"].active {
+    border-color: var(--notif-info);
+    background: linear-gradient(145deg, #60a5fa, var(--notif-info));
+}
+
+.notification-toolbar-actions {
+    display: flex;
+    gap: 8px;
+}
+
+.notification-toolbar-actions button {
+    min-height: 28px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--notif-accent-deep);
+    font-size: 11px;
+    font-weight: 700;
+    background: var(--soft);
+    cursor: pointer;
+}
+
+.notification-toolbar-actions button:hover,
+.notification-toolbar-actions button:focus-visible {
+    border-color: var(--notif-accent-ring);
+    background: var(--notif-accent-soft);
+    outline: none;
+}
+
+.notification-group-label {
+    padding: 8px 14px 6px;
+    color: var(--muted);
+    font-size: 11px;
+    font-weight: 800;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    background: var(--soft);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 1;
+}
+
+.notification-item-wrap {
+    display: grid;
+    grid-template-columns: 10px minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: start;
+    padding: 14px 15px;
+    border-bottom: 1px solid var(--border);
+    background: var(--panel);
+    transition: background 160ms ease;
+}
+
+.notification-item-wrap.unread {
+    background: linear-gradient(90deg, var(--notif-accent-soft), transparent 72%);
+}
+
+.notification-item-wrap:has(.notification-item:hover),
+.notification-item-wrap:has(.notification-item:focus-visible) {
+    background: var(--hover);
+}
+
+.notification-item-wrap.unread:has(.notification-item:hover),
+.notification-item-wrap.unread:has(.notification-item:focus-visible) {
+    background: linear-gradient(90deg, rgba(0, 168, 132, 0.18), var(--hover) 72%);
+}
+
+.notification-item-wrap:has(.notification-item-actions button:hover),
+.notification-item-wrap:has(.notification-item-actions button:focus-visible) {
+    background: var(--panel);
+}
+
+.notification-item-wrap.unread:has(.notification-item-actions button:hover),
+.notification-item-wrap.unread:has(.notification-item-actions button:focus-visible) {
+    background: linear-gradient(90deg, var(--notif-accent-soft), transparent 72%);
+}
+
+.notification-item-wrap.fresh {
+    animation: notificationFresh 1400ms ease both;
+}
+
+.notification-item {
+    width: 100%;
+    min-width: 0;
+    padding: 0;
+    margin: 0;
+    border: 0;
+    display: block;
+    color: var(--text);
+    text-align: left;
+    background: transparent;
+    cursor: pointer;
+}
+
+.notification-item:hover,
+.notification-item:focus-visible {
+    outline: none;
+}
+
+.notification-item:focus-visible {
+    border-radius: 6px;
+    box-shadow: 0 0 0 2px var(--notif-accent-ring);
+}
+
+.notification-dot {
+    width: 10px;
+    height: 10px;
+    margin-top: 4px;
+    border-radius: 50%;
+    background: var(--border);
+}
+
+.notification-item-wrap.unread .notification-dot {
+    background: var(--notif-accent);
+    box-shadow: 0 0 0 4px var(--notif-accent-soft);
+}
+
+.notification-title {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.notification-type {
+    flex: 0 0 auto;
+    padding: 4px 7px;
+    border-radius: 7px;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 800;
+    text-transform: uppercase;
+    background: linear-gradient(145deg, var(--notif-accent-deep), var(--notif-accent));
+}
+
+.notification-type.warning {
+    background: linear-gradient(145deg, #f59e0b, var(--notif-warning));
+}
+
+.notification-type.success {
+    background: linear-gradient(145deg, #34d399, var(--notif-success));
+}
+
+.notification-type.danger {
+    background: linear-gradient(145deg, #f87171, var(--notif-danger));
+}
+
+.notification-type.info {
+    background: linear-gradient(145deg, #60a5fa, var(--notif-info));
+}
+
+.notification-body {
+    min-width: 0;
+}
+
+.notification-message {
+    display: block;
+    margin-top: 7px;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.45;
+}
+
+.notification-message.clamped {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.notification-message.expanded {
+    -webkit-line-clamp: unset;
+}
+
+.notification-link-hint {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+    margin-top: 8px;
+    color: var(--notif-info);
+    font-size: 11px;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.notification-link-hint svg,
+.notification-link-hint i {
+    width: 13px;
+    height: 13px;
+    display: block;
+    flex-shrink: 0;
+}
+
+.notification-item-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    flex-shrink: 0;
+}
+
+.notification-item-actions button {
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    margin: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    color: var(--muted);
+    background: var(--panel);
+    line-height: 0;
+    cursor: pointer;
+    transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+}
+
+.notification-item-actions button svg,
+.notification-item-actions button i {
+    width: 15px;
+    height: 15px;
+    display: block;
+    flex-shrink: 0;
+    pointer-events: none;
+}
+
+.notification-item-actions button:hover,
+.notification-item-actions button:focus-visible {
+    border-color: var(--notif-accent-ring);
+    color: var(--notif-accent-deep);
+    background: var(--notif-accent-soft);
+    outline: none;
+}
+
+.notification-time {
+    display: block;
+    margin-top: 9px;
+    color: var(--muted);
+    font-size: 11px;
+    text-align: right;
+}
+
+.notification-empty {
+    padding: 34px 18px;
+    color: var(--muted);
+    font-size: 14px;
+    text-align: center;
+    background: linear-gradient(180deg, transparent, var(--notif-accent-soft));
+}
+
+@keyframes bellRing {
+    0% { transform: rotate(0); }
+    12% { transform: rotate(16deg); }
+    24% { transform: rotate(-14deg); }
+    36% { transform: rotate(12deg); }
+    48% { transform: rotate(-9deg); }
+    60% { transform: rotate(6deg); }
+    72% { transform: rotate(-3deg); }
+    100% { transform: rotate(0); }
+}
+
+@keyframes badgePop {
+    0% { transform: scale(0.5); }
+    55% { transform: scale(1.22); }
+    100% { transform: scale(1); }
+}
+
+@keyframes notificationPulse {
+    0% { transform: scale(0.82); opacity: 0.85; }
+    70%, 100% { transform: scale(1.55); opacity: 0; }
+}
+
+@keyframes notificationFresh {
+    0% { background: rgba(0, 168, 132, 0.22); transform: translateX(8px); }
+    100% { background: var(--panel); transform: translateX(0); }
+}
+
+body.dark .notification-item-wrap.unread {
+    background: linear-gradient(90deg, rgba(0, 168, 132, 0.18), transparent 72%);
+}
+
+body.dark .notification-item-wrap.unread:hover {
+    background: linear-gradient(90deg, rgba(0, 168, 132, 0.24), var(--hover) 72%);
+}
+
+body.dark .notification-empty {
+    background: linear-gradient(180deg, transparent, rgba(0, 168, 132, 0.1));
 }
 
 .menu-popover {
@@ -1479,7 +2556,7 @@ body.dark .icon-btn {
     border: 1px solid var(--border);
     border-radius: 12px;
     padding: 16px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 8px 28px rgba(17, 27, 33, 0.16);
     max-width: 300px;
     z-index: 2000;
     animation: slideInRight 0.3s ease-out;
@@ -1491,15 +2568,23 @@ body.dark .icon-btn {
 }
 
 .live-notification.success {
-    border-left: 4px solid #10b981;
+    border-left: 4px solid #059669;
+    background: linear-gradient(90deg, rgba(5, 150, 105, 0.12), var(--panel) 42%);
 }
 
 .live-notification.info {
-    border-left: 4px solid #3b82f6;
+    border-left: 4px solid #2563eb;
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.12), var(--panel) 42%);
 }
 
 .live-notification.warning {
-    border-left: 4px solid #f59e0b;
+    border-left: 4px solid #d97706;
+    background: linear-gradient(90deg, rgba(217, 119, 6, 0.14), var(--panel) 42%);
+}
+
+.live-notification.danger {
+    border-left: 4px solid #dc2626;
+    background: linear-gradient(90deg, rgba(220, 38, 38, 0.12), var(--panel) 42%);
 }
 
 .live-notification-title {
@@ -1507,9 +2592,57 @@ body.dark .icon-btn {
     margin-bottom: 4px;
 }
 
+.live-notification.success .live-notification-title {
+    color: #047857;
+}
+
+.live-notification.info .live-notification-title {
+    color: #1d4ed8;
+}
+
+.live-notification.warning .live-notification-title {
+    color: #b45309;
+}
+
+.live-notification.danger .live-notification-title {
+    color: #b91c1c;
+}
+
 .live-notification-message {
     font-size: 14px;
     color: var(--muted);
+}
+
+body.dark .live-notification.success .live-notification-title {
+    color: #6ee7b7;
+}
+
+body.dark .live-notification.info .live-notification-title {
+    color: #93c5fd;
+}
+
+body.dark .live-notification.warning .live-notification-title {
+    color: #fcd34d;
+}
+
+body.dark .live-notification.danger .live-notification-title {
+    color: #fca5a5;
+}
+
+body.dark .live-notification.success {
+    background: linear-gradient(90deg, rgba(5, 150, 105, 0.2), var(--panel) 42%);
+}
+
+body.dark .live-notification.info {
+    background: linear-gradient(90deg, rgba(37, 99, 235, 0.2), var(--panel) 42%);
+}
+
+body.dark .live-notification.warning {
+    background: linear-gradient(90deg, rgba(217, 119, 6, 0.22), var(--panel) 42%);
+}
+
+body.dark .live-notification.danger {
+    background: linear-gradient(90deg, rgba(220, 38, 38, 0.2), var(--panel) 42%);
 }
 
 /* AI Features Panel */
@@ -2014,12 +3147,15 @@ body.dark .day-pill {
 }
 
 .msg-text {
+    display: block;
+    min-width: 0;
     white-space: pre-wrap;
 }
 
 .msg-meta {
     width: 100%;
-    margin-top: 2px;
+    min-width: 74px;
+    margin-top: 3px;
     display: flex;
     align-items: center;
     justify-content: flex-end;
@@ -2028,6 +3164,7 @@ body.dark .day-pill {
     color: var(--muted);
     font-size: 11px;
     line-height: 1.6;
+    text-align: right;
 }
 
 .msg-content .msg-meta {
@@ -3543,6 +4680,45 @@ body.dark .call-card {
                 </div>
                 <div class="icon-row">
                     <button class="icon-btn" id="newChatButton" type="button" title="TrioAI" aria-label="TrioAI"><i data-lucide="bot"></i></button>
+                    <div class="notification-wrap">
+                        <button class="icon-btn" id="sheetNotificationButton" type="button" title="Notifications" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
+                            <i data-lucide="bell"></i>
+                            <span class="notification-badge" id="notificationBadge"></span>
+                        </button>
+                        <div class="notification-popover" id="notificationPopover">
+                            <div class="notification-head">
+                                <strong><i data-lucide="bell"></i><span>Notifications</span></strong>
+                                <div class="notification-actions">
+                                    <button class="notification-filter" id="unreadNotificationsButton" type="button" title="Unread only" aria-label="Unread only" aria-pressed="false"><i data-lucide="inbox"></i></button>
+                                    <button class="notification-filter" id="notificationSoundButton" type="button" title="Notification sound" aria-label="Notification sound" aria-pressed="false"><i data-lucide="volume-2"></i></button>
+                                    <button class="notification-filter" id="notificationDesktopButton" type="button" title="Desktop notifications" aria-label="Desktop notifications" aria-pressed="false"><i data-lucide="monitor-smartphone"></i></button>
+                                    <button id="refreshNotificationsButton" type="button" title="Refresh notifications" aria-label="Refresh notifications"><i data-lucide="refresh-cw"></i></button>
+                                    <button id="markNotificationsReadButton" type="button" title="Mark all read" aria-label="Mark all read"><i data-lucide="check-check"></i></button>
+                                </div>
+                            </div>
+                            <div class="notification-search">
+                                <i data-lucide="search"></i>
+                                <input id="notificationSearchInput" type="search" placeholder="Search notifications" aria-label="Search notifications">
+                                <button class="notification-search-clear" id="clearNotificationSearchButton" type="button" title="Clear search" aria-label="Clear search"><i data-lucide="x"></i></button>
+                            </div>
+                            <div class="notification-toolbar" id="notificationToolbar">
+                                <span class="notification-summary" id="notificationSummary"></span>
+                                <div class="notification-type-filters" id="notificationTypeFilters">
+                                    <button class="notification-type-chip active" type="button" data-type="all">All</button>
+                                    <button class="notification-type-chip" type="button" data-type="info">Info</button>
+                                    <button class="notification-type-chip" type="button" data-type="success">Success</button>
+                                    <button class="notification-type-chip" type="button" data-type="warning">Warning</button>
+                                    <button class="notification-type-chip" type="button" data-type="danger">Alert</button>
+                                </div>
+                                <div class="notification-toolbar-actions">
+                                    <button type="button" id="restoreDismissedNotificationsButton" hidden>Restore hidden</button>
+                                </div>
+                            </div>
+                            <div class="notification-list" id="notificationList">
+                                <div class="notification-empty">No notifications yet</div>
+                            </div>
+                        </div>
+                    </div>
                     <div class="menu-wrap">
                         <button class="icon-btn" id="menuButton" type="button" title="Menu" aria-label="Menu" aria-haspopup="true" aria-expanded="false"><i data-lucide="more-vertical"></i></button>
                         <div class="menu-popover" id="menuPopover" role="menu">
@@ -3557,6 +4733,49 @@ body.dark .call-card {
                             <button id="clearChatButton" type="button" role="menuitem"><i data-lucide="trash-2"></i><span>Clear TrioAI</span></button>
                             <button id="exportChatButton" type="button" role="menuitem"><i data-lucide="download"></i><span>Export chat</span></button>
                             <button id="signoutButton" type="button" role="menuitem"><i data-lucide="log-out"></i><span>Sign out</span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="app-clock" id="appClock" aria-live="polite" aria-label="Current date and time">
+                <div class="app-clock-analog">
+                    <div class="app-clock-face" id="appClockFace">
+                        <span class="app-clock-hand hour" id="appClockHourHand"></span>
+                        <span class="app-clock-hand minute" id="appClockMinuteHand"></span>
+                        <span class="app-clock-hand second" id="appClockSecondHand"></span>
+                        <span class="app-clock-center"></span>
+                    </div>
+                </div>
+                <div class="app-clock-digital">
+                    <div class="app-clock-time-row">
+                        <span class="app-clock-time" id="appClockTime">00:00</span>
+                        <span class="app-clock-period" id="appClockPeriod">AM</span>
+                    </div>
+                    <span class="app-clock-seconds" id="appClockSeconds">00 seconds</span>
+                    <span class="app-clock-date" id="appClockDate">Loading…</span>
+                </div>
+                <div class="app-weather" id="appWeather" aria-label="Current weather">
+                    <div class="app-weather-top">
+                        <span class="app-weather-icon" id="appWeatherIcon"><i data-lucide="cloud-sun"></i></span>
+                        <span class="app-weather-temp" id="appWeatherTemp">--°C</span>
+                    </div>
+                    <span class="app-weather-meta" id="appWeatherMeta">Loading weather…</span>
+                    <button type="button" class="app-weather-location" id="appWeatherLocation" aria-label="Change weather location"><i data-lucide="map-pin"></i><span>—</span></button>
+                    <div class="app-weather-picker" id="appWeatherPicker" hidden>
+                        <div class="app-weather-picker-head">
+                            <strong>Weather location</strong>
+                            <button type="button" class="app-weather-picker-close" id="closeWeatherPickerButton" aria-label="Close"><i data-lucide="x"></i></button>
+                        </div>
+                        <div class="app-weather-picker-search">
+                            <i data-lucide="search"></i>
+                            <input id="appWeatherSearchInput" type="search" placeholder="Search city" autocomplete="off" aria-label="Search city">
+                        </div>
+                        <div class="app-weather-picker-actions">
+                            <button type="button" id="useDeviceWeatherButton">Use my location</button>
+                        </div>
+                        <div class="app-weather-picker-results" id="appWeatherSearchResults">
+                            <div class="app-weather-picker-status">Type a city name to search</div>
                         </div>
                     </div>
                 </div>
@@ -4118,6 +5337,24 @@ const otpEmailLine = document.getElementById("otpEmailLine");
 const accountName = document.getElementById("accountName");
 const accountEmail = document.getElementById("accountEmail");
 const accountAvatar = document.getElementById("accountAvatar");
+const appClockFace = document.getElementById("appClockFace");
+const appClockHourHand = document.getElementById("appClockHourHand");
+const appClockMinuteHand = document.getElementById("appClockMinuteHand");
+const appClockSecondHand = document.getElementById("appClockSecondHand");
+const appClockTime = document.getElementById("appClockTime");
+const appClockPeriod = document.getElementById("appClockPeriod");
+const appClockSeconds = document.getElementById("appClockSeconds");
+const appClockDate = document.getElementById("appClockDate");
+const appWeather = document.getElementById("appWeather");
+const appWeatherIcon = document.getElementById("appWeatherIcon");
+const appWeatherTemp = document.getElementById("appWeatherTemp");
+const appWeatherMeta = document.getElementById("appWeatherMeta");
+const appWeatherLocation = document.getElementById("appWeatherLocation");
+const appWeatherPicker = document.getElementById("appWeatherPicker");
+const appWeatherSearchInput = document.getElementById("appWeatherSearchInput");
+const appWeatherSearchResults = document.getElementById("appWeatherSearchResults");
+const closeWeatherPickerButton = document.getElementById("closeWeatherPickerButton");
+const useDeviceWeatherButton = document.getElementById("useDeviceWeatherButton");
 const chatList = document.getElementById("chatList");
 const chatAvatar = document.getElementById("chatAvatar");
 const chatName = document.getElementById("chatName");
@@ -4126,6 +5363,20 @@ const messageInput = document.getElementById("messageInput");
 const chatBody = document.getElementById("chatBody");
 const chatForm = document.getElementById("chatForm");
 const newChatButton = document.getElementById("newChatButton");
+const sheetNotificationButton = document.getElementById("sheetNotificationButton");
+const notificationBadge = document.getElementById("notificationBadge");
+const notificationPopover = document.getElementById("notificationPopover");
+const notificationList = document.getElementById("notificationList");
+const markNotificationsReadButton = document.getElementById("markNotificationsReadButton");
+const refreshNotificationsButton = document.getElementById("refreshNotificationsButton");
+const unreadNotificationsButton = document.getElementById("unreadNotificationsButton");
+const notificationSoundButton = document.getElementById("notificationSoundButton");
+const notificationSearchInput = document.getElementById("notificationSearchInput");
+const clearNotificationSearchButton = document.getElementById("clearNotificationSearchButton");
+const notificationSummary = document.getElementById("notificationSummary");
+const notificationTypeFilters = document.getElementById("notificationTypeFilters");
+const restoreDismissedNotificationsButton = document.getElementById("restoreDismissedNotificationsButton");
+const notificationDesktopButton = document.getElementById("notificationDesktopButton");
 const menuButton = document.getElementById("menuButton");
 const menuPopover = document.getElementById("menuPopover");
 const profileButton = document.getElementById("profileButton");
@@ -4290,18 +5541,372 @@ let isVideoOn = false;
 let userChats = [];
 let currentChatMessages = [];
 let messagePollingInterval = null;
+let sheetNotifications = [];
+let notificationPollingInterval = null;
+let notificationSeenIds = new Set();
+let freshNotificationIds = new Set();
+let showUnreadOnly = false;
+let notificationSearchQuery = "";
+let notificationTypeFilter = "all";
+let notificationSoundEnabled = localStorage.getItem("trioai_notification_sound") === "on";
+let notificationDesktopEnabled = localStorage.getItem("trioai_notification_desktop") === "on";
+let dismissedNotificationIds = new Set();
+let appClockTimer = null;
+let appWeatherTimer = null;
+let appWeatherRequestInFlight = null;
+let appWeatherSearchTimer = null;
 
 function init() {
     renderEmojiTabs();
     renderEmojiGrid();
     renderQuickEmojis();
     renderAvatarChoices();
+    buildAppClockMarks();
     bindEvents();
     restoreSession();
     loadStarredMessages();
+    startAppClock();
+    startAppWeather();
 
     if (window.lucide) {
         lucide.createIcons();
+    }
+}
+
+function buildAppClockMarks() {
+    if (!appClockFace || appClockFace.dataset.marksBuilt === "true") return;
+    for (let i = 0; i < 12; i += 1) {
+        const mark = document.createElement("span");
+        mark.className = "app-clock-mark";
+        mark.style.transform = "rotate(" + (i * 30) + "deg)";
+        appClockFace.insertBefore(mark, appClockFace.firstChild);
+    }
+    appClockFace.dataset.marksBuilt = "true";
+}
+
+function startAppClock() {
+    stopAppClock();
+    updateAppClock();
+    appClockTimer = setInterval(updateAppClock, 1000);
+}
+
+function stopAppClock() {
+    if (appClockTimer) {
+        clearInterval(appClockTimer);
+        appClockTimer = null;
+    }
+}
+
+function updateAppClock() {
+    if (!appClockTime) return;
+
+    const now = new Date();
+    const hours24 = now.getHours();
+    const minutes = now.getMinutes();
+    const seconds = now.getSeconds();
+    const hours12 = hours24 % 12 || 12;
+    const period = hours24 >= 12 ? "PM" : "AM";
+
+    appClockTime.textContent = String(hours12).padStart(2, "0") + ":" + String(minutes).padStart(2, "0");
+    if (appClockPeriod) appClockPeriod.textContent = period;
+    if (appClockSeconds) appClockSeconds.textContent = String(seconds).padStart(2, "0") + " seconds";
+    if (appClockDate) {
+        appClockDate.textContent = now.toLocaleDateString(undefined, {
+            weekday: "long",
+            month: "long",
+            day: "numeric"
+        });
+    }
+
+    const secondDeg = seconds * 6;
+    const minuteDeg = minutes * 6 + seconds * 0.1;
+    const hourDeg = (hours24 % 12) * 30 + minutes * 0.5;
+
+    if (appClockSecondHand) appClockSecondHand.style.transform = "rotate(" + secondDeg + "deg)";
+    if (appClockMinuteHand) appClockMinuteHand.style.transform = "rotate(" + minuteDeg + "deg)";
+    if (appClockHourHand) appClockHourHand.style.transform = "rotate(" + hourDeg + "deg)";
+}
+
+function startAppWeather() {
+    stopAppWeather();
+    updateAppWeather();
+    appWeatherTimer = setInterval(updateAppWeather, 10 * 60 * 1000);
+}
+
+function stopAppWeather() {
+    if (appWeatherTimer) {
+        clearInterval(appWeatherTimer);
+        appWeatherTimer = null;
+    }
+}
+
+function setWeatherUi(state) {
+    if (!appWeather || !appWeatherTemp || !appWeatherMeta || !appWeatherLocation || !appWeatherIcon) return;
+
+    if (state?.loading) {
+        appWeatherTemp.textContent = "--°C";
+        appWeatherMeta.textContent = "Loading weather…";
+        appWeatherLocation.querySelector("span").textContent = "—";
+        return;
+    }
+
+    if (state?.error) {
+        appWeatherTemp.textContent = "--°C";
+        appWeatherMeta.textContent = state.error;
+        appWeatherLocation.querySelector("span").textContent = state.locationLabel || "—";
+        return;
+    }
+
+    appWeatherTemp.textContent = state.tempText;
+    appWeatherMeta.textContent = state.metaText;
+    appWeatherLocation.querySelector("span").textContent = state.locationLabel || "—";
+    const iconName = state.iconName || "cloud";
+    const iconEl = appWeatherIcon.querySelector("i");
+    if (iconEl) iconEl.setAttribute("data-lucide", iconName);
+    if (window.lucide) lucide.createIcons();
+}
+
+function openWeatherPicker() {
+    if (!appWeatherPicker) return;
+    appWeatherPicker.hidden = false;
+    if (window.lucide) lucide.createIcons();
+    if (appWeatherSearchInput) {
+        appWeatherSearchInput.focus();
+        appWeatherSearchInput.select();
+    }
+}
+
+function closeWeatherPicker() {
+    if (!appWeatherPicker) return;
+    appWeatherPicker.hidden = true;
+}
+
+function toggleWeatherPicker(event) {
+    if (event) event.stopPropagation();
+    if (!appWeatherPicker) return;
+    if (appWeatherPicker.hidden) openWeatherPicker();
+    else closeWeatherPicker();
+}
+
+function setWeatherSearchStatus(text) {
+    if (!appWeatherSearchResults) return;
+    appWeatherSearchResults.innerHTML = '<div class="app-weather-picker-status">' + escapeHtml(text) + '</div>';
+}
+
+function setManualWeatherLocation(location) {
+    try {
+        localStorage.setItem("trioai_weather_location", JSON.stringify({
+            latitude: location.latitude,
+            longitude: location.longitude,
+            label: location.label,
+            mode: "manual"
+        }));
+    } catch (_) {}
+    closeWeatherPicker();
+    updateAppWeather();
+}
+
+function setAutoWeatherLocation() {
+    const stored = (() => {
+        try {
+            return JSON.parse(localStorage.getItem("trioai_weather_location") || "null");
+        } catch (_) {
+            return null;
+        }
+    })();
+    try {
+        localStorage.setItem("trioai_weather_location", JSON.stringify({
+            latitude: stored?.latitude,
+            longitude: stored?.longitude,
+            label: stored?.label,
+            mode: "auto"
+        }));
+    } catch (_) {}
+    closeWeatherPicker();
+    updateAppWeather();
+}
+
+async function searchWeatherLocations(query) {
+    const trimmed = (query || "").trim();
+    if (!trimmed) {
+        setWeatherSearchStatus("Type a city name to search");
+        return;
+    }
+    setWeatherSearchStatus("Searching…");
+
+    const url = "https://geocoding-api.open-meteo.com/v1/search?name=" + encodeURIComponent(trimmed)
+        + "&count=8&language=en&format=json";
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Search failed");
+    const data = await response.json();
+    const results = Array.isArray(data?.results) ? data.results : [];
+
+    if (!results.length) {
+        setWeatherSearchStatus("No matches found");
+        return;
+    }
+
+    appWeatherSearchResults.innerHTML = "";
+    results.forEach((item) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "app-weather-picker-result";
+        button.dataset.lat = String(item.latitude);
+        button.dataset.lon = String(item.longitude);
+        const title = item.name || "Location";
+        const subtitle = [item.admin1, item.country].filter(Boolean).join(", ");
+        button.dataset.label = subtitle ? (title + ", " + subtitle) : title;
+        button.textContent = title;
+        if (subtitle) {
+            const meta = document.createElement("span");
+            meta.textContent = subtitle;
+            button.appendChild(meta);
+        }
+        appWeatherSearchResults.appendChild(button);
+    });
+}
+
+function weatherCodeInfo(code) {
+    const safe = typeof code === "number" ? code : Number(code);
+    if (safe === 0) return { label: "Clear", icon: "sun" };
+    if (safe === 1 || safe === 2) return { label: "Partly cloudy", icon: "cloud-sun" };
+    if (safe === 3) return { label: "Cloudy", icon: "cloud" };
+    if (safe === 45 || safe === 48) return { label: "Fog", icon: "cloud" };
+    if (safe === 51 || safe === 53 || safe === 55) return { label: "Drizzle", icon: "cloud-rain" };
+    if (safe === 56 || safe === 57) return { label: "Freezing drizzle", icon: "cloud-rain" };
+    if (safe === 61 || safe === 63 || safe === 65) return { label: "Rain", icon: "cloud-rain" };
+    if (safe === 66 || safe === 67) return { label: "Freezing rain", icon: "cloud-rain" };
+    if (safe === 71 || safe === 73 || safe === 75) return { label: "Snow", icon: "cloud-snow" };
+    if (safe === 77) return { label: "Snow grains", icon: "cloud-snow" };
+    if (safe === 80 || safe === 81 || safe === 82) return { label: "Showers", icon: "cloud-rain" };
+    if (safe === 85 || safe === 86) return { label: "Snow showers", icon: "cloud-snow" };
+    if (safe === 95 || safe === 96 || safe === 99) return { label: "Thunderstorm", icon: "cloud-lightning" };
+    return { label: "Weather", icon: "cloud" };
+}
+
+async function getWeatherLocation() {
+    const stored = (() => {
+        try {
+            return JSON.parse(localStorage.getItem("trioai_weather_location") || "null");
+        } catch (_) {
+            return null;
+        }
+    })();
+
+    if (stored?.mode === "manual" && stored?.latitude && stored?.longitude) return stored;
+
+    const fallback = stored?.latitude && stored?.longitude
+        ? stored
+        : { latitude: 28.6139, longitude: 77.2090, label: "New Delhi" };
+
+    if (!("geolocation" in navigator)) return fallback;
+
+    const permission = await (async () => {
+        try {
+            if (!navigator.permissions?.query) return null;
+            return await navigator.permissions.query({ name: "geolocation" });
+        } catch (_) {
+            return null;
+        }
+    })();
+
+    if (permission?.state === "denied") return fallback;
+
+    return await new Promise((resolve) => {
+        navigator.geolocation.getCurrentPosition(
+            (pos) => {
+                const latitude = pos.coords.latitude;
+                const longitude = pos.coords.longitude;
+                resolve({ latitude, longitude, label: stored?.label || "Your area" });
+            },
+            () => resolve(fallback),
+            { enableHighAccuracy: false, timeout: 8000, maximumAge: 20 * 60 * 1000 }
+        );
+    });
+}
+
+async function reverseGeocodeOpenMeteo(latitude, longitude) {
+    const url = "https://geocoding-api.open-meteo.com/v1/reverse?latitude=" + encodeURIComponent(latitude)
+        + "&longitude=" + encodeURIComponent(longitude)
+        + "&language=en&count=1";
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Reverse geocode failed");
+    const data = await response.json();
+    const first = data?.results?.[0];
+    if (!first) return null;
+    const name = [first.name, first.admin1, first.country].filter(Boolean).join(", ");
+    return name || null;
+}
+
+async function fetchCurrentWeather(latitude, longitude) {
+    const url = "https://api.open-meteo.com/v1/forecast?latitude=" + encodeURIComponent(latitude)
+        + "&longitude=" + encodeURIComponent(longitude)
+        + "&current=temperature_2m,weather_code,wind_speed_10m"
+        + "&timezone=auto";
+    const response = await fetch(url);
+    if (!response.ok) throw new Error("Weather fetch failed");
+    const data = await response.json();
+    const current = data?.current;
+    if (!current) throw new Error("Weather unavailable");
+    return {
+        temperature: current.temperature_2m,
+        weatherCode: current.weather_code,
+        wind: current.wind_speed_10m,
+        time: current.time
+    };
+}
+
+async function updateAppWeather() {
+    if (!appWeather) return;
+    if (appWeatherRequestInFlight) return;
+
+    setWeatherUi({ loading: true });
+    const request = (async () => {
+        const location = await getWeatherLocation();
+        const stored = (() => {
+            try {
+                return JSON.parse(localStorage.getItem("trioai_weather_location") || "null");
+            } catch (_) {
+                return null;
+            }
+        })();
+        const mode = stored?.mode || "auto";
+        let label = location.label;
+        try {
+            const resolved = await reverseGeocodeOpenMeteo(location.latitude, location.longitude);
+            if (resolved) label = resolved;
+        } catch (_) {}
+
+        const current = await fetchCurrentWeather(location.latitude, location.longitude);
+        const info = weatherCodeInfo(current.weatherCode);
+        const tempNumber = Number(current.temperature);
+        const tempText = (Number.isFinite(tempNumber) ? Math.round(tempNumber) : "--") + "°C";
+        const windNumber = Number(current.wind);
+        const windText = Number.isFinite(windNumber) ? (Math.round(windNumber) + " km/h") : null;
+        const metaText = info.label + (windText ? " · " + windText : "");
+
+        try {
+            localStorage.setItem("trioai_weather_location", JSON.stringify({
+                latitude: location.latitude,
+                longitude: location.longitude,
+                label,
+                mode
+            }));
+        } catch (_) {}
+
+        return { tempText, metaText, locationLabel: label, iconName: info.icon };
+    })();
+
+    appWeatherRequestInFlight = request;
+    try {
+        const state = await request;
+        if (appWeatherRequestInFlight === request) setWeatherUi(state);
+    } catch (error) {
+        if (appWeatherRequestInFlight === request) {
+            setWeatherUi({ error: "Weather unavailable", locationLabel: "—" });
+        }
+    } finally {
+        if (appWeatherRequestInFlight === request) appWeatherRequestInFlight = null;
     }
 }
 
@@ -4339,6 +5944,7 @@ function startMessagePolling() {
                     currentChatMessages = newMessages;
                     renderRealMessages();
                     scrollToBottom();
+                    triggerBellAnimation();
                 }
             } catch (error) {
                 console.error("Failed to poll messages:", error);
@@ -4698,6 +6304,54 @@ function bindEvents() {
     resetPasswordButton.addEventListener("click", resetPassword);
 
     newChatButton.addEventListener("click", () => selectAiChat());
+    if (appWeatherLocation) appWeatherLocation.addEventListener("click", toggleWeatherPicker);
+    if (closeWeatherPickerButton) closeWeatherPickerButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        closeWeatherPicker();
+    });
+    if (useDeviceWeatherButton) useDeviceWeatherButton.addEventListener("click", (event) => {
+        event.stopPropagation();
+        setAutoWeatherLocation();
+    });
+    if (appWeatherSearchInput) appWeatherSearchInput.addEventListener("input", () => {
+        if (appWeatherSearchTimer) clearTimeout(appWeatherSearchTimer);
+        appWeatherSearchTimer = setTimeout(() => {
+            searchWeatherLocations(appWeatherSearchInput.value).catch(() => {
+                setWeatherSearchStatus("Search failed");
+            });
+        }, 250);
+    });
+    if (appWeatherSearchResults) appWeatherSearchResults.addEventListener("click", (event) => {
+        const btn = event.target.closest(".app-weather-picker-result");
+        if (!btn) return;
+        event.stopPropagation();
+        const latitude = Number(btn.dataset.lat);
+        const longitude = Number(btn.dataset.lon);
+        const label = btn.dataset.label || btn.textContent || "Location";
+        if (!Number.isFinite(latitude) || !Number.isFinite(longitude)) return;
+        setManualWeatherLocation({ latitude, longitude, label });
+    });
+    sheetNotificationButton.addEventListener("click", toggleNotificationPopover);
+    markNotificationsReadButton.addEventListener("click", markAllNotificationsRead);
+    refreshNotificationsButton.addEventListener("click", refreshNotificationsNow);
+    unreadNotificationsButton.addEventListener("click", toggleUnreadNotifications);
+    notificationSoundButton.addEventListener("click", toggleNotificationSound);
+    if (notificationDesktopButton) notificationDesktopButton.addEventListener("click", toggleNotificationDesktop);
+    if (clearNotificationSearchButton) clearNotificationSearchButton.addEventListener("click", clearNotificationSearch);
+    if (restoreDismissedNotificationsButton) restoreDismissedNotificationsButton.addEventListener("click", restoreDismissedNotifications);
+    if (notificationTypeFilters) {
+        notificationTypeFilters.addEventListener("click", (event) => {
+            const chip = event.target.closest(".notification-type-chip");
+            if (!chip) return;
+            event.stopPropagation();
+            setNotificationTypeFilter(chip.dataset.type || "all");
+        });
+    }
+    notificationSearchInput.addEventListener("input", () => {
+        notificationSearchQuery = notificationSearchInput.value.trim().toLowerCase();
+        if (clearNotificationSearchButton) clearNotificationSearchButton.classList.toggle("show", notificationSearchQuery.length > 0);
+        renderNotifications();
+    });
     menuButton.addEventListener("click", toggleMenu);
     profileButton.addEventListener("click", openProfileModal);
     activityButton.addEventListener("click", openActivityModal);
@@ -4879,6 +6533,8 @@ function bindEvents() {
         if (!event.target.closest(".message-options")) closeMessageOptions();
         if (!event.target.closest(".composer-wrap") && emojiPanel.classList.contains("open")) closeEmojiPanel();
         if (!event.target.closest(".menu-wrap") && menuPopover.classList.contains("open")) closeMenu();
+        if (!event.target.closest(".notification-wrap") && notificationPopover.classList.contains("open")) closeNotificationPopover();
+        if (!event.target.closest(".app-weather") && appWeatherPicker && !appWeatherPicker.hidden) closeWeatherPicker();
         if (event.target === profileModal) closeProfileModal();
         if (event.target === activityModal) closeActivityModal();
         if (event.target === forwardModal) closeForwardModal();
@@ -4888,6 +6544,8 @@ function bindEvents() {
         if (event.key !== "Escape") return;
         closeMessageOptions();
         closeMenu();
+        closeNotificationPopover();
+        closeWeatherPicker();
         closeEmojiPanel();
         closeMessageSearchPanel();
         closeProfileModal();
@@ -5218,6 +6876,7 @@ function startSession(user, persist = true) {
     authView.hidden = true;
     loadUserChats(); // Load real user chats
     loadSidebarContacts(); // Load contacts in sidebar
+    startNotificationPolling();
     trackUserActivity(); // Start tracking user activity
     loadOnlineUsers(); // Load online users from backend
     startOnlineStatusPolling(); // Start periodic status updates
@@ -5235,6 +6894,7 @@ function signOut() {
     goOffline();
     currentUser = null;
     stopPolling();
+    stopNotificationPolling();
     localStorage.removeItem("trioai_user");
     appShell.classList.remove("active");
     appShell.hidden = true;
@@ -5465,6 +7125,470 @@ function touchUser() {
 function goOffline() {
     if (!currentUser) return;
     apiRequest("setOffline", { email: currentUser.email }).catch(() => {});
+}
+
+function startNotificationPolling() {
+    stopNotificationPolling();
+    notificationSeenIds = new Set(JSON.parse(localStorage.getItem(notificationSeenStorageKey()) || "[]"));
+    loadDismissedNotifications();
+    loadSheetNotifications(false);
+    notificationPollingInterval = setInterval(() => loadSheetNotifications(true), 15000);
+}
+
+function stopNotificationPolling() {
+    if (notificationPollingInterval) {
+        clearInterval(notificationPollingInterval);
+        notificationPollingInterval = null;
+    }
+    sheetNotifications = [];
+    freshNotificationIds.clear();
+    renderNotifications();
+    closeNotificationPopover();
+}
+
+function notificationSeenStorageKey() {
+    return "trioai_notification_seen_" + (currentUser?.email || "guest");
+}
+
+function notificationDismissedStorageKey() {
+    return "trioai_notification_dismissed_" + (currentUser?.email || "guest");
+}
+
+function loadDismissedNotifications() {
+    dismissedNotificationIds = new Set(JSON.parse(localStorage.getItem(notificationDismissedStorageKey()) || "[]"));
+}
+
+function saveDismissedNotifications() {
+    localStorage.setItem(notificationDismissedStorageKey(), JSON.stringify(Array.from(dismissedNotificationIds).slice(-200)));
+}
+
+function getFilteredNotifications() {
+    return sheetNotifications.filter((item) => {
+        if (dismissedNotificationIds.has(String(item.id))) return false;
+        if (notificationTypeFilter !== "all" && (item.type || "info") !== notificationTypeFilter) return false;
+        if (notificationSearchQuery) {
+            const haystack = [item.title, item.message, item.type].join(" ").toLowerCase();
+            if (!haystack.includes(notificationSearchQuery)) return false;
+        }
+        if (showUnreadOnly && item.read) return false;
+        return true;
+    });
+}
+
+function getNotificationDateGroup(dateString) {
+    if (!dateString) return "Earlier";
+    const date = new Date(dateString);
+    if (isNaN(date.getTime())) return "Earlier";
+
+    const now = new Date();
+    const startOfToday = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const startOfYesterday = new Date(startOfToday);
+    startOfYesterday.setDate(startOfYesterday.getDate() - 1);
+    const startOfWeek = new Date(startOfToday);
+    startOfWeek.setDate(startOfWeek.getDate() - 7);
+
+    if (date >= startOfToday) return "Today";
+    if (date >= startOfYesterday) return "Yesterday";
+    if (date >= startOfWeek) return "This week";
+    return "Earlier";
+}
+
+function groupNotificationsByDate(notifications) {
+    const order = ["Today", "Yesterday", "This week", "Earlier"];
+    const groups = new Map();
+    notifications.forEach((item) => {
+        const label = getNotificationDateGroup(item.createdAt);
+        if (!groups.has(label)) groups.set(label, []);
+        groups.get(label).push(item);
+    });
+    return order.filter((label) => groups.has(label)).map((label) => ({ label, items: groups.get(label) }));
+}
+
+function setNotificationTypeFilter(type) {
+    notificationTypeFilter = type || "all";
+    if (notificationTypeFilters) {
+        notificationTypeFilters.querySelectorAll(".notification-type-chip").forEach((chip) => {
+            chip.classList.toggle("active", chip.dataset.type === notificationTypeFilter);
+        });
+    }
+    renderNotifications();
+}
+
+function clearNotificationSearch(event) {
+    if (event) event.stopPropagation();
+    notificationSearchQuery = "";
+    if (notificationSearchInput) notificationSearchInput.value = "";
+    if (clearNotificationSearchButton) clearNotificationSearchButton.classList.remove("show");
+    renderNotifications();
+}
+
+function restoreDismissedNotifications(event) {
+    if (event) event.stopPropagation();
+    dismissedNotificationIds.clear();
+    saveDismissedNotifications();
+    renderNotifications();
+    showToast("Hidden notifications restored");
+}
+
+async function toggleNotificationDesktop(event) {
+    if (event) event.stopPropagation();
+    if (!("Notification" in window)) {
+        showToast("Desktop notifications are not supported in this browser");
+        return;
+    }
+
+    if (!notificationDesktopEnabled) {
+        const permission = await Notification.requestPermission();
+        if (permission !== "granted") {
+            showToast("Desktop notification permission denied");
+            notificationDesktopEnabled = false;
+        } else {
+            notificationDesktopEnabled = true;
+            showToast("Desktop notifications on");
+        }
+    } else {
+        notificationDesktopEnabled = false;
+        showToast("Desktop notifications off");
+    }
+
+    localStorage.setItem("trioai_notification_desktop", notificationDesktopEnabled ? "on" : "off");
+    renderNotifications();
+}
+
+function showDesktopNotification(title, message) {
+    if (!notificationDesktopEnabled || !("Notification" in window) || Notification.permission !== "granted") return;
+    try {
+        new Notification(title || "TrioAI", {
+            body: message || "",
+            icon: logoUrl || undefined,
+            tag: "trioai-sheet-notification"
+        });
+    } catch (error) {
+        console.error("Desktop notification failed:", error);
+    }
+}
+
+function buildNotificationItem(item) {
+    const wrap = document.createElement("div");
+    wrap.className = "notification-item-wrap"
+        + (item.read ? "" : " unread")
+        + (freshNotificationIds.has(String(item.id)) ? " fresh" : "");
+    wrap.dataset.notificationId = item.id;
+
+    const dot = document.createElement("span");
+    dot.className = "notification-dot";
+
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "notification-item";
+
+    const body = document.createElement("span");
+    body.className = "notification-body";
+
+    const title = document.createElement("span");
+    title.className = "notification-title";
+    title.appendChild(document.createTextNode(item.title || "Notification"));
+
+    const type = document.createElement("span");
+    type.className = "notification-type " + (item.type || "info");
+    type.textContent = item.type || "info";
+    title.appendChild(type);
+
+    const message = document.createElement("span");
+    message.className = "notification-message";
+    const messageText = item.message || "";
+    message.textContent = messageText;
+
+    const time = document.createElement("span");
+    time.className = "notification-time";
+    time.textContent = item.createdAt ? formatRelativeTime(item.createdAt) : "Just now";
+
+    body.appendChild(title);
+    body.appendChild(message);
+    if (item.linkUrl) {
+        const linkHint = document.createElement("span");
+        linkHint.className = "notification-link-hint";
+        linkHint.innerHTML = '<i data-lucide="external-link"></i><span>Open link</span>';
+        body.appendChild(linkHint);
+    }
+    body.appendChild(time);
+
+    const actions = document.createElement("div");
+    actions.className = "notification-item-actions";
+
+    const readBtn = document.createElement("button");
+    readBtn.type = "button";
+    readBtn.title = item.read ? "Mark unread" : "Mark read";
+    readBtn.setAttribute("aria-label", readBtn.title);
+    readBtn.innerHTML = '<i data-lucide="' + (item.read ? "mail" : "check") + '"></i>';
+    readBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        if (item.read) markNotificationUnread(item);
+        else markNotificationRead(item, false);
+    });
+
+    const dismissBtn = document.createElement("button");
+    dismissBtn.type = "button";
+    dismissBtn.title = "Hide notification";
+    dismissBtn.setAttribute("aria-label", "Hide notification");
+    dismissBtn.innerHTML = '<i data-lucide="x"></i>';
+    dismissBtn.addEventListener("click", (event) => {
+        event.stopPropagation();
+        dismissNotification(item);
+    });
+
+    actions.appendChild(readBtn);
+    if (item.linkUrl) {
+        const linkBtn = document.createElement("button");
+        linkBtn.type = "button";
+        linkBtn.title = "Open link";
+        linkBtn.setAttribute("aria-label", "Open link");
+        linkBtn.innerHTML = '<i data-lucide="external-link"></i>';
+        linkBtn.addEventListener("click", (event) => {
+            event.stopPropagation();
+            openNotification(item, true);
+        });
+        actions.appendChild(linkBtn);
+    }
+    actions.appendChild(dismissBtn);
+
+    button.appendChild(body);
+    button.addEventListener("click", () => openNotification(item));
+
+    wrap.appendChild(dot);
+    wrap.appendChild(button);
+    wrap.appendChild(actions);
+    return wrap;
+}
+
+async function loadSheetNotifications(showNewToast = false) {
+    if (!currentUser) return;
+
+    try {
+        const response = await apiRequest("getNotifications", { email: currentUser.email });
+        const incoming = response.notifications || [];
+        const freshUnread = incoming.filter((item) => !item.read && !notificationSeenIds.has(String(item.id)));
+
+        sheetNotifications = incoming;
+        freshNotificationIds = new Set(freshUnread.map((item) => String(item.id)));
+        incoming.forEach((item) => notificationSeenIds.add(String(item.id)));
+        localStorage.setItem(notificationSeenStorageKey(), JSON.stringify(Array.from(notificationSeenIds).slice(-200)));
+        renderNotifications();
+
+        if (showNewToast && freshUnread.length) {
+            const latest = freshUnread[0];
+            triggerBellAnimation();
+            playNotificationSound();
+            showDesktopNotification(latest.title || "New notification", latest.message || "You have a new update");
+            showLiveNotification(latest.title || "New notification", latest.message || "You have a new update", latest.type || "info");
+            setTimeout(() => {
+                freshNotificationIds.clear();
+                renderNotifications();
+            }, 2600);
+        }
+    } catch (error) {
+        console.error("Failed to load notifications:", error);
+    }
+}
+
+function renderNotifications() {
+    if (!notificationList || !notificationBadge || !sheetNotificationButton) return;
+
+    const unreadCount = sheetNotifications.filter((item) => !item.read && !dismissedNotificationIds.has(String(item.id))).length;
+    const visibleNotifications = getFilteredNotifications();
+
+    notificationBadge.textContent = unreadCount > 99 ? "99+" : String(unreadCount);
+    notificationBadge.classList.toggle("show", unreadCount > 0);
+    const wrap = sheetNotificationButton.closest(".notification-wrap");
+    if (wrap) wrap.classList.toggle("has-unread", unreadCount > 0);
+
+    if (unreadNotificationsButton) {
+        unreadNotificationsButton.classList.toggle("active", showUnreadOnly);
+        unreadNotificationsButton.setAttribute("aria-pressed", String(showUnreadOnly));
+    }
+    if (notificationSoundButton) {
+        notificationSoundButton.classList.toggle("active", notificationSoundEnabled);
+        notificationSoundButton.setAttribute("aria-pressed", String(notificationSoundEnabled));
+        notificationSoundButton.querySelector("i")?.setAttribute("data-lucide", notificationSoundEnabled ? "volume-2" : "volume-x");
+    }
+    if (notificationDesktopButton) {
+        const desktopActive = notificationDesktopEnabled && ("Notification" in window) && Notification.permission === "granted";
+        notificationDesktopButton.classList.toggle("active", desktopActive);
+        notificationDesktopButton.setAttribute("aria-pressed", String(desktopActive));
+    }
+    if (notificationSummary) {
+        const hiddenCount = dismissedNotificationIds.size;
+        notificationSummary.innerHTML = unreadCount
+            ? "<strong>" + unreadCount + "</strong> unread · " + visibleNotifications.length + " shown"
+            : visibleNotifications.length + " notification" + (visibleNotifications.length === 1 ? "" : "s") + (hiddenCount ? " · " + hiddenCount + " hidden" : "");
+    }
+    if (restoreDismissedNotificationsButton) {
+        restoreDismissedNotificationsButton.hidden = dismissedNotificationIds.size === 0;
+    }
+    if (clearNotificationSearchButton) {
+        clearNotificationSearchButton.classList.toggle("show", notificationSearchQuery.length > 0);
+    }
+
+    const emptyText = notificationSearchQuery
+        ? "No matching notifications"
+        : (showUnreadOnly ? "No unread notifications" : (notificationTypeFilter !== "all" ? "No " + notificationTypeFilter + " notifications" : "No notifications yet"));
+
+    if (!visibleNotifications.length) {
+        notificationList.innerHTML = '<div class="notification-empty">' + emptyText + '</div>';
+        if (window.lucide) lucide.createIcons();
+        return;
+    }
+
+    notificationList.innerHTML = "";
+    groupNotificationsByDate(visibleNotifications).forEach((group) => {
+        const label = document.createElement("div");
+        label.className = "notification-group-label";
+        label.textContent = group.label;
+        notificationList.appendChild(label);
+        group.items.forEach((item) => notificationList.appendChild(buildNotificationItem(item)));
+    });
+    if (window.lucide) lucide.createIcons();
+}
+
+function toggleNotificationPopover() {
+    closeMenu();
+    const isOpen = notificationPopover.classList.toggle("open");
+    sheetNotificationButton.setAttribute("aria-expanded", String(isOpen));
+    if (isOpen) {
+        loadSheetNotifications(false);
+    }
+}
+
+function closeNotificationPopover() {
+    if (!notificationPopover || !sheetNotificationButton) return;
+    notificationPopover.classList.remove("open");
+    sheetNotificationButton.setAttribute("aria-expanded", "false");
+}
+
+function triggerBellAnimation() {
+    if (!sheetNotificationButton) return;
+    const wrap = sheetNotificationButton.closest(".notification-wrap");
+    if (!wrap) return;
+    wrap.classList.remove("ringing");
+    void wrap.offsetWidth;
+    wrap.classList.add("ringing");
+    setTimeout(() => wrap.classList.remove("ringing"), 950);
+}
+
+function refreshNotificationsNow(event) {
+    if (event) event.stopPropagation();
+    if (!currentUser) return;
+    refreshNotificationsButton.classList.add("spinning");
+    loadSheetNotifications(false).finally(() => {
+        refreshNotificationsButton.classList.remove("spinning");
+        showToast("Notifications refreshed");
+    });
+}
+
+function toggleUnreadNotifications(event) {
+    if (event) event.stopPropagation();
+    showUnreadOnly = !showUnreadOnly;
+    renderNotifications();
+}
+
+function toggleNotificationSound(event) {
+    if (event) event.stopPropagation();
+    notificationSoundEnabled = !notificationSoundEnabled;
+    localStorage.setItem("trioai_notification_sound", notificationSoundEnabled ? "on" : "off");
+    renderNotifications();
+    if (notificationSoundEnabled) {
+        playNotificationSound();
+        showToast("Notification sound on");
+    } else {
+        showToast("Notification sound off");
+    }
+}
+
+function playNotificationSound() {
+    if (!notificationSoundEnabled) return;
+
+    try {
+        const AudioContext = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContext) return;
+        const audioContext = new AudioContext();
+        const gain = audioContext.createGain();
+        gain.gain.setValueAtTime(0.0001, audioContext.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.08, audioContext.currentTime + 0.02);
+        gain.gain.exponentialRampToValueAtTime(0.0001, audioContext.currentTime + 0.24);
+        gain.connect(audioContext.destination);
+
+        [660, 880].forEach((frequency, index) => {
+            const oscillator = audioContext.createOscillator();
+            oscillator.type = "sine";
+            oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime + index * 0.08);
+            oscillator.connect(gain);
+            oscillator.start(audioContext.currentTime + index * 0.08);
+            oscillator.stop(audioContext.currentTime + 0.18 + index * 0.08);
+        });
+
+        setTimeout(() => audioContext.close(), 420);
+    } catch (error) {
+        console.error("Notification sound failed:", error);
+    }
+}
+
+async function markAllNotificationsRead(event) {
+    if (event) event.stopPropagation();
+    if (!currentUser || !sheetNotifications.length) return;
+
+    try {
+        await apiRequest("markNotificationsRead", { email: currentUser.email });
+        sheetNotifications = sheetNotifications.map((item) => ({ ...item, read: true }));
+        freshNotificationIds.clear();
+        renderNotifications();
+        showToast("Notifications marked as read");
+    } catch (error) {
+        showToast(error.message || "Could not update notifications");
+    }
+}
+
+async function markNotificationRead(item, openLink) {
+    if (!currentUser || !item || item.read) {
+        if (openLink && item?.linkUrl) window.open(item.linkUrl, "_blank", "noopener");
+        return;
+    }
+    item.read = true;
+    renderNotifications();
+    try {
+        await apiRequest("markNotificationsRead", { email: currentUser.email, ids: item.id });
+    } catch (error) {
+        showToast(error.message || "Could not mark notification as read");
+    }
+    if (openLink && item.linkUrl) window.open(item.linkUrl, "_blank", "noopener");
+}
+
+async function markNotificationUnread(item) {
+    if (!currentUser || !item || !item.read) return;
+    item.read = false;
+    renderNotifications();
+    try {
+        await apiRequest("markNotificationsUnread", { email: currentUser.email, ids: item.id });
+        showToast("Marked as unread");
+    } catch (error) {
+        showToast(error.message || "Could not mark notification as unread");
+    }
+}
+
+function dismissNotification(item) {
+    if (!item) return;
+    dismissedNotificationIds.add(String(item.id));
+    saveDismissedNotifications();
+    renderNotifications();
+    showToast("Notification hidden");
+}
+
+async function openNotification(item, linkOnly) {
+    if (!currentUser || !item) return;
+    if (linkOnly) {
+        if (item.linkUrl) window.open(item.linkUrl, "_blank", "noopener");
+        return;
+    }
+    await markNotificationRead(item, true);
 }
 
 function saveCurrentChat() {
@@ -5789,6 +7913,7 @@ function startNewChat() {
 }
 
 function toggleMenu() {
+    closeNotificationPopover();
     const isOpen = menuPopover.classList.toggle("open");
     menuButton.setAttribute("aria-expanded", String(isOpen));
 }
