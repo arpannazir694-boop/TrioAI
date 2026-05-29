@@ -6,7 +6,7 @@
 <title>TrioAI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Rajdhani:wght@700&display=swap" rel="stylesheet">
 <style>
 :root {
     --app-bg: #d1d7db;
@@ -1053,6 +1053,11 @@ body.dark .icon-btn {
 .icon-btn:focus-visible {
     background: var(--hover);
     outline: none;
+}
+
+.icon-btn.active {
+    color: #ffffff;
+    background: var(--green);
 }
 
 .icon-btn svg {
@@ -2870,6 +2875,922 @@ body.dark .chat-area {
     background: #0b141a;
 }
 
+.store-open .chat-body,
+.store-open .composer-wrap,
+.store-open .message-search-panel,
+.store-open .starred-messages {
+    display: none !important;
+}
+
+.store-panel {
+    flex: 1;
+    min-height: 0;
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    background:
+        linear-gradient(180deg, rgba(0, 128, 62, 0.08), rgba(239, 250, 239, 0.72) 220px),
+        #f7fbf6;
+}
+
+.store-open .store-panel {
+    display: flex;
+}
+
+body.dark .store-panel {
+    background:
+        linear-gradient(180deg, rgba(0, 168, 132, 0.13), rgba(11, 20, 26, 0.94) 240px),
+        #0b141a;
+}
+
+/* ── STORE HERO ─────────────────────────────────── */
+@keyframes storeHeroSweep {
+    0%   { transform: translateX(-120%); }
+    100% { transform: translateX(500%); }
+}
+@keyframes storeIconGlow {
+    0%, 100% { filter: drop-shadow(0 0 5px rgba(169,239,103,0.45)); }
+    50%       { filter: drop-shadow(0 0 18px rgba(169,239,103,1)); }
+}
+@keyframes storeRibbonPulse {
+    0%, 100% { box-shadow: 0 0 0 1px rgba(169,239,103,0.25), 0 0 14px rgba(169,239,103,0.1), 0 8px 24px rgba(0,0,0,0.25); }
+    50%       { box-shadow: 0 0 0 2px rgba(169,239,103,0.6), 0 0 28px rgba(169,239,103,0.25), 0 8px 32px rgba(0,0,0,0.35); }
+}
+@keyframes storeDotFade {
+    0%, 100% { opacity: 0.12; }
+    50%       { opacity: 0.28; }
+}
+
+.store-hero {
+    margin: 14px 14px 0;
+    min-height: 130px;
+    padding: 0;
+    display: flex;
+    align-items: stretch;
+    justify-content: space-between;
+    gap: 0;
+    overflow: hidden;
+    border-radius: 16px;
+    color: #ffffff;
+    position: relative;
+    background: linear-gradient(135deg, #0a4a1e 0%, #0d6b2b 40%, #12913a 70%, #0a5522 100%);
+    box-shadow: 0 18px 52px rgba(4,77,30,0.45), 0 4px 14px rgba(0,0,0,0.30);
+}
+
+/* diagonal stripe texture */
+.store-hero::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image: repeating-linear-gradient(
+        -52deg,
+        transparent,
+        transparent 9px,
+        rgba(255,255,255,0.014) 9px,
+        rgba(255,255,255,0.014) 10px
+    );
+    border-radius: inherit;
+    z-index: 0;
+}
+
+/* animated light sweep */
+.store-hero-sweep {
+    position: absolute;
+    inset-block: 0;
+    left: 0;
+    width: 22%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.05), transparent);
+    animation: storeHeroSweep 4.4s ease-in-out infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+/* left accent stripe */
+.store-hero-bar {
+    position: absolute;
+    left: 0; top: 0; bottom: 0;
+    width: 5px;
+    background: linear-gradient(180deg, #c8ff7a, #2dab4b 50%, #c8ff7a);
+    border-radius: 16px 0 0 16px;
+    z-index: 3;
+}
+
+/* organic blob on right */
+.store-hero-blob {
+    position: absolute;
+    right: 0; top: 0; bottom: 0;
+    width: 48%;
+    height: 100%;
+    pointer-events: none;
+    z-index: 0;
+    overflow: visible;
+}
+
+/* dot-matrix accent */
+.store-hero-dots {
+    position: absolute;
+    right: 195px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    z-index: 1;
+    animation: storeDotFade 3s ease-in-out infinite;
+}
+.store-hero-dots span {
+    display: flex;
+    gap: 8px;
+}
+.store-hero-dots b {
+    display: block;
+    width: 3px;
+    height: 3px;
+    border-radius: 50%;
+    background: rgba(169,239,103,0.55);
+}
+
+.store-hero-main {
+    position: relative;
+    z-index: 2;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 22px;
+    padding: 20px 28px 20px 30px;
+    flex: 1;
+}
+
+/* hexagonal icon badge */
+.store-logo {
+    width: 74px;
+    height: 74px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    position: relative;
+    color: #0a6e29;
+    background: linear-gradient(145deg, #e8ffd5, #ffffff);
+    clip-path: polygon(50% 0%, 93% 25%, 93% 75%, 50% 100%, 7% 75%, 7% 25%);
+    animation: storeIconGlow 3.2s ease-in-out infinite;
+    box-shadow: 0 0 0 3px rgba(169,239,103,0.3), 0 8px 24px rgba(0,0,0,0.25);
+}
+
+.store-logo svg {
+    width: 38px;
+    height: 38px;
+}
+
+.store-title {
+    min-width: 0;
+}
+
+.store-title h2 {
+    margin: 0;
+    font-family: 'Rajdhani', 'Inter', sans-serif;
+    font-size: clamp(30px, 4.2vw, 56px);
+    line-height: 1;
+    letter-spacing: 6px;
+    font-weight: 700;
+    color: #ffffff;
+    background: none;
+    -webkit-text-fill-color: #ffffff;
+    text-shadow: 0 2px 20px rgba(0,0,0,0.30), 0 0 40px rgba(169,239,103,0.12);
+}
+
+.store-subtitle {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin: 10px 0 0;
+}
+
+.store-subtitle span:first-child {
+    color: rgba(255,255,255,0.78);
+    font-size: 13px;
+    font-weight: 600;
+    white-space: nowrap;
+}
+
+.store-subtitle-rule {
+    height: 2px;
+    min-width: 36px;
+    max-width: 90px;
+    background: linear-gradient(90deg, rgba(255,214,51,0.85), rgba(255,214,51,0));
+    border-radius: 2px;
+    position: relative;
+    flex-shrink: 0;
+}
+
+.store-subtitle-rule::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: rgba(255,214,51,0.9);
+    box-shadow: 0 0 6px rgba(255,214,51,0.6);
+}
+
+/* right decorative icon */
+.store-hero-right {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 14px 26px 14px 10px;
+    flex: 0 0 auto;
+}
+
+.store-hero-sparkle {
+    position: absolute;
+    top: 14px;
+    left: 0;
+    font-size: 20px;
+    color: rgba(255,255,255,0.85);
+    line-height: 1;
+    filter: drop-shadow(0 0 5px rgba(255,255,255,0.5));
+    user-select: none;
+}
+
+.store-hero-icon-badge {
+    width: 96px;
+    height: 96px;
+    border-radius: 50%;
+    border: 2px solid rgba(169,239,103,0.35);
+    background: rgba(0,0,0,0.18);
+    display: grid;
+    place-items: center;
+    backdrop-filter: blur(8px);
+    box-shadow: 0 0 0 6px rgba(169,239,103,0.07), inset 0 0 20px rgba(0,0,0,0.15);
+}
+
+.store-hero-icon-badge svg {
+    width: 68px;
+    height: 68px;
+}
+
+/* ribbon kept for backwards compat but hidden */
+.store-ribbon {
+    display: none;
+}
+
+.store-tools {
+    margin: 12px 14px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.store-search {
+    flex: 1;
+    min-width: 0;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 0 12px;
+    border: 1px solid rgba(34, 122, 53, 0.18);
+    border-radius: 8px;
+    color: #477253;
+    background: rgba(255, 255, 255, 0.82);
+}
+
+body.dark .store-search {
+    border-color: rgba(94, 234, 212, 0.17);
+    color: #aebac1;
+    background: rgba(32, 44, 51, 0.88);
+}
+
+.store-search input {
+    width: 100%;
+    min-width: 0;
+    border: 0;
+    outline: 0;
+    color: var(--text);
+    background: transparent;
+}
+
+.store-refresh,
+.store-clear-filters,
+.store-excel {
+    width: 40px;
+    height: 40px;
+    flex: 0 0 auto;
+    padding: 0;
+    display: grid;
+    place-items: center;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 140ms ease, transform 100ms ease, box-shadow 140ms ease;
+    position: relative;
+}
+
+.store-refresh,
+.store-clear-filters,
+.store-excel {
+    /* shared icon size */
+}
+
+.store-refresh svg,
+.store-clear-filters svg,
+.store-excel svg,
+.store-refresh i,
+.store-clear-filters i {
+    width: 18px;
+    height: 18px;
+    display: block;
+    flex: none;
+}
+
+/* Excel — deep Excel green */
+.store-excel {
+    background: #1D6F42;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(29,111,66,0.35);
+}
+
+.store-excel svg {
+    width: 20px;
+    height: 20px;
+}
+
+.store-excel:hover,
+.store-excel:focus-visible {
+    outline: none;
+    background: #155c36;
+    box-shadow: 0 4px 14px rgba(29,111,66,0.5);
+}
+
+.store-excel:active { transform: scale(0.91); }
+
+/* Refresh — vibrant green */
+.store-refresh {
+    background: #168f3d;
+    color: #ffffff;
+    box-shadow: 0 2px 8px rgba(22,143,61,0.32);
+}
+
+.store-refresh:hover,
+.store-refresh:focus-visible {
+    outline: none;
+    background: #0f7d33;
+    box-shadow: 0 4px 14px rgba(22,143,61,0.48);
+}
+
+.store-refresh:active { transform: scale(0.91); }
+
+/* Clear filters — outlined */
+.store-clear-filters {
+    border: 1.5px solid rgba(22, 143, 61, 0.30);
+    color: #0f6b2e;
+    background: rgba(255, 255, 255, 0.88);
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+}
+
+.store-clear-filters:hover,
+.store-clear-filters:focus-visible {
+    outline: none;
+    background: #ddf5e4;
+    border-color: rgba(22,143,61,0.55);
+}
+
+.store-clear-filters:active { transform: scale(0.91); }
+
+body.dark .store-clear-filters {
+    color: #a9ef67;
+    border-color: rgba(94, 234, 212, 0.22);
+    background: rgba(32, 44, 51, 0.88);
+}
+
+body.dark .store-excel { background: #1D6F42; }
+body.dark .store-excel:hover { background: #155c36; }
+body.dark .store-refresh { background: #168f3d; }
+body.dark .store-refresh:hover { background: #0f7d33; }
+
+.store-status {
+    min-width: 150px;
+    color: #477253;
+    font-size: 12px;
+    font-weight: 800;
+    text-align: right;
+}
+
+body.dark .store-status {
+    color: #aebac1;
+}
+
+.store-table-wrap {
+    flex: 1;
+    min-height: 0;
+    margin: 0 14px 14px;
+    overflow-x: hidden;
+    overflow-y: auto;
+    border: 1px solid rgba(16, 112, 48, 0.16);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 10px 24px rgba(17, 27, 33, 0.08);
+}
+
+body.dark .store-table-wrap {
+    border-color: rgba(94, 234, 212, 0.14);
+    background: rgba(17, 27, 33, 0.92);
+}
+
+.store-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    color: #141d18;
+}
+
+body.dark .store-table {
+    color: var(--text);
+}
+
+.store-table th {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+    height: 54px;
+    padding: 9px 8px;
+    border: 1px solid rgba(201, 236, 204, 0.48);
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+    text-align: left;
+    white-space: normal;
+    background: linear-gradient(180deg, #12843a, #056c2e);
+}
+
+.store-table th span {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    min-width: 0;
+    line-height: 1.2;
+}
+
+.store-table th svg {
+    width: 15px;
+    height: 15px;
+    flex: 0 0 auto;
+}
+
+.store-table td {
+    min-height: 52px;
+    padding: 9px 8px;
+    border: 1px solid rgba(35, 104, 51, 0.18);
+    font-size: 12px;
+    font-weight: 600;
+    vertical-align: middle;
+    white-space: normal;
+    overflow-wrap: anywhere;
+    word-break: break-word;
+    line-height: 1.35;
+    background: rgba(255, 255, 255, 0.72);
+}
+
+.store-table col.store-col-row { width: 4.5%; }
+.store-table col.store-col-itb { width: 18%; }
+.store-table col.store-col-indent { width: 15%; }
+.store-table col.store-col-pro { width: 11%; }
+.store-table col.store-col-product { width: 23%; }
+.store-table col.store-col-etd { width: 12%; }
+.store-table col.store-col-remarks { width: 16.5%; }
+
+.store-table tbody tr:nth-child(even) td {
+    background: rgba(235, 246, 233, 0.78);
+}
+
+/* ── Row colours by Store Remarks value ── */
+.store-table tbody tr.store-row-stock td {
+    background: rgba(187, 247, 208, 0.72) !important;
+    border-color: rgba(34, 197, 94, 0.22) !important;
+}
+
+.store-table tbody tr.store-row-not-require td {
+    background: rgba(254, 249, 195, 0.82) !important;
+    border-color: rgba(234, 179, 8, 0.22) !important;
+}
+
+.store-table tbody tr.store-row-blank td {
+    background: rgba(255, 237, 213, 0.82) !important;
+    border-color: rgba(249, 115, 22, 0.22) !important;
+}
+
+/* active / selected cells still win */
+.store-table tbody tr.store-row-stock td.store-cell.active,
+.store-table tbody tr.store-row-not-require td.store-cell.active,
+.store-table tbody tr.store-row-blank td.store-cell.active {
+    background: #e7f8e4 !important;
+}
+
+.store-table tbody tr.store-row-stock td.store-cell.selected,
+.store-table tbody tr.store-row-not-require td.store-cell.selected,
+.store-table tbody tr.store-row-blank td.store-cell.selected {
+    background: #e8f4ff !important;
+}
+
+body.dark .store-table td {
+    border-color: rgba(174, 186, 193, 0.16);
+    background: rgba(17, 27, 33, 0.86);
+}
+
+body.dark .store-table tbody tr:nth-child(even) td {
+    background: rgba(32, 44, 51, 0.86);
+}
+
+body.dark .store-table tbody tr.store-row-stock td {
+    background: rgba(20, 83, 45, 0.60) !important;
+}
+
+body.dark .store-table tbody tr.store-row-not-require td {
+    background: rgba(78, 68, 0, 0.55) !important;
+}
+
+body.dark .store-table tbody tr.store-row-blank td {
+    background: rgba(90, 40, 0, 0.50) !important;
+}
+
+.store-row-number {
+    width: 28px;
+    min-width: 24px;
+    height: 22px;
+    display: inline-grid;
+    place-items: center;
+    border-radius: 6px;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 900;
+    background: #248d2f;
+}
+
+.store-th-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+}
+
+.store-filter-btn {
+    width: 26px;
+    height: 26px;
+    flex: 0 0 auto;
+    display: grid;
+    place-items: center;
+    border-radius: 6px;
+    color: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+}
+
+.store-filter-btn:hover,
+.store-filter-btn:focus-visible,
+.store-filter-btn.active {
+    outline: none;
+    background: rgba(255, 255, 255, 0.26);
+}
+
+.store-filter-btn svg {
+    width: 14px;
+    height: 14px;
+}
+
+.store-filter-popover {
+    position: fixed;
+    z-index: 80;
+    width: min(280px, calc(100vw - 24px));
+    max-height: min(430px, calc(100vh - 80px));
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(22, 143, 61, 0.25);
+    border-radius: 8px;
+    background: var(--panel);
+    box-shadow: 0 18px 42px rgba(17, 27, 33, 0.22);
+}
+
+.store-filter-popover.open {
+    display: flex;
+}
+
+.store-filter-head {
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    font-weight: 900;
+}
+
+.store-filter-head button,
+.store-filter-actions button {
+    min-height: 30px;
+    padding: 0 10px;
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 800;
+    background: var(--soft);
+    cursor: pointer;
+}
+
+.store-filter-search {
+    margin: 10px 12px 6px;
+    height: 34px;
+    padding: 0 10px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    color: var(--text);
+    background: var(--input);
+    outline: none;
+}
+
+.store-filter-options {
+    flex: 1;
+    min-height: 80px;
+    overflow-y: auto;
+    padding: 4px 8px;
+}
+
+.store-filter-option {
+    min-height: 32px;
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    padding: 7px 6px;
+    border-radius: 6px;
+    color: var(--text);
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1.3;
+    cursor: pointer;
+}
+
+.store-filter-option:hover {
+    background: var(--hover);
+}
+
+.store-filter-option input {
+    margin-top: 1px;
+    flex: 0 0 auto;
+}
+
+.store-filter-actions {
+    padding: 10px 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+    border-top: 1px solid var(--border);
+}
+
+.store-remarks-cell {
+    padding: 6px 6px !important;
+    overflow: hidden;
+}
+
+.store-remarks-editor {
+    width: 100%;
+    min-width: 0;
+    overflow: hidden;
+}
+
+.store-remarks-select {
+    width: 100%;
+    min-width: 0;
+    box-sizing: border-box;
+    height: 36px;
+    padding: 0 30px 0 10px;
+    border: 1.5px solid rgba(22, 143, 61, 0.28);
+    border-radius: 8px;
+    color: #0b4f20;
+    font-size: 12px;
+    font-weight: 700;
+    background-color: #eef8ec;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%230b4f20' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 8px center;
+    appearance: none;
+    -webkit-appearance: none;
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.store-remarks-select:focus {
+    outline: none;
+    border-color: #168f3d;
+    box-shadow: 0 0 0 3px rgba(22,143,61,0.15);
+}
+
+.store-remarks-select:hover {
+    border-color: rgba(22, 143, 61, 0.55);
+}
+
+.store-cell {
+    position: relative;
+    cursor: cell;
+}
+
+.store-cell.active {
+    outline: 2px solid #168f3d;
+    outline-offset: -3px;
+    background: #e7f8e4 !important;
+}
+
+.store-cell.selected {
+    box-shadow: inset 0 0 0 2px rgba(52, 183, 241, 0.72);
+    background: #e8f4ff !important;
+}
+
+.store-history-meta {
+    margin-top: 6px;
+    color: #55725d;
+    font-size: 11px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.store-context-menu {
+    position: fixed;
+    z-index: 95;
+    width: 180px;
+    display: none;
+    padding: 6px;
+    border: 1px solid rgba(22, 143, 61, 0.25);
+    border-radius: 8px;
+    background: var(--panel);
+    box-shadow: 0 18px 42px rgba(17, 27, 33, 0.22);
+}
+
+.store-context-menu.open {
+    display: block;
+}
+
+.store-context-menu button {
+    width: 100%;
+    min-height: 36px;
+    padding: 8px 10px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    border-radius: 6px;
+    color: var(--text);
+    text-align: left;
+    background: transparent;
+    cursor: pointer;
+}
+
+.store-context-menu button:hover,
+.store-context-menu button:focus-visible {
+    outline: none;
+    background: var(--hover);
+}
+
+.store-context-menu svg {
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+}
+
+.store-history-popover {
+    position: fixed;
+    z-index: 90;
+    width: min(360px, calc(100vw - 24px));
+    max-height: min(460px, calc(100vh - 80px));
+    display: none;
+    flex-direction: column;
+    overflow: hidden;
+    border: 1px solid rgba(22, 143, 61, 0.25);
+    border-radius: 8px;
+    background: var(--panel);
+    box-shadow: 0 18px 42px rgba(17, 27, 33, 0.24);
+}
+
+.store-history-popover.open {
+    display: flex;
+}
+
+.store-history-head {
+    padding: 12px;
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.store-history-head strong {
+    display: block;
+    font-size: 13px;
+}
+
+.store-history-head span {
+    display: block;
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.store-history-head button {
+    width: 30px;
+    height: 30px;
+    display: grid;
+    place-items: center;
+    border-radius: 6px;
+    color: var(--text);
+    background: var(--soft);
+    cursor: pointer;
+}
+
+.store-history-list {
+    overflow-y: auto;
+    padding: 10px 12px;
+}
+
+.store-history-item {
+    padding: 10px;
+    border: 1px solid var(--border);
+    border-radius: 7px;
+    background: var(--soft);
+}
+
+.store-history-item + .store-history-item {
+    margin-top: 8px;
+}
+
+.store-history-item strong {
+    display: block;
+    font-size: 13px;
+}
+
+.store-history-item span {
+    display: block;
+    margin-top: 3px;
+    color: var(--muted);
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.store-history-empty {
+    padding: 20px;
+    color: var(--muted);
+    font-weight: 800;
+    text-align: center;
+}
+
+.store-key-hint {
+    margin-left: auto;
+    color: #55725d;
+    font-size: 11px;
+    font-weight: 900;
+}
+
+body.dark .store-history-meta,
+body.dark .store-key-hint {
+    color: #aebac1;
+}
+
+.store-remarks-select.is-empty {
+    color: #69746d;
+    background-color: #ffffff;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%2369746d' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+
+.store-remarks-select.is-saving {
+    opacity: 0.64;
+    cursor: progress;
+}
+
+body.dark .store-remarks-select {
+    color: #d8ffe2;
+    border-color: rgba(94, 234, 212, 0.16);
+    background-color: #203327;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23d8ffe2' stroke-width='2.5' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E");
+}
+
+.store-empty,
+.store-error {
+    padding: 32px;
+    color: #58745e;
+    font-weight: 800;
+    text-align: center;
+}
+
+.store-error {
+    color: #b42318;
+}
+
 .message-search-panel {
     display: none;
     flex-direction: column;
@@ -4487,6 +5408,66 @@ body.dark .call-card {
         padding: 16px 12px;
     }
 
+    .store-hero {
+        margin: 8px 8px 0;
+        min-height: 90px;
+        align-items: stretch;
+        flex-direction: row;
+    }
+
+    .store-hero-main {
+        padding: 14px 12px 14px 20px;
+        gap: 14px;
+    }
+
+    .store-hero-dots {
+        display: none;
+    }
+
+    .store-logo {
+        width: 56px;
+        height: 56px;
+    }
+
+    .store-logo svg {
+        width: 30px;
+        height: 30px;
+    }
+
+    .store-title h2 {
+        font-size: clamp(18px, 5vw, 30px);
+        letter-spacing: 3px;
+    }
+
+    .store-hero-icon-badge {
+        width: 70px;
+        height: 70px;
+    }
+
+    .store-hero-icon-badge svg {
+        width: 50px;
+        height: 50px;
+    }
+
+    .store-hero-right {
+        padding: 10px 16px 10px 6px;
+    }
+
+    .store-tools {
+        margin: 10px 8px;
+        align-items: stretch;
+        flex-direction: column;
+    }
+
+    .store-status {
+        min-width: 0;
+        text-align: left;
+    }
+
+    .store-table-wrap {
+        margin: 0 8px 8px;
+    }
+
     .msg {
         max-width: 86%;
     }
@@ -4680,6 +5661,7 @@ body.dark .call-card {
                 </div>
                 <div class="icon-row">
                     <button class="icon-btn" id="newChatButton" type="button" title="TrioAI" aria-label="TrioAI"><i data-lucide="bot"></i></button>
+                    <button class="icon-btn" id="storeButton" type="button" title="Store" aria-label="Store"><i data-lucide="store"></i></button>
                     <div class="notification-wrap">
                         <button class="icon-btn" id="sheetNotificationButton" type="button" title="Notifications" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
                             <i data-lucide="bell"></i>
@@ -4956,6 +5938,91 @@ body.dark .call-card {
                     <!-- Starred messages will be populated here -->
                 </div>
             </div>
+
+            <section class="store-panel" id="storePanel" aria-label="Store remarks">
+                <div class="store-hero">
+                    <div class="store-hero-sweep"></div>
+                    <div class="store-hero-bar"></div>
+                    <!-- organic blob -->
+                    <svg class="store-hero-blob" viewBox="0 0 400 130" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+                        <path d="M400,0 C310,0 255,18 230,65 C205,112 265,130 400,130 Z" fill="rgba(22,120,55,0.55)"/>
+                        <path d="M400,8 C325,8 272,30 250,65 C228,100 282,122 400,122 Z" fill="rgba(45,171,75,0.28)"/>
+                        <path d="M400,20 C345,20 298,44 278,65 C258,86 300,110 400,110 Z" fill="rgba(80,200,100,0.14)"/>
+                    </svg>
+                    <!-- dot matrix -->
+                    <div class="store-hero-dots">
+                        <span><b></b><b></b><b></b><b></b></span>
+                        <span><b></b><b></b><b></b><b></b></span>
+                        <span><b></b><b></b><b></b><b></b></span>
+                        <span><b></b><b></b><b></b><b></b></span>
+                    </div>
+                    <div class="store-hero-main">
+                        <div class="store-logo"><i data-lucide="warehouse"></i></div>
+                        <div class="store-title">
+                            <h2>STORE&nbsp;&nbsp;REMARKS</h2>
+                            <p class="store-subtitle">
+                                <span>Select Store Remarks from Dropdown</span>
+                                <span class="store-subtitle-rule"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <!-- right decorative icon badge -->
+                    <div class="store-hero-right">
+                        <span class="store-hero-sparkle">✦</span>
+                        <div class="store-hero-icon-badge">
+                            <svg viewBox="0 0 56 56" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="11" y="9" width="26" height="34" rx="3" stroke="rgba(169,239,103,0.85)" stroke-width="1.8" fill="rgba(169,239,103,0.07)"/>
+                                <rect x="18" y="5" width="12" height="9" rx="2" stroke="rgba(169,239,103,0.85)" stroke-width="1.8" fill="rgba(10,77,30,0.9)"/>
+                                <line x1="16" y1="22" x2="31" y2="22" stroke="rgba(169,239,103,0.7)" stroke-width="1.6" stroke-linecap="round"/>
+                                <line x1="16" y1="27" x2="31" y2="27" stroke="rgba(169,239,103,0.7)" stroke-width="1.6" stroke-linecap="round"/>
+                                <line x1="16" y1="32" x2="25" y2="32" stroke="rgba(169,239,103,0.7)" stroke-width="1.6" stroke-linecap="round"/>
+                                <path d="M33 21l2.5 2.5 4-5" stroke="#a9ef67" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                <rect x="31" y="37" width="15" height="13" rx="2" fill="rgba(30,150,70,0.65)" stroke="rgba(169,239,103,0.65)" stroke-width="1.4"/>
+                                <line x1="31" y1="43" x2="46" y2="43" stroke="rgba(169,239,103,0.6)" stroke-width="1.2"/>
+                                <line x1="38.5" y1="37" x2="38.5" y2="43" stroke="rgba(169,239,103,0.6)" stroke-width="1.2"/>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+                <div class="store-tools">
+                    <label class="store-search">
+                        <i data-lucide="search"></i>
+                        <input id="storeSearchInput" type="search" placeholder="Search ITB, indent, product, pro code" aria-label="Search store rows">
+                    </label>
+                    <span class="store-key-hint"></span>
+                    <button class="store-excel" id="storeExcelButton" type="button" title="Download Excel (.xls)" aria-label="Download Excel"><svg viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg"><rect x="1" y="1" width="20" height="20" rx="3" fill="rgba(255,255,255,0.18)" stroke="rgba(255,255,255,0.45)" stroke-width="1.2"/><line x1="11" y1="1" x2="11" y2="21" stroke="rgba(255,255,255,0.22)" stroke-width="1"/><line x1="1" y1="8" x2="21" y2="8" stroke="rgba(255,255,255,0.22)" stroke-width="1"/><path d="M3.5 10.5L8.5 19.5" stroke="white" stroke-width="2.1" stroke-linecap="round"/><path d="M8.5 10.5L3.5 19.5" stroke="white" stroke-width="2.1" stroke-linecap="round"/><line x1="13" y1="12" x2="19.5" y2="12" stroke="white" stroke-width="1.7" stroke-linecap="round"/><line x1="13" y1="15.5" x2="19.5" y2="15.5" stroke="white" stroke-width="1.7" stroke-linecap="round"/><line x1="13" y1="19" x2="19.5" y2="19" stroke="white" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+                    <button class="store-refresh" id="storeRefreshButton" type="button" title="Refresh data" aria-label="Refresh"><i data-lucide="refresh-cw"></i></button>
+                    <button class="store-clear-filters" id="storeClearFiltersButton" type="button" title="Clear all filters" aria-label="Clear filters"><i data-lucide="filter-x"></i></button>
+                    <span class="store-status" id="storeStatus">Ready</span>
+                </div>
+                <div class="store-table-wrap">
+                    <table class="store-table">
+                        <colgroup>
+                            <col class="store-col-row">
+                            <col class="store-col-itb">
+                            <col class="store-col-indent">
+                            <col class="store-col-pro">
+                            <col class="store-col-product">
+                            <col class="store-col-etd">
+                            <col class="store-col-remarks">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th aria-label="Row number"></th>
+                                <th><div class="store-th-content"><span><i data-lucide="badge-info"></i>ITB</span><button class="store-filter-btn" type="button" data-store-filter="itb" title="Filter ITB" aria-label="Filter ITB"><i data-lucide="list-filter"></i></button></div></th>
+                                <th><div class="store-th-content"><span><i data-lucide="clipboard-list"></i>Indent Number</span><button class="store-filter-btn" type="button" data-store-filter="indentNumber" title="Filter Indent Number" aria-label="Filter Indent Number"><i data-lucide="list-filter"></i></button></div></th>
+                                <th><div class="store-th-content"><span><i data-lucide="tag"></i>Pro Code</span><button class="store-filter-btn" type="button" data-store-filter="proCode" title="Filter Pro Code" aria-label="Filter Pro Code"><i data-lucide="list-filter"></i></button></div></th>
+                                <th><div class="store-th-content"><span><i data-lucide="package"></i>Product Name</span><button class="store-filter-btn" type="button" data-store-filter="productName" title="Filter Product Name" aria-label="Filter Product Name"><i data-lucide="list-filter"></i></button></div></th>
+                                <th><div class="store-th-content"><span><i data-lucide="calendar-days"></i>Buyer ETD</span><button class="store-filter-btn" type="button" data-store-filter="buyerEtd" title="Filter Buyer ETD" aria-label="Filter Buyer ETD"><i data-lucide="list-filter"></i></button></div></th>
+                                <th><div class="store-th-content"><span><i data-lucide="message-circle"></i>Store Remarks</span><button class="store-filter-btn" type="button" data-store-filter="storeRemarks" title="Filter Store Remarks" aria-label="Filter Store Remarks"><i data-lucide="list-filter"></i></button></div></th>
+                            </tr>
+                        </thead>
+                        <tbody id="storeTableBody">
+                            <tr><td colspan="7" class="store-empty">Open Store to load rows</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
 
             <div class="chat-body" id="chatBody" aria-live="polite">
                 <div class="day-pill">Today</div>
@@ -5238,7 +6305,8 @@ body.dark .call-card {
 <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.min.js"></script>
 <script>
 const CONFIG = {
-    APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwEoVCdfvTwRsC5EvgHvtTvtzODtf6tzMiPk0TJiM0e1ucr9NVWoureNLv7vhOBIO6y/exec"
+    APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwEoVCdfvTwRsC5EvgHvtTvtzODtf6tzMiPk0TJiM0e1ucr9NVWoureNLv7vhOBIO6y/exec",
+    STORE_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwNV3OrAeVzHWBS0DwshJHPifXdajx1xji4D0hrl8gYw2RtBQKo-hjc1-AA-ohuw_nl/exec"
 };
 
 // Typing Animation
@@ -5363,6 +6431,13 @@ const messageInput = document.getElementById("messageInput");
 const chatBody = document.getElementById("chatBody");
 const chatForm = document.getElementById("chatForm");
 const newChatButton = document.getElementById("newChatButton");
+const storeButton = document.getElementById("storeButton");
+const storePanel = document.getElementById("storePanel");
+const storeTableBody = document.getElementById("storeTableBody");
+const storeSearchInput = document.getElementById("storeSearchInput");
+const storeRefreshButton = document.getElementById("storeRefreshButton");
+const storeClearFiltersButton = document.getElementById("storeClearFiltersButton");
+const storeStatus = document.getElementById("storeStatus");
 const sheetNotificationButton = document.getElementById("sheetNotificationButton");
 const notificationBadge = document.getElementById("notificationBadge");
 const notificationPopover = document.getElementById("notificationPopover");
@@ -5555,6 +6630,16 @@ let appClockTimer = null;
 let appWeatherTimer = null;
 let appWeatherRequestInFlight = null;
 let appWeatherSearchTimer = null;
+let storeRows = [];
+let storeLoaded = false;
+let storeLoading = false;
+let storeSearchQuery = "";
+let storeFilters = {};
+let activeStoreFilterColumn = "";
+let activeStoreRowNumber = null;
+let activeStoreColumnIndex = 0;
+let lastStoreSelectedRowNumber = null;
+let selectedStoreRowNumbers = new Set();
 
 function init() {
     renderEmojiTabs();
@@ -5910,6 +6995,809 @@ async function updateAppWeather() {
     }
 }
 
+function openStorePanel() {
+    closeMenu();
+    closeNotificationPopover();
+    appRoot.classList.add("chat-open");
+    document.querySelector(".chat-area")?.classList.add("store-open");
+    activeChat = { type: "store", id: "store", name: "Store", email: "store", avatarUrl: "", bio: "Store Remarks" };
+    chatName.textContent = "Store";
+    chatStatus.textContent = "STORE remarks";
+    chatAvatar.innerHTML = '<i data-lucide="warehouse"></i>';
+    storeButton?.classList.add("active");
+    if (window.lucide) lucide.createIcons();
+    if (!storeLoaded) loadStoreRows();
+}
+
+function closeStorePanel() {
+    document.querySelector(".chat-area")?.classList.remove("store-open");
+    storeButton?.classList.remove("active");
+}
+
+async function loadStoreRows(force = false) {
+    if (storeLoading) return;
+    if (storeLoaded && !force) {
+        renderStoreRows();
+        return;
+    }
+
+    storeLoading = true;
+    setStoreStatus("Loading STORE...");
+    if (storeTableBody) {
+        storeTableBody.innerHTML = '<tr><td colspan="7" class="store-empty">Loading STORE rows...</td></tr>';
+    }
+
+    try {
+        const response = await storeRequest("getStoreData", {});
+        storeRows = normalizeStoreRows(response.rows || response.data || []);
+        storeLoaded = true;
+        renderStoreRows();
+        setStoreStatus(storeRows.length + " rows loaded");
+    } catch (error) {
+        storeRows = [];
+        storeLoaded = false;
+        if (storeTableBody) {
+            storeTableBody.innerHTML = '<tr><td colspan="7" class="store-error">' + escapeHtml(error.message || "Could not load STORE") + '</td></tr>';
+        }
+        setStoreStatus("Load failed");
+    } finally {
+        storeLoading = false;
+    }
+}
+
+function normalizeStoreRows(rows) {
+    return (Array.isArray(rows) ? rows : []).map((row, index) => {
+        const source = Array.isArray(row) ? {
+            itb: row[0],
+            indentNumber: row[1],
+            proCode: row[2],
+            productName: row[3],
+            buyerEtd: row[4],
+            storeRemarks: row[5],
+            rowNumber: index + 2
+        } : row;
+
+        return {
+            rowNumber: Number(source.rowNumber || source.row || source.sheetRow || index + 2),
+            displayIndex: index + 1,
+            itb: cleanText(source.itb || source.ITB),
+            indentNumber: cleanText(source.indentNumber || source["Indent Number"]),
+            proCode: cleanText(source.proCode || source["Pro Code"]),
+            productName: cleanText(source.productName || source["Product Name"]),
+            buyerEtd: formatStoreDate(source.buyerEtd || source["Buyer ETD"]),
+            storeRemarks: cleanText(source.storeRemarks || source["Store Remarks"]),
+            storeUpdatedBy: cleanText(source.storeUpdatedBy || source["Store Updated By"]),
+            storeUpdatedEmail: cleanText(source.storeUpdatedEmail || source["Store Updated Email"]),
+            storeUpdatedAt: cleanText(source.storeUpdatedAt || source["Store Updated At"]),
+            storeHistory: normalizeStoreHistory(source.storeHistory || source["Store History"])
+        };
+    }).filter((row) => row.itb || row.indentNumber || row.proCode || row.productName);
+}
+
+function renderStoreRows() {
+    if (!storeTableBody) return;
+
+    const filteredRows = getFilteredStoreRows();
+
+    if (!filteredRows.length) {
+        storeTableBody.innerHTML = '<tr><td colspan="7" class="store-empty">No STORE rows found</td></tr>';
+        setStoreStatus(storeRows.length ? "No matches" : "No rows");
+        updateStoreFilterButtons();
+        return;
+    }
+
+    storeTableBody.innerHTML = "";
+    filteredRows.forEach((row) => {
+        const tr = document.createElement("tr");
+        tr.dataset.rowNumber = String(row.rowNumber);
+        const _rm = (row.storeRemarks || "").trim();
+        if (_rm === "Stock") tr.classList.add("store-row-stock");
+        else if (_rm === "Not Require") tr.classList.add("store-row-not-require");
+        else if (!_rm) tr.classList.add("store-row-blank");
+
+        tr.appendChild(makeStoreCell(row, 0, '<span class="store-row-number">' + row.displayIndex + '</span>', true));
+        tr.appendChild(makeStoreCell(row, 1, row.itb));
+        tr.appendChild(makeStoreCell(row, 2, row.indentNumber));
+        tr.appendChild(makeStoreCell(row, 3, row.proCode));
+        tr.appendChild(makeStoreCell(row, 4, row.productName));
+        tr.appendChild(makeStoreCell(row, 5, row.buyerEtd));
+
+        const remarksCell = document.createElement("td");
+        prepareStoreCell(remarksCell, row, 6);
+        remarksCell.classList.add("store-remarks-cell");
+        remarksCell.dataset.rowNumber = String(row.rowNumber);
+
+        const editor = document.createElement("div");
+        editor.className = "store-remarks-editor";
+
+        const select = document.createElement("select");
+        select.className = "store-remarks-select" + (row.storeRemarks ? "" : " is-empty");
+        select.dataset.rowNumber = String(row.rowNumber);
+        select.innerHTML =
+            '<option value="">Select</option>' +
+            '<option value="Stock">Stock</option>' +
+            '<option value="Not Require">Not Require</option>';
+        select.value = row.storeRemarks === "Stock" || row.storeRemarks === "Not Require" ? row.storeRemarks : "";
+        select.addEventListener("change", () => updateStoreRemark(row, select));
+        select.addEventListener("keydown", (event) => handleStoreRemarkKeydown(event, row, 6));
+        select.addEventListener("focus", () => setActiveStoreCell(row.rowNumber, 6, false));
+
+        editor.append(select);
+        remarksCell.appendChild(editor);
+        tr.appendChild(remarksCell);
+
+        storeTableBody.appendChild(tr);
+    });
+
+    setStoreStatus(filteredRows.length + " of " + storeRows.length + " rows" + (hasActiveStoreFilters() ? " filtered" : ""));
+    updateStoreFilterButtons();
+    syncStoreSelectionClasses();
+    if (window.lucide) lucide.createIcons();
+}
+
+function getFilteredStoreRows(ignoreColumn = "") {
+    return storeRows.filter((row) => {
+        if (storeSearchQuery) {
+            const matchesSearch = [row.itb, row.indentNumber, row.proCode, row.productName, row.buyerEtd, row.storeRemarks]
+                .join(" ")
+                .toLowerCase()
+                .includes(storeSearchQuery);
+            if (!matchesSearch) return false;
+        }
+
+        return getStoreFilterColumns().every((column) => {
+            if (column === ignoreColumn) return true;
+            const selected = storeFilters[column];
+            if (!selected || !selected.size) return true;
+            return selected.has(getStoreFilterValue(row, column));
+        });
+    });
+}
+
+function getStoreFilterColumns() {
+    return ["itb", "indentNumber", "proCode", "productName", "buyerEtd", "storeRemarks"];
+}
+
+function getStoreFilterLabels() {
+    return {
+        itb: "ITB",
+        indentNumber: "Indent Number",
+        proCode: "Pro Code",
+        productName: "Product Name",
+        buyerEtd: "Buyer ETD",
+        storeRemarks: "Store Remarks"
+    };
+}
+
+function getStoreFilterValue(row, column) {
+    return cleanText(row[column]) || "(Blank)";
+}
+
+function hasActiveStoreFilters() {
+    return getStoreFilterColumns().some((column) => storeFilters[column]?.size);
+}
+
+function updateStoreFilterButtons() {
+    document.querySelectorAll("[data-store-filter]").forEach((button) => {
+        const column = button.dataset.storeFilter;
+        button.classList.toggle("active", Boolean(storeFilters[column]?.size));
+    });
+}
+
+function openStoreFilter(column, button) {
+    if (!column || !button) return;
+    activeStoreFilterColumn = column;
+
+    const popover = ensureStoreFilterPopover();
+    const labels = getStoreFilterLabels();
+    const selected = new Set(storeFilters[column] || []);
+    const options = getStoreFilterOptions(column);
+    const optionHtml = options.map((value) => {
+        const checked = !selected.size || selected.has(value);
+        return '<label class="store-filter-option" data-filter-option="' + escapeHtml(value.toLowerCase()) + '">' +
+            '<input type="checkbox" value="' + escapeHtml(value) + '"' + (checked ? " checked" : "") + '>' +
+            '<span>' + escapeHtml(value) + '</span>' +
+            '</label>';
+    }).join("") || '<div class="store-empty">No values</div>';
+
+    popover.innerHTML =
+        '<div class="store-filter-head">' +
+            '<span>' + escapeHtml(labels[column] || "Filter") + '</span>' +
+            '<button type="button" data-store-filter-close>Close</button>' +
+        '</div>' +
+        '<input class="store-filter-search" type="search" placeholder="Search values" aria-label="Search filter values">' +
+        '<div class="store-filter-actions">' +
+            '<button type="button" data-store-filter-select-all>Select all</button>' +
+            '<button type="button" data-store-filter-clear>Clear</button>' +
+        '</div>' +
+        '<div class="store-filter-options">' + optionHtml + '</div>' +
+        '<div class="store-filter-actions">' +
+            '<button type="button" data-store-filter-cancel>Cancel</button>' +
+            '<button type="button" data-store-filter-apply>Apply</button>' +
+        '</div>';
+
+    bindStoreFilterPopover(popover, column);
+
+    const rect = button.getBoundingClientRect();
+    popover.style.top = Math.min(rect.bottom + 8, window.innerHeight - 440) + "px";
+    popover.style.left = Math.max(12, Math.min(rect.right - 280, window.innerWidth - 292)) + "px";
+    popover.classList.add("open");
+    popover.querySelector(".store-filter-search")?.focus();
+}
+
+function ensureStoreFilterPopover() {
+    let popover = document.getElementById("storeFilterPopover");
+    if (!popover) {
+        popover = document.createElement("div");
+        popover.id = "storeFilterPopover";
+        popover.className = "store-filter-popover";
+        document.body.appendChild(popover);
+    }
+    return popover;
+}
+
+function bindStoreFilterPopover(popover, column) {
+    const searchInput = popover.querySelector(".store-filter-search");
+    const optionWrap = popover.querySelector(".store-filter-options");
+    const optionInputs = () => Array.from(popover.querySelectorAll('.store-filter-option input[type="checkbox"]'));
+
+    popover.querySelector("[data-store-filter-close]")?.addEventListener("click", closeStoreFilter);
+    popover.querySelector("[data-store-filter-cancel]")?.addEventListener("click", closeStoreFilter);
+    popover.querySelector("[data-store-filter-select-all]")?.addEventListener("click", () => {
+        optionInputs().forEach((input) => { input.checked = true; });
+    });
+    popover.querySelector("[data-store-filter-clear]")?.addEventListener("click", () => {
+        optionInputs().forEach((input) => { input.checked = false; });
+    });
+    popover.querySelector("[data-store-filter-apply]")?.addEventListener("click", () => {
+        applyStoreFilter(column, optionInputs());
+    });
+    searchInput?.addEventListener("input", () => {
+        const query = searchInput.value.trim().toLowerCase();
+        optionWrap.querySelectorAll(".store-filter-option").forEach((option) => {
+            option.hidden = query && !option.dataset.filterOption.includes(query);
+        });
+    });
+}
+
+function getStoreFilterOptions(column) {
+    const values = new Set();
+    getFilteredStoreRows(column).forEach((row) => values.add(getStoreFilterValue(row, column)));
+    return Array.from(values).sort((a, b) => a.localeCompare(b, undefined, { numeric: true, sensitivity: "base" }));
+}
+
+function applyStoreFilter(column, inputs) {
+    const options = getStoreFilterOptions(column);
+    const selected = inputs.filter((input) => input.checked).map((input) => input.value);
+
+    if (!selected.length) {
+        storeFilters[column] = new Set(["__NO_MATCH__"]);
+    } else if (selected.length === options.length) {
+        delete storeFilters[column];
+    } else {
+        storeFilters[column] = new Set(selected);
+    }
+
+    closeStoreFilter();
+    renderStoreRows();
+}
+
+function closeStoreFilter() {
+    const popover = document.getElementById("storeFilterPopover");
+    if (popover) popover.classList.remove("open");
+    activeStoreFilterColumn = "";
+}
+
+function clearStoreFilters() {
+    storeFilters = {};
+    if (storeSearchInput) storeSearchInput.value = "";
+    storeSearchQuery = "";
+    closeStoreFilter();
+    renderStoreRows();
+}
+
+function makeStoreCell(row, columnIndex, value, html = false) {
+    const td = document.createElement("td");
+    prepareStoreCell(td, row, columnIndex);
+    if (html) td.innerHTML = value;
+    else td.textContent = value || "";
+    return td;
+}
+
+function prepareStoreCell(cell, row, columnIndex) {
+    cell.classList.add("store-cell");
+    cell.tabIndex = 0;
+    cell.dataset.rowNumber = String(row.rowNumber);
+    cell.dataset.columnIndex = String(columnIndex);
+    cell.addEventListener("click", (event) => selectStoreCell(row.rowNumber, columnIndex, event));
+    cell.addEventListener("focus", () => setActiveStoreCell(row.rowNumber, columnIndex, false));
+    cell.addEventListener("keydown", (event) => handleStoreCellKeydown(event, row, columnIndex));
+    cell.addEventListener("contextmenu", (event) => openStoreContextMenu(event, row, columnIndex));
+}
+
+function normalizeStoreHistory(value) {
+    if (Array.isArray(value)) return value;
+    const text = cleanText(value);
+    if (!text) return [];
+    try {
+        const parsed = JSON.parse(text);
+        return Array.isArray(parsed) ? parsed : [];
+    } catch (_) {
+        return text.split(/\n+/).filter(Boolean).map((line) => ({ summary: line }));
+    }
+}
+
+function selectStoreCell(rowNumber, columnIndex, event = {}) {
+    const visibleRows = getFilteredStoreRows();
+    const rowNumbers = visibleRows.map((row) => row.rowNumber);
+
+    if (columnIndex === 6 && event.shiftKey && lastStoreSelectedRowNumber) {
+        const start = rowNumbers.indexOf(lastStoreSelectedRowNumber);
+        const end = rowNumbers.indexOf(rowNumber);
+        if (start !== -1 && end !== -1) {
+            selectedStoreRowNumbers = new Set(rowNumbers.slice(Math.min(start, end), Math.max(start, end) + 1));
+        }
+    } else if (columnIndex === 6 && (event.ctrlKey || event.metaKey)) {
+        if (selectedStoreRowNumbers.has(rowNumber)) selectedStoreRowNumbers.delete(rowNumber);
+        else selectedStoreRowNumbers.add(rowNumber);
+        lastStoreSelectedRowNumber = rowNumber;
+    } else {
+        selectedStoreRowNumbers = columnIndex === 6 ? new Set([rowNumber]) : new Set();
+        lastStoreSelectedRowNumber = rowNumber;
+    }
+
+    setActiveStoreCell(rowNumber, columnIndex, false);
+    syncStoreSelectionClasses();
+}
+
+function setActiveStoreCell(rowNumber, columnIndex = activeStoreColumnIndex, addSelection = true) {
+    activeStoreRowNumber = rowNumber;
+    activeStoreColumnIndex = Number(columnIndex) || 0;
+    if (activeStoreColumnIndex === 6 && addSelection && !selectedStoreRowNumbers.size) {
+        selectedStoreRowNumbers = new Set([rowNumber]);
+        lastStoreSelectedRowNumber = rowNumber;
+    }
+    syncStoreSelectionClasses();
+}
+
+function syncStoreSelectionClasses() {
+    document.querySelectorAll(".store-cell").forEach((cell) => {
+        const rowNumber = Number(cell.dataset.rowNumber);
+        const columnIndex = Number(cell.dataset.columnIndex);
+        cell.classList.toggle("active", rowNumber === activeStoreRowNumber && columnIndex === activeStoreColumnIndex);
+        cell.classList.toggle("selected", columnIndex === 6 && selectedStoreRowNumbers.has(rowNumber));
+    });
+}
+
+function handleStoreCellKeydown(event, row, columnIndex) {
+    if (event.ctrlKey && event.key.toLowerCase() === "c") {
+        const cell = event.currentTarget;
+        let value = "";
+        if (columnIndex === 6) {
+            const sel = cell.querySelector("select");
+            value = sel ? sel.value : cell.textContent.trim();
+        } else {
+            value = cell.textContent.trim();
+        }
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+            navigator.clipboard.writeText(value).then(() => showToast("Copied")).catch(() => {});
+        } else {
+            try {
+                const ta = document.createElement("textarea");
+                ta.value = value;
+                ta.style.cssText = "position:fixed;opacity:0;pointer-events:none";
+                document.body.appendChild(ta);
+                ta.select();
+                document.execCommand("copy");
+                document.body.removeChild(ta);
+                showToast("Copied");
+            } catch (_) {}
+        }
+        event.preventDefault();
+        return;
+    }
+
+    if (event.ctrlKey && event.key.toLowerCase() === "d") {
+        event.preventDefault();
+        if (columnIndex === 6) fillStoreRemarksFromActive(row);
+        return;
+    }
+
+    const direction = getStoreKeyDirection(event);
+    if (direction) {
+        event.preventDefault();
+        moveStoreCellFocus(row.rowNumber, columnIndex, direction.row, direction.col, event.shiftKey);
+        return;
+    }
+
+    if (event.key === "Escape") {
+        selectedStoreRowNumbers = columnIndex === 6 ? new Set([row.rowNumber]) : new Set();
+        syncStoreSelectionClasses();
+    }
+}
+
+function handleStoreRemarkKeydown(event, row, columnIndex) {
+    if (event.altKey) return;
+    handleStoreCellKeydown(event, row, columnIndex);
+}
+
+function getStoreKeyDirection(event) {
+    const key = event.key;
+    if (key === "ArrowDown") return { row: 1, col: 0 };
+    if (key === "ArrowUp") return { row: -1, col: 0 };
+    if (key === "ArrowRight") return { row: 0, col: 1 };
+    if (key === "ArrowLeft") return { row: 0, col: -1 };
+    if (key === "Tab") return { row: 0, col: event.shiftKey ? -1 : 1 };
+    return null;
+}
+
+function moveStoreCellFocus(currentRowNumber, currentColumnIndex, rowDirection, columnDirection, extendSelection) {
+    const rows = getFilteredStoreRows();
+    const index = rows.findIndex((item) => item.rowNumber === currentRowNumber);
+    if (index === -1) return;
+
+    let nextIndex = index + rowDirection;
+    let nextColumnIndex = Number(currentColumnIndex) + columnDirection;
+
+    if (nextColumnIndex > 6) {
+        nextColumnIndex = 0;
+        nextIndex += 1;
+    } else if (nextColumnIndex < 0) {
+        nextColumnIndex = 6;
+        nextIndex -= 1;
+    }
+
+    const next = rows[nextIndex];
+    if (!next) return;
+
+    if (nextColumnIndex === 6 && extendSelection) {
+        if (!selectedStoreRowNumbers.size) selectedStoreRowNumbers.add(currentRowNumber);
+        selectedStoreRowNumbers.add(next.rowNumber);
+    } else {
+        selectedStoreRowNumbers = nextColumnIndex === 6 ? new Set([next.rowNumber]) : new Set();
+        lastStoreSelectedRowNumber = next.rowNumber;
+    }
+
+    activeStoreRowNumber = next.rowNumber;
+    activeStoreColumnIndex = nextColumnIndex;
+    syncStoreSelectionClasses();
+    getStoreCell(next.rowNumber, nextColumnIndex)?.focus();
+}
+
+function getStoreCell(rowNumber, columnIndex) {
+    return storeTableBody?.querySelector('.store-cell[data-row-number="' + rowNumber + '"][data-column-index="' + columnIndex + '"]');
+}
+
+function downloadStoreExcel() {
+    const rows = getFilteredStoreRows();
+    const headers = ["#", "ITB", "Indent Number", "Pro Code", "Product Name", "Buyer ETD", "Store Remarks"];
+
+    function xmlEscape(v) {
+        return String(v == null ? "" : v)
+            .replace(/&/g, "&amp;")
+            .replace(/</g, "&lt;")
+            .replace(/>/g, "&gt;")
+            .replace(/"/g, "&quot;");
+    }
+
+    function cell(value, styleId) {
+        const v = xmlEscape(value);
+        return '<Cell ss:StyleID="' + styleId + '"><Data ss:Type="String">' + v + '</Data></Cell>';
+    }
+
+    const headerRow = '<Row ss:Height="30">' + headers.map(h => cell(h, "SH")).join("") + '</Row>';
+
+    const dataRows = rows.map((row, i) => {
+        const cols = [
+            i + 1,
+            row.itb,
+            row.indentNumber,
+            row.proCode,
+            row.productName,
+            row.buyerEtd,
+            row.storeRemarks
+        ];
+        return '<Row ss:AutoFitHeight="1">' + cols.map(v => cell(v, i % 2 === 0 ? "SC" : "SA")).join("") + '</Row>';
+    }).join("");
+
+    const xml = [
+        '<?xml version="1.0" encoding="UTF-8"?>',
+        '<?mso-application progid="Excel.Sheet"?>',
+        '<Workbook xmlns="urn:schemas-microsoft-com:office:spreadsheet"',
+        ' xmlns:ss="urn:schemas-microsoft-com:office:spreadsheet"',
+        ' xmlns:x="urn:schemas-microsoft-com:office:excel">',
+        ' <Styles>',
+        '  <Style ss:ID="SH">',
+        '   <Font ss:FontName="Verdana" ss:Bold="1" ss:Color="#FFFFFF" ss:Size="11"/>',
+        '   <Interior ss:Color="#1D6F42" ss:Pattern="Solid"/>',
+        '   <Alignment ss:WrapText="1" ss:Horizontal="Center" ss:Vertical="Center"/>',
+        '   <Borders>',
+        '    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="2" ss:Color="#FFFFFF"/>',
+        '   </Borders>',
+        '  </Style>',
+        '  <Style ss:ID="SC">',
+        '   <Font ss:FontName="Verdana" ss:Size="10"/>',
+        '   <Alignment ss:WrapText="1" ss:Vertical="Top"/>',
+        '   <Interior ss:Color="#F0FFF4" ss:Pattern="Solid"/>',
+        '   <Borders>',
+        '    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#C8E6C9"/>',
+        '   </Borders>',
+        '  </Style>',
+        '  <Style ss:ID="SA">',
+        '   <Font ss:FontName="Verdana" ss:Size="10"/>',
+        '   <Alignment ss:WrapText="1" ss:Vertical="Top"/>',
+        '   <Interior ss:Color="#FFFFFF" ss:Pattern="Solid"/>',
+        '   <Borders>',
+        '    <Border ss:Position="Bottom" ss:LineStyle="Continuous" ss:Weight="1" ss:Color="#C8E6C9"/>',
+        '   </Borders>',
+        '  </Style>',
+        ' </Styles>',
+        ' <Worksheet ss:Name="Store Remarks">',
+        '  <Table ss:DefaultColumnWidth="120">',
+        '   <Column ss:Width="30"/>',
+        '   <Column ss:Width="160"/>',
+        '   <Column ss:Width="130"/>',
+        '   <Column ss:Width="90"/>',
+        '   <Column ss:Width="190"/>',
+        '   <Column ss:Width="90"/>',
+        '   <Column ss:Width="110"/>',
+        '   ' + headerRow,
+        '   ' + dataRows,
+        '  </Table>',
+        '  <WorksheetOptions xmlns="urn:schemas-microsoft-com:office:excel">',
+        '   <FreezePanes/>',
+        '   <FrozenNoSplit/>',
+        '   <SplitHorizontal>1</SplitHorizontal>',
+        '   <TopRowBottomPane>1</TopRowBottomPane>',
+        '   <ActivePane>2</ActivePane>',
+        '  </WorksheetOptions>',
+        ' </Worksheet>',
+        '</Workbook>'
+    ].join("\n");
+
+    const blob = new Blob([xml], { type: "application/vnd.ms-excel;charset=utf-8" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement("a");
+    const now = new Date();
+    const stamp = now.getFullYear() + "-" +
+        String(now.getMonth() + 1).padStart(2, "0") + "-" +
+        String(now.getDate()).padStart(2, "0");
+    a.href = url;
+    a.download = "Store_Remarks_" + stamp + ".xls";
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(() => URL.revokeObjectURL(url), 2000);
+}
+
+function getStoreSelectByRowNumber(rowNumber) {
+    return storeTableBody?.querySelector('.store-remarks-select[data-row-number="' + rowNumber + '"]');
+}
+
+function getStoreRowByNumber(rowNumber) {
+    return storeRows.find((item) => item.rowNumber === rowNumber);
+}
+
+async function fillStoreRemarksFromActive(row) {
+    const sourceValue = getStoreSelectByRowNumber(activeStoreRowNumber)?.value || row.storeRemarks || "";
+    if (!sourceValue) {
+        showToast("Select Stock or Not Require first");
+        return;
+    }
+
+    const targetRows = Array.from(selectedStoreRowNumbers)
+        .map(getStoreRowByNumber)
+        .filter(Boolean);
+    const rowsToUpdate = targetRows.length ? targetRows : [row];
+    await updateStoreRemarksBulk(rowsToUpdate, sourceValue);
+}
+
+async function updateStoreRemark(row, select) {
+    const previous = row.storeRemarks || "";
+    const next = select.value;
+    select.classList.add("is-saving");
+    select.disabled = true;
+    setStoreStatus("Saving row " + row.displayIndex + "...");
+
+    try {
+        await storeRequest("updateStoreRemark", {
+            rowNumber: row.rowNumber,
+            storeRemarks: next,
+            itb: row.itb,
+            indentNumber: row.indentNumber,
+            proCode: row.proCode,
+            updatedBy: currentUser?.name || "Unknown",
+            updatedEmail: currentUser?.email || ""
+        });
+        row.storeRemarks = next;
+        row.storeUpdatedBy = currentUser?.name || "Unknown";
+        row.storeUpdatedEmail = currentUser?.email || "";
+        row.storeUpdatedAt = "Just now";
+        row.storeHistory = [
+            makeLocalStoreHistoryEntry(previous, next),
+            ...(row.storeHistory || [])
+        ];
+        select.classList.toggle("is-empty", !next);
+        renderStoreRows();
+        setStoreStatus("Saved row " + row.displayIndex);
+        showToast("Store remark saved");
+    } catch (error) {
+        select.value = previous;
+        setStoreStatus("Save failed");
+        showToast(error.message || "Store remark not saved");
+    } finally {
+        select.disabled = false;
+        select.classList.remove("is-saving");
+    }
+}
+
+async function updateStoreRemarksBulk(rows, value) {
+    const normalizedRows = rows.filter((row) => row && row.storeRemarks !== value);
+    if (!normalizedRows.length) {
+        showToast("Selected cells already match");
+        return;
+    }
+
+    setStoreStatus("Saving " + normalizedRows.length + " cells...");
+    document.querySelectorAll(".store-remarks-select").forEach((select) => {
+        if (selectedStoreRowNumbers.has(Number(select.dataset.rowNumber))) select.disabled = true;
+    });
+
+    try {
+        const chunks = chunkArray(normalizedRows, 35);
+        for (const chunk of chunks) {
+            await storeRequest("updateStoreRemarks", {
+                storeRemarks: value,
+                updatedBy: currentUser?.name || "Unknown",
+                updatedEmail: currentUser?.email || "",
+                rows: JSON.stringify(chunk.map((row) => ({
+                    rowNumber: row.rowNumber,
+                    itb: row.itb,
+                    indentNumber: row.indentNumber,
+                    proCode: row.proCode,
+                    previousValue: row.storeRemarks || ""
+                })))
+            });
+        }
+
+        normalizedRows.forEach((row) => {
+            const previous = row.storeRemarks || "";
+            row.storeRemarks = value;
+            row.storeUpdatedBy = currentUser?.name || "Unknown";
+            row.storeUpdatedEmail = currentUser?.email || "";
+            row.storeUpdatedAt = "Just now";
+            row.storeHistory = [makeLocalStoreHistoryEntry(previous, value), ...(row.storeHistory || [])];
+        });
+        renderStoreRows();
+        setStoreStatus("Saved " + normalizedRows.length + " cells");
+        showToast("Store remarks filled");
+    } catch (error) {
+        setStoreStatus("Bulk save failed");
+        showToast(error.message || "Store remarks not saved");
+    } finally {
+        document.querySelectorAll(".store-remarks-select").forEach((select) => { select.disabled = false; });
+    }
+}
+
+function makeLocalStoreHistoryEntry(previousValue, newValue) {
+    return {
+        at: "Just now",
+        by: currentUser?.name || "Unknown",
+        email: currentUser?.email || "",
+        from: previousValue || "",
+        to: newValue || ""
+    };
+}
+
+function chunkArray(items, size) {
+    const chunks = [];
+    for (let i = 0; i < items.length; i += size) chunks.push(items.slice(i, i + size));
+    return chunks;
+}
+
+function openStoreContextMenu(event, row, columnIndex) {
+    event.preventDefault();
+    selectStoreCell(row.rowNumber, columnIndex, event);
+    closeStoreHistory();
+
+    const menu = ensureStoreContextMenu();
+    menu.innerHTML =
+        '<button type="button" data-store-menu-history><i data-lucide="history"></i><span>Show history</span></button>';
+
+    menu.querySelector("[data-store-menu-history]")?.addEventListener("click", () => {
+        closeStoreContextMenu();
+        openStoreHistory(row, { x: event.clientX, y: event.clientY });
+    });
+
+    menu.style.left = Math.max(8, Math.min(event.clientX, window.innerWidth - 190)) + "px";
+    menu.style.top = Math.max(8, Math.min(event.clientY, window.innerHeight - 54)) + "px";
+    menu.classList.add("open");
+    if (window.lucide) lucide.createIcons();
+}
+
+function ensureStoreContextMenu() {
+    let menu = document.getElementById("storeContextMenu");
+    if (!menu) {
+        menu = document.createElement("div");
+        menu.id = "storeContextMenu";
+        menu.className = "store-context-menu";
+        document.body.appendChild(menu);
+    }
+    return menu;
+}
+
+function closeStoreContextMenu() {
+    document.getElementById("storeContextMenu")?.classList.remove("open");
+}
+
+function openStoreHistory(row, anchor) {
+    const popover = ensureStoreHistoryPopover();
+    const history = Array.isArray(row.storeHistory) ? row.storeHistory : [];
+    const items = history.map((item) => {
+        if (item.summary) return '<div class="store-history-item"><strong>' + escapeHtml(item.summary) + '</strong></div>';
+        return '<div class="store-history-item">' +
+            '<strong>' + escapeHtml(item.by || "Unknown") + '</strong>' +
+            '<span>' + escapeHtml(item.email || "") + '</span>' +
+            '<span>' + escapeHtml(item.at || "") + '</span>' +
+            '<span>' + escapeHtml((item.from || "(Blank)") + " -> " + (item.to || "(Blank)")) + '</span>' +
+            '</div>';
+    }).join("") || '<div class="store-history-empty">No history yet</div>';
+
+    popover.innerHTML =
+        '<div class="store-history-head">' +
+            '<div><strong>' + escapeHtml(row.productName || "Store item") + '</strong>' +
+            '<span>' + escapeHtml([row.proCode, row.indentNumber].filter(Boolean).join(" | ")) + '</span></div>' +
+            '<button type="button" data-store-history-close aria-label="Close history"><i data-lucide="x"></i></button>' +
+        '</div>' +
+        '<div class="store-history-list">' + items + '</div>';
+
+    popover.querySelector("[data-store-history-close]")?.addEventListener("click", closeStoreHistory);
+    const x = Number(anchor?.x ?? 0);
+    const y = Number(anchor?.y ?? 0);
+    popover.style.top = Math.max(12, Math.min(y + 8, window.innerHeight - 470)) + "px";
+    popover.style.left = Math.max(12, Math.min(x + 8, window.innerWidth - 372)) + "px";
+    popover.classList.add("open");
+    if (window.lucide) lucide.createIcons();
+}
+
+function ensureStoreHistoryPopover() {
+    let popover = document.getElementById("storeHistoryPopover");
+    if (!popover) {
+        popover = document.createElement("div");
+        popover.id = "storeHistoryPopover";
+        popover.className = "store-history-popover";
+        document.body.appendChild(popover);
+    }
+    return popover;
+}
+
+function closeStoreHistory() {
+    document.getElementById("storeHistoryPopover")?.classList.remove("open");
+}
+
+function setStoreStatus(message) {
+    if (storeStatus) storeStatus.textContent = message;
+}
+
+function cleanText(value) {
+    return String(value === undefined || value === null ? "" : value).trim();
+}
+
+function formatStoreDate(value) {
+    if (!value) return "";
+    if (value instanceof Date) return formatStoreDateObject(value);
+    const text = cleanText(value);
+    const parsed = new Date(text);
+    if (!Number.isNaN(parsed.getTime()) && /^\d{4}-\d{2}-\d{2}|[A-Za-z]{3}/.test(text)) {
+        return formatStoreDateObject(parsed);
+    }
+    return text;
+}
+
+function formatStoreDateObject(date) {
+    return date.toLocaleDateString("en-GB", { day: "2-digit", month: "short", year: "numeric" }).replace(/ /g, "-");
+}
+
 async function loadUserChats() {
     if (!currentUser) return;
     
@@ -5919,7 +7807,7 @@ async function loadUserChats() {
         renderChatList();
         
         // Start message polling for active chat
-        if (activeChat && activeChat.type !== "ai") {
+        if (activeChat && activeChat.type !== "ai" && activeChat.type !== "store") {
             startMessagePolling();
         }
     } catch (error) {
@@ -6107,6 +7995,7 @@ async function sendRealMessage(text, type = 'text', attachment = null) {
 }
 
 async function selectUserChat(chatId) {
+    closeStorePanel();
     const chat = userChats.find(c => c.id === chatId);
     if (!chat) return;
     
@@ -6304,6 +8193,21 @@ function bindEvents() {
     resetPasswordButton.addEventListener("click", resetPassword);
 
     newChatButton.addEventListener("click", () => selectAiChat());
+    if (storeButton) storeButton.addEventListener("click", openStorePanel);
+    const storeExcelButton = document.getElementById("storeExcelButton");
+    if (storeExcelButton) storeExcelButton.addEventListener("click", downloadStoreExcel);
+    if (storeRefreshButton) storeRefreshButton.addEventListener("click", () => loadStoreRows(true));
+    if (storeClearFiltersButton) storeClearFiltersButton.addEventListener("click", clearStoreFilters);
+    document.querySelectorAll("[data-store-filter]").forEach((button) => {
+        button.addEventListener("click", (event) => {
+            event.stopPropagation();
+            openStoreFilter(button.dataset.storeFilter, button);
+        });
+    });
+    if (storeSearchInput) storeSearchInput.addEventListener("input", () => {
+        storeSearchQuery = storeSearchInput.value.trim().toLowerCase();
+        renderStoreRows();
+    });
     if (appWeatherLocation) appWeatherLocation.addEventListener("click", toggleWeatherPicker);
     if (closeWeatherPickerButton) closeWeatherPickerButton.addEventListener("click", (event) => {
         event.stopPropagation();
@@ -6535,6 +8439,9 @@ function bindEvents() {
         if (!event.target.closest(".menu-wrap") && menuPopover.classList.contains("open")) closeMenu();
         if (!event.target.closest(".notification-wrap") && notificationPopover.classList.contains("open")) closeNotificationPopover();
         if (!event.target.closest(".app-weather") && appWeatherPicker && !appWeatherPicker.hidden) closeWeatherPicker();
+        if (!event.target.closest(".store-filter-popover") && !event.target.closest("[data-store-filter]")) closeStoreFilter();
+        if (!event.target.closest(".store-context-menu")) closeStoreContextMenu();
+        if (!event.target.closest(".store-history-popover") && !event.target.closest(".store-context-menu")) closeStoreHistory();
         if (event.target === profileModal) closeProfileModal();
         if (event.target === activityModal) closeActivityModal();
         if (event.target === forwardModal) closeForwardModal();
@@ -6546,6 +8453,9 @@ function bindEvents() {
         closeMenu();
         closeNotificationPopover();
         closeWeatherPicker();
+        closeStoreFilter();
+        closeStoreContextMenu();
+        closeStoreHistory();
         closeEmojiPanel();
         closeMessageSearchPanel();
         closeProfileModal();
@@ -6680,16 +8590,26 @@ async function apiRequest(action, payload) {
         throw new Error("Apps Script URL missing");
     }
 
-    const result = await jsonpRequest({ action, ...payload });
+    const result = await jsonpRequest({ action, ...payload }, CONFIG.APPS_SCRIPT_URL);
     if (!result.ok) throw new Error(result.message || "Request failed");
     return result;
 }
 
-function jsonpRequest(params) {
+async function storeRequest(action, payload = {}) {
+    if (!CONFIG.STORE_SCRIPT_URL || CONFIG.STORE_SCRIPT_URL.includes("PASTE_YOUR")) {
+        throw new Error("Store Apps Script URL missing");
+    }
+
+    const result = await jsonpRequest({ action, ...payload }, CONFIG.STORE_SCRIPT_URL, 90000);
+    if (!result.ok) throw new Error(result.message || "Store request failed");
+    return result;
+}
+
+function jsonpRequest(params, endpointUrl = CONFIG.APPS_SCRIPT_URL, timeoutMs = 30000) {
     return new Promise((resolve, reject) => {
         const callbackName = "trioaiCallback_" + Date.now() + "_" + Math.random().toString(16).slice(2);
         const script = document.createElement("script");
-        const url = new URL(CONFIG.APPS_SCRIPT_URL);
+        const url = new URL(endpointUrl);
 
         Object.keys(params).forEach((key) => {
             if (params[key] !== undefined && params[key] !== null) {
@@ -6708,7 +8628,7 @@ function jsonpRequest(params) {
         const timer = setTimeout(() => {
             cleanup();
             reject(new Error("Server response timed out"));
-        }, 30000);
+        }, timeoutMs);
 
         window[callbackName] = (data) => {
             cleanup();
@@ -7033,6 +8953,7 @@ function isActiveRow(row) {
 function selectAiChat() {
     activeChat = { type: "ai", id: "trio", name: "TrioAI", email: "trioai", avatarUrl: logoUrl, bio: "Your personal assistant" };
     closeMenu();
+    closeStorePanel();
     appRoot.classList.add("chat-open");
     setChatHeader(activeChat);
     loadBotMessages();
