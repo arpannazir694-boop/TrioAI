@@ -1084,6 +1084,9 @@ body.dark .icon-btn {
     --notif-danger: #dc2626;
     --notif-danger-soft: rgba(220, 38, 38, 0.12);
     --notif-badge: linear-gradient(145deg, #ff6b6b, #e11d48);
+    --notif-surface: #f7fbfb;
+    --notif-card: rgba(255, 255, 255, 0.92);
+    --notif-card-border: rgba(16, 185, 129, 0.16);
 }
 
 .notification-badge {
@@ -1141,17 +1144,18 @@ body.dark .notification-wrap.has-unread .icon-btn {
     top: 48px;
     right: -48px;
     z-index: 25;
-    width: min(390px, calc(100vw - 32px));
-    max-height: min(520px, calc(100vh - 120px));
+    width: min(410px, calc(100vw - 28px));
+    max-height: min(560px, calc(100vh - 110px));
     display: none;
     flex-direction: column;
     overflow: hidden;
-    border: 1px solid var(--notif-accent-ring);
+    border: 1px solid rgba(0, 168, 132, 0.2);
     border-radius: 8px;
     background:
-        linear-gradient(180deg, var(--notif-accent-soft) 0, transparent 88px),
-        var(--panel);
-    box-shadow: 0 18px 42px rgba(17, 27, 33, 0.22);
+        radial-gradient(circle at 12% -10%, rgba(96, 165, 250, 0.2), transparent 34%),
+        linear-gradient(180deg, rgba(0, 168, 132, 0.13) 0, rgba(0, 168, 132, 0) 130px),
+        var(--notif-surface);
+    box-shadow: 0 24px 58px rgba(17, 27, 33, 0.24), 0 2px 0 rgba(255, 255, 255, 0.72) inset;
 }
 
 .notification-popover.open {
@@ -1159,35 +1163,42 @@ body.dark .notification-wrap.has-unread .icon-btn {
 }
 
 .notification-head {
-    min-height: 64px;
-    padding: 12px 13px;
+    min-height: 62px;
+    padding: 12px 14px;
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 12px;
-    border-bottom: 1px solid var(--border);
-    background: linear-gradient(135deg, var(--notif-accent-soft), rgba(52, 183, 241, 0.08)), var(--soft);
+    border-bottom: 1px solid rgba(0, 168, 132, 0.16);
+    background:
+        linear-gradient(135deg, rgba(0, 168, 132, 0.18), rgba(96, 165, 250, 0.12)),
+        rgba(255, 255, 255, 0.68);
+    backdrop-filter: blur(12px);
 }
 
 .notification-head strong {
     display: flex;
     align-items: center;
     gap: 8px;
-    font-size: 15px;
+    min-width: 0;
+    font-size: 16px;
     letter-spacing: 0;
     color: var(--notif-accent-deep);
 }
 
 .notification-head strong svg {
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
     color: var(--notif-accent);
 }
 
 .notification-actions {
     display: flex;
     align-items: center;
-    gap: 6px;
+    justify-content: flex-end;
+    flex-wrap: wrap;
+    gap: 7px;
+    margin-left: auto;
 }
 
 .notification-head button,
@@ -1197,12 +1208,13 @@ body.dark .notification-wrap.has-unread .icon-btn {
     display: grid;
     place-items: center;
     flex: 0 0 auto;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0, 168, 132, 0.15);
     border-radius: 8px;
     color: var(--notif-accent-deep);
-    background: var(--panel);
+    background: rgba(255, 255, 255, 0.84);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.07);
     cursor: pointer;
-    transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, color 140ms ease;
+    transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, color 140ms ease, box-shadow 140ms ease;
 }
 
 .notification-head button:hover,
@@ -1210,10 +1222,11 @@ body.dark .notification-wrap.has-unread .icon-btn {
 .notification-filter:hover,
 .notification-filter:focus-visible {
     border-color: var(--notif-accent-ring);
-    background: var(--notif-accent-soft);
+    background: #ffffff;
     color: var(--notif-accent-deep);
     outline: none;
-    transform: translateY(-1px);
+    transform: translateY(-2px);
+    box-shadow: 0 12px 24px rgba(0, 168, 132, 0.14);
 }
 
 .notification-filter {
@@ -1246,12 +1259,14 @@ body.dark .notification-head strong svg {
 body.dark .notification-popover {
     border-color: rgba(94, 234, 212, 0.22);
     background:
-        linear-gradient(180deg, rgba(0, 168, 132, 0.12) 0, transparent 88px),
+        radial-gradient(circle at 12% -10%, rgba(96, 165, 250, 0.16), transparent 34%),
+        linear-gradient(180deg, rgba(0, 168, 132, 0.14) 0, transparent 132px),
         var(--panel);
 }
 
 body.dark .notification-head {
-    background: linear-gradient(135deg, rgba(0, 168, 132, 0.16), rgba(52, 183, 241, 0.08)), var(--soft);
+    border-bottom-color: rgba(94, 234, 212, 0.16);
+    background: linear-gradient(135deg, rgba(0, 168, 132, 0.18), rgba(52, 183, 241, 0.1)), rgba(32, 44, 51, 0.74);
 }
 
 body.dark .notification-head button,
@@ -1261,7 +1276,8 @@ body.dark .notification-filter {
 
 body.dark .notification-head button,
 body.dark .notification-filter:not(.active) {
-    background: var(--panel);
+    background: rgba(17, 27, 33, 0.82);
+    box-shadow: 0 8px 18px rgba(0, 0, 0, 0.18);
 }
 
 body.dark .notification-head button:hover,
@@ -1283,13 +1299,34 @@ body.dark .notification-filter.active {
     min-height: 0;
     max-height: none;
     overflow-y: auto;
+    padding: 10px 10px 12px;
+    background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.52), transparent 24px),
+        var(--notif-surface);
+    scrollbar-width: thin;
+    scrollbar-color: rgba(0, 128, 105, 0.42) transparent;
+}
+
+.notification-list::-webkit-scrollbar {
+    width: 9px;
+}
+
+.notification-list::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.notification-list::-webkit-scrollbar-thumb {
+    border: 2px solid transparent;
+    border-radius: 999px;
+    background: rgba(0, 128, 105, 0.4);
+    background-clip: padding-box;
 }
 
 .notification-search {
     position: relative;
-    padding: 10px 12px;
-    border-bottom: 1px solid var(--border);
-    background: var(--panel);
+    padding: 12px 12px 10px;
+    border-bottom: 0;
+    background: rgba(255, 255, 255, 0.7);
 }
 
 .notification-search svg {
@@ -1305,13 +1342,14 @@ body.dark .notification-filter.active {
 
 .notification-search input {
     width: 100%;
-    min-height: 34px;
-    padding: 0 12px 0 38px;
-    border: 1px solid var(--border);
+    min-height: 36px;
+    padding: 0 38px 0 39px;
+    border: 1px solid rgba(15, 23, 42, 0.14);
     border-radius: 8px;
     outline: 0;
     color: var(--text);
-    background: var(--input);
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 8px 18px rgba(15, 23, 42, 0.04);
 }
 
 .notification-search input:focus {
@@ -1352,18 +1390,18 @@ body.dark .notification-filter.active {
 }
 
 .notification-toolbar {
-    padding: 8px 12px 10px;
+    padding: 8px 12px 12px;
     display: flex;
     flex-direction: column;
     gap: 8px;
-    border-bottom: 1px solid var(--border);
-    background: var(--panel);
+    border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+    background: rgba(255, 255, 255, 0.72);
 }
 
 .notification-summary {
-    color: var(--muted);
+    color: #64748b;
     font-size: 12px;
-    font-weight: 600;
+    font-weight: 800;
 }
 
 .notification-summary strong {
@@ -1378,15 +1416,16 @@ body.dark .notification-filter.active {
 
 .notification-type-chip {
     min-height: 28px;
-    padding: 0 10px;
-    border: 1px solid var(--border);
+    padding: 0 11px;
+    border: 1px solid rgba(15, 23, 42, 0.12);
     border-radius: 999px;
-    color: var(--muted);
+    color: #526273;
     font-size: 11px;
     font-weight: 700;
-    background: var(--soft);
+    background: rgba(255, 255, 255, 0.78);
     cursor: pointer;
-    transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
+    box-shadow: 0 6px 14px rgba(15, 23, 42, 0.04);
+    transition: transform 140ms ease, border-color 140ms ease, background 140ms ease, color 140ms ease;
 }
 
 .notification-type-chip:hover,
@@ -1394,6 +1433,7 @@ body.dark .notification-filter.active {
     border-color: var(--notif-accent-ring);
     color: var(--notif-accent-deep);
     outline: none;
+    transform: translateY(-1px);
 }
 
 .notification-type-chip.active {
@@ -1430,12 +1470,12 @@ body.dark .notification-filter.active {
 .notification-toolbar-actions button {
     min-height: 28px;
     padding: 0 10px;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(0, 168, 132, 0.18);
     border-radius: 8px;
     color: var(--notif-accent-deep);
     font-size: 11px;
     font-weight: 700;
-    background: var(--soft);
+    background: rgba(255, 255, 255, 0.76);
     cursor: pointer;
 }
 
@@ -1447,52 +1487,62 @@ body.dark .notification-filter.active {
 }
 
 .notification-group-label {
-    padding: 8px 14px 6px;
-    color: var(--muted);
+    margin: 0 0 8px;
+    padding: 8px 6px 4px;
+    color: #64748b;
     font-size: 11px;
     font-weight: 800;
     letter-spacing: 0.06em;
     text-transform: uppercase;
-    background: var(--soft);
-    border-bottom: 1px solid var(--border);
+    background: transparent;
+    border-bottom: 0;
     position: sticky;
-    top: 0;
+    top: -10px;
     z-index: 1;
 }
 
 .notification-item-wrap {
     display: grid;
-    grid-template-columns: 10px minmax(0, 1fr) auto;
-    gap: 12px;
+    grid-template-columns: 12px minmax(0, 1fr) auto;
+    gap: 10px;
     align-items: start;
-    padding: 14px 15px;
-    border-bottom: 1px solid var(--border);
-    background: var(--panel);
-    transition: background 160ms ease;
+    margin-bottom: 10px;
+    padding: 13px 12px;
+    border: 1px solid var(--notif-card-border);
+    border-radius: 8px;
+    background: var(--notif-card);
+    box-shadow: 0 10px 24px rgba(15, 23, 42, 0.06);
+    transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
 .notification-item-wrap.unread {
-    background: linear-gradient(90deg, var(--notif-accent-soft), transparent 72%);
+    border-color: rgba(0, 168, 132, 0.34);
+    background:
+        linear-gradient(90deg, rgba(0, 168, 132, 0.14), rgba(255, 255, 255, 0.92) 54%),
+        var(--notif-card);
 }
 
 .notification-item-wrap:has(.notification-item:hover),
 .notification-item-wrap:has(.notification-item:focus-visible) {
-    background: var(--hover);
+    border-color: rgba(0, 168, 132, 0.34);
+    background: #ffffff;
+    box-shadow: 0 15px 30px rgba(15, 23, 42, 0.1);
+    transform: translateY(-1px);
 }
 
 .notification-item-wrap.unread:has(.notification-item:hover),
 .notification-item-wrap.unread:has(.notification-item:focus-visible) {
-    background: linear-gradient(90deg, rgba(0, 168, 132, 0.18), var(--hover) 72%);
+    background: linear-gradient(90deg, rgba(0, 168, 132, 0.18), #ffffff 64%);
 }
 
 .notification-item-wrap:has(.notification-item-actions button:hover),
 .notification-item-wrap:has(.notification-item-actions button:focus-visible) {
-    background: var(--panel);
+    background: #ffffff;
 }
 
 .notification-item-wrap.unread:has(.notification-item-actions button:hover),
 .notification-item-wrap.unread:has(.notification-item-actions button:focus-visible) {
-    background: linear-gradient(90deg, var(--notif-accent-soft), transparent 72%);
+    background: linear-gradient(90deg, rgba(0, 168, 132, 0.14), #ffffff 64%);
 }
 
 .notification-item-wrap.fresh {
@@ -1523,11 +1573,11 @@ body.dark .notification-filter.active {
 }
 
 .notification-dot {
-    width: 10px;
-    height: 10px;
-    margin-top: 4px;
+    width: 9px;
+    height: 9px;
+    margin-top: 5px;
     border-radius: 50%;
-    background: var(--border);
+    background: #dbe4ea;
 }
 
 .notification-item-wrap.unread .notification-dot {
@@ -1540,6 +1590,7 @@ body.dark .notification-filter.active {
     align-items: center;
     justify-content: space-between;
     gap: 10px;
+    color: #1f2937;
     font-size: 14px;
     font-weight: 800;
     line-height: 1.25;
@@ -1547,13 +1598,15 @@ body.dark .notification-filter.active {
 
 .notification-type {
     flex: 0 0 auto;
-    padding: 4px 7px;
-    border-radius: 7px;
+    padding: 4px 8px;
+    border-radius: 999px;
     color: #ffffff;
     font-size: 10px;
     font-weight: 800;
     text-transform: uppercase;
+    letter-spacing: 0.02em;
     background: linear-gradient(145deg, var(--notif-accent-deep), var(--notif-accent));
+    box-shadow: 0 6px 12px rgba(15, 23, 42, 0.1);
 }
 
 .notification-type.warning {
@@ -1578,8 +1631,8 @@ body.dark .notification-filter.active {
 
 .notification-message {
     display: block;
-    margin-top: 7px;
-    color: var(--muted);
+    margin-top: 8px;
+    color: #64748b;
     font-size: 13px;
     line-height: 1.45;
 }
@@ -1617,23 +1670,24 @@ body.dark .notification-filter.active {
 .notification-item-actions {
     display: flex;
     flex-direction: column;
-    gap: 4px;
+    gap: 6px;
     flex-shrink: 0;
 }
 
 .notification-item-actions button {
-    width: 28px;
-    height: 28px;
+    width: 30px;
+    height: 30px;
     padding: 0;
     margin: 0;
     display: inline-flex;
     align-items: center;
     justify-content: center;
     flex-shrink: 0;
-    border: 1px solid var(--border);
+    border: 1px solid rgba(15, 23, 42, 0.12);
     border-radius: 8px;
-    color: var(--muted);
-    background: var(--panel);
+    color: #64748b;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 6px 12px rgba(15, 23, 42, 0.05);
     line-height: 0;
     cursor: pointer;
     transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
@@ -1658,18 +1712,104 @@ body.dark .notification-filter.active {
 
 .notification-time {
     display: block;
-    margin-top: 9px;
-    color: var(--muted);
+    margin-top: 10px;
+    color: #64748b;
     font-size: 11px;
     text-align: right;
 }
 
 .notification-empty {
     padding: 34px 18px;
-    color: var(--muted);
+    color: #64748b;
     font-size: 14px;
     text-align: center;
-    background: linear-gradient(180deg, transparent, var(--notif-accent-soft));
+    border: 1px dashed rgba(0, 168, 132, 0.24);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.68);
+}
+
+body.dark .notification-list {
+    background:
+        linear-gradient(180deg, rgba(17, 27, 33, 0.48), transparent 24px),
+        #111b21;
+    scrollbar-color: rgba(94, 234, 212, 0.38) transparent;
+}
+
+body.dark .notification-search,
+body.dark .notification-toolbar {
+    background: rgba(17, 27, 33, 0.72);
+    border-color: rgba(94, 234, 212, 0.12);
+}
+
+body.dark .notification-search input,
+body.dark .notification-type-chip,
+body.dark .notification-toolbar-actions button {
+    color: #d1d7db;
+    border-color: rgba(134, 150, 160, 0.24);
+    background: rgba(32, 44, 51, 0.82);
+    box-shadow: none;
+}
+
+body.dark .notification-summary,
+body.dark .notification-group-label,
+body.dark .notification-message,
+body.dark .notification-time {
+    color: #aebac1;
+}
+
+body.dark .notification-item-wrap {
+    border-color: rgba(94, 234, 212, 0.13);
+    background: rgba(32, 44, 51, 0.88);
+    box-shadow: 0 10px 26px rgba(0, 0, 0, 0.18);
+}
+
+body.dark .notification-item-wrap.unread {
+    border-color: rgba(94, 234, 212, 0.34);
+    background:
+        linear-gradient(90deg, rgba(0, 168, 132, 0.2), rgba(32, 44, 51, 0.9) 58%),
+        rgba(32, 44, 51, 0.88);
+}
+
+body.dark .notification-item-wrap:has(.notification-item:hover),
+body.dark .notification-item-wrap:has(.notification-item:focus-visible),
+body.dark .notification-item-wrap:has(.notification-item-actions button:hover),
+body.dark .notification-item-wrap:has(.notification-item-actions button:focus-visible) {
+    border-color: rgba(94, 234, 212, 0.32);
+    background: #202c33;
+}
+
+body.dark .notification-item-wrap.unread:has(.notification-item:hover),
+body.dark .notification-item-wrap.unread:has(.notification-item:focus-visible),
+body.dark .notification-item-wrap.unread:has(.notification-item-actions button:hover),
+body.dark .notification-item-wrap.unread:has(.notification-item-actions button:focus-visible) {
+    background: linear-gradient(90deg, rgba(0, 168, 132, 0.24), #202c33 64%);
+}
+
+body.dark .notification-title {
+    color: #e9edef;
+}
+
+body.dark .notification-dot {
+    background: #3b4a54;
+}
+
+body.dark .notification-item-actions button {
+    color: #aebac1;
+    border-color: rgba(134, 150, 160, 0.24);
+    background: rgba(17, 27, 33, 0.82);
+    box-shadow: none;
+}
+
+body.dark .notification-item-actions button:hover,
+body.dark .notification-item-actions button:focus-visible {
+    color: #5eead4;
+    background: rgba(0, 168, 132, 0.16);
+}
+
+body.dark .notification-empty {
+    color: #aebac1;
+    border-color: rgba(94, 234, 212, 0.22);
+    background: rgba(32, 44, 51, 0.62);
 }
 
 @keyframes bellRing {
@@ -3145,6 +3285,248 @@ body.dark .store-panel {
     display: flex;
     align-items: center;
     gap: 10px;
+}
+
+.store-access-modal {
+    width: min(840px, 100%);
+    max-height: min(720px, calc(100vh - 40px));
+    overflow: auto;
+    padding: 14px;
+    border: 1px solid rgba(22, 143, 61, 0.18);
+    border-radius: 8px;
+    background: rgba(255, 255, 255, 0.86);
+    box-shadow: 0 10px 24px rgba(17, 27, 33, 0.08);
+    animation: riseIn 220ms ease both;
+}
+
+.store-access-head {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.store-access-head strong {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #0f6b2e;
+    font-size: 15px;
+}
+
+.store-access-head strong svg {
+    width: 18px;
+    height: 18px;
+}
+
+.store-access-head span {
+    display: block;
+    margin-top: 3px;
+    color: #477253;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.store-access-status {
+    flex: 0 0 auto;
+    padding: 5px 9px;
+    border-radius: 999px;
+    color: #ffffff !important;
+    font-size: 11px !important;
+    font-weight: 900 !important;
+    text-transform: uppercase;
+    background: linear-gradient(145deg, #0f7d33, #18a34a);
+}
+
+.store-access-head-actions {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    flex: 0 0 auto;
+}
+
+.store-access-form {
+    display: grid;
+    grid-template-columns: minmax(180px, 1.2fr) minmax(150px, 1fr) 120px auto;
+    gap: 10px;
+    align-items: end;
+}
+
+.store-access-form label {
+    display: grid;
+    gap: 5px;
+}
+
+.store-access-form label span {
+    color: #477253;
+    font-size: 11px;
+    font-weight: 900;
+    text-transform: uppercase;
+}
+
+.store-access-form input,
+.store-access-form select {
+    width: 100%;
+    height: 38px;
+    padding: 0 10px;
+    border: 1px solid rgba(34, 122, 53, 0.18);
+    border-radius: 8px;
+    outline: none;
+    color: var(--text);
+    background: rgba(255, 255, 255, 0.9);
+}
+
+.store-access-form input:focus,
+.store-access-form select:focus {
+    border-color: #168f3d;
+    box-shadow: 0 0 0 3px rgba(22, 143, 61, 0.12);
+}
+
+.store-access-form button {
+    height: 38px;
+    padding: 0 13px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border: 0;
+    border-radius: 8px;
+    color: #ffffff;
+    font-weight: 900;
+    background: #168f3d;
+    cursor: pointer;
+}
+
+.store-access-form button svg {
+    width: 16px;
+    height: 16px;
+}
+
+.store-access-list {
+    margin-top: 12px;
+    display: grid;
+    gap: 8px;
+    max-height: 190px;
+    overflow-y: auto;
+}
+
+.store-access-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto auto;
+    gap: 8px;
+    align-items: center;
+    padding: 9px 10px;
+    border: 1px solid rgba(34, 122, 53, 0.14);
+    border-radius: 8px;
+    background: rgba(247, 251, 246, 0.88);
+}
+
+.store-access-user {
+    min-width: 0;
+}
+
+.store-access-user strong,
+.store-access-user span {
+    display: block;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+
+.store-access-user strong {
+    color: #141d18;
+    font-size: 13px;
+}
+
+.store-access-user span {
+    margin-top: 2px;
+    color: #477253;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.store-access-role {
+    padding: 5px 9px;
+    border-radius: 999px;
+    color: #ffffff;
+    font-size: 10px;
+    font-weight: 900;
+    text-transform: uppercase;
+    background: #2563eb;
+}
+
+.store-access-role.editor {
+    background: #168f3d;
+}
+
+.store-access-role.admin {
+    background: #7c3aed;
+}
+
+.store-access-row button {
+    height: 30px;
+    padding: 0 9px;
+    border: 1px solid rgba(34, 122, 53, 0.18);
+    border-radius: 7px;
+    color: #0f6b2e;
+    font-size: 11px;
+    font-weight: 900;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+.store-access-row button:hover,
+.store-access-row button:focus-visible {
+    outline: none;
+    background: #ddf5e4;
+}
+
+body.dark .store-access-modal {
+    border-color: rgba(94, 234, 212, 0.14);
+    background: rgba(17, 27, 33, 0.9);
+}
+
+body.dark .store-access-head strong,
+body.dark .store-access-head span,
+body.dark .store-access-form label span,
+body.dark .store-access-user span {
+    color: #aebac1;
+}
+
+body.dark .store-access-form input,
+body.dark .store-access-form select,
+body.dark .store-access-row {
+    border-color: rgba(94, 234, 212, 0.14);
+    background: rgba(32, 44, 51, 0.88);
+}
+
+body.dark .store-access-user strong {
+    color: var(--text);
+}
+
+body.dark .store-access-row button {
+    color: #a9ef67;
+    border-color: rgba(94, 234, 212, 0.18);
+    background: rgba(17, 27, 33, 0.84);
+}
+
+#storeAccessButton {
+    color: #0f6b2e;
+}
+
+body.dark #storeAccessButton {
+    color: #a9ef67;
+}
+
+@media (max-width: 860px) {
+    .store-access-form {
+        grid-template-columns: 1fr;
+    }
+
+    .store-access-row {
+        grid-template-columns: 1fr 80px;
+    }
 }
 
 .store-search {
@@ -5662,6 +6044,7 @@ body.dark .call-card {
                 <div class="icon-row">
                     <button class="icon-btn" id="newChatButton" type="button" title="TrioAI" aria-label="TrioAI"><i data-lucide="bot"></i></button>
                     <button class="icon-btn" id="storeButton" type="button" title="Store" aria-label="Store"><i data-lucide="store"></i></button>
+                    <button class="icon-btn" id="storeAccessButton" type="button" title="Store Access" aria-label="Store Access" hidden><i data-lucide="shield-check"></i></button>
                     <div class="notification-wrap">
                         <button class="icon-btn" id="sheetNotificationButton" type="button" title="Notifications" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
                             <i data-lucide="bell"></i>
@@ -6122,6 +6505,44 @@ body.dark .call-card {
     </main>
 </section>
 
+<div class="modal-backdrop" id="storeAccessPanel" role="dialog" aria-modal="true" aria-labelledby="storeAccessTitle">
+    <section class="store-access-modal">
+        <div class="store-access-head">
+            <div>
+                <strong id="storeAccessTitle"><i data-lucide="shield-check"></i> Store Access</strong>
+                <span>Viewer can only view. Editor can update Store Remarks.</span>
+            </div>
+            <div class="store-access-head-actions">
+                <span class="store-access-status" id="storeAccessStatus">Admin</span>
+                <button class="icon-btn" id="closeStoreAccessButton" type="button" title="Close" aria-label="Close"><i data-lucide="x"></i></button>
+            </div>
+        </div>
+        <form class="store-access-form" id="storeAccessForm">
+            <label>
+                <span>User email</span>
+                <input id="storeAccessEmail" type="email" list="storeAccessUsers" placeholder="user@example.com" required>
+                <datalist id="storeAccessUsers"></datalist>
+            </label>
+            <label>
+                <span>Name</span>
+                <input id="storeAccessName" type="text" placeholder="User name">
+            </label>
+            <label>
+                <span>Role</span>
+                <select id="storeAccessRole">
+                    <option value="viewer">Viewer</option>
+                    <option value="editor">Editor</option>
+                    <option value="">No access</option>
+                </select>
+            </label>
+            <button type="submit"><i data-lucide="save"></i><span>Save</span></button>
+        </form>
+        <div class="store-access-list" id="storeAccessList">
+            <div class="store-empty">Open Store Access to load users</div>
+        </div>
+    </section>
+</div>
+
 <div class="modal-backdrop" id="profileModal" role="dialog" aria-modal="true" aria-labelledby="profileTitle">
     <form class="profile-modal" id="profileForm">
         <div class="modal-head">
@@ -6306,7 +6727,8 @@ body.dark .call-card {
 <script>
 const CONFIG = {
     APPS_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwEoVCdfvTwRsC5EvgHvtTvtzODtf6tzMiPk0TJiM0e1ucr9NVWoureNLv7vhOBIO6y/exec",
-    STORE_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwNV3OrAeVzHWBS0DwshJHPifXdajx1xji4D0hrl8gYw2RtBQKo-hjc1-AA-ohuw_nl/exec"
+    STORE_SCRIPT_URL: "https://script.google.com/macros/s/AKfycbwNV3OrAeVzHWBS0DwshJHPifXdajx1xji4D0hrl8gYw2RtBQKo-hjc1-AA-ohuw_nl/exec",
+    STORE_ADMIN_EMAIL: "arpannazir694@gmail.com"
 };
 
 // Typing Animation
@@ -6432,12 +6854,22 @@ const chatBody = document.getElementById("chatBody");
 const chatForm = document.getElementById("chatForm");
 const newChatButton = document.getElementById("newChatButton");
 const storeButton = document.getElementById("storeButton");
+const storeAccessButton = document.getElementById("storeAccessButton");
 const storePanel = document.getElementById("storePanel");
 const storeTableBody = document.getElementById("storeTableBody");
 const storeSearchInput = document.getElementById("storeSearchInput");
 const storeRefreshButton = document.getElementById("storeRefreshButton");
 const storeClearFiltersButton = document.getElementById("storeClearFiltersButton");
 const storeStatus = document.getElementById("storeStatus");
+const storeAccessPanel = document.getElementById("storeAccessPanel");
+const storeAccessForm = document.getElementById("storeAccessForm");
+const storeAccessEmail = document.getElementById("storeAccessEmail");
+const storeAccessName = document.getElementById("storeAccessName");
+const storeAccessRole = document.getElementById("storeAccessRole");
+const storeAccessList = document.getElementById("storeAccessList");
+const storeAccessStatus = document.getElementById("storeAccessStatus");
+const storeAccessUsers = document.getElementById("storeAccessUsers");
+const closeStoreAccessButton = document.getElementById("closeStoreAccessButton");
 const sheetNotificationButton = document.getElementById("sheetNotificationButton");
 const notificationBadge = document.getElementById("notificationBadge");
 const notificationPopover = document.getElementById("notificationPopover");
@@ -6626,6 +7058,7 @@ let notificationTypeFilter = "all";
 let notificationSoundEnabled = localStorage.getItem("trioai_notification_sound") === "on";
 let notificationDesktopEnabled = localStorage.getItem("trioai_notification_desktop") === "on";
 let dismissedNotificationIds = new Set();
+let notificationLoadError = "";
 let appClockTimer = null;
 let appWeatherTimer = null;
 let appWeatherRequestInFlight = null;
@@ -6640,6 +7073,10 @@ let activeStoreRowNumber = null;
 let activeStoreColumnIndex = 0;
 let lastStoreSelectedRowNumber = null;
 let selectedStoreRowNumbers = new Set();
+let currentStoreAccessRole = "";
+let storeAccessLoaded = false;
+let storeAccessEntries = [];
+let storeAccessUserOptions = [];
 
 function init() {
     renderEmojiTabs();
@@ -6995,7 +7432,46 @@ async function updateAppWeather() {
     }
 }
 
-function openStorePanel() {
+function isStoreAdmin() {
+    return (currentUser?.email || "").toLowerCase() === CONFIG.STORE_ADMIN_EMAIL;
+}
+
+function canViewStore() {
+    return ["viewer", "editor", "admin"].includes(currentStoreAccessRole);
+}
+
+function canEditStore() {
+    return ["editor", "admin"].includes(currentStoreAccessRole);
+}
+
+function storeRoleLabel(role) {
+    if (role === "admin") return "Admin";
+    if (role === "editor") return "Editor";
+    if (role === "viewer") return "Viewer";
+    return "No access";
+}
+
+function updateAdminControls() {
+    if (storeAccessButton) storeAccessButton.hidden = !isStoreAdmin();
+}
+
+async function openStoreAccessModal() {
+    if (!isStoreAdmin()) return;
+    closeMenu();
+    closeNotificationPopover();
+    currentStoreAccessRole = "admin";
+    storeAccessLoaded = true;
+    if (storeAccessPanel) storeAccessPanel.classList.add("open");
+    renderStoreAccessPanel();
+    await loadStoreAccessAdminData();
+    if (window.lucide) lucide.createIcons();
+}
+
+function closeStoreAccessModal() {
+    if (storeAccessPanel) storeAccessPanel.classList.remove("open");
+}
+
+async function openStorePanel() {
     closeMenu();
     closeNotificationPopover();
     appRoot.classList.add("chat-open");
@@ -7006,6 +7482,16 @@ function openStorePanel() {
     chatAvatar.innerHTML = '<i data-lucide="warehouse"></i>';
     storeButton?.classList.add("active");
     if (window.lucide) lucide.createIcons();
+    await ensureStoreAccess();
+    if (!canViewStore()) {
+        storeLoaded = false;
+        storeRows = [];
+        if (storeTableBody) {
+            storeTableBody.innerHTML = '<tr><td colspan="7" class="store-error">You do not have Store access. Ask admin for Viewer or Editor access.</td></tr>';
+        }
+        setStoreStatus("Access denied");
+        return;
+    }
     if (!storeLoaded) loadStoreRows();
 }
 
@@ -7014,8 +7500,135 @@ function closeStorePanel() {
     storeButton?.classList.remove("active");
 }
 
+async function ensureStoreAccess(force = false) {
+    if (!currentUser) return "";
+    if (storeAccessLoaded && !force) return currentStoreAccessRole;
+
+    setStoreStatus("Checking access...");
+    try {
+        const response = await storeRequest("getStoreAccess", {
+            email: currentUser.email,
+            name: currentUser.name || ""
+        });
+        currentStoreAccessRole = response.role || "";
+        storeAccessLoaded = true;
+        if (currentStoreAccessRole === "admin") {
+            await loadStoreAccessAdminData();
+        }
+    } catch (error) {
+        currentStoreAccessRole = "";
+        storeAccessLoaded = false;
+        showToast(error.message || "Could not check Store access");
+    }
+    return currentStoreAccessRole;
+}
+
+async function loadStoreAccessAdminData() {
+    if (!isStoreAdmin()) return;
+    try {
+        const [accessResponse, usersResponse] = await Promise.all([
+            storeRequest("getStoreAccessList", { email: currentUser.email }),
+            apiRequest("getAllUsers", {}).catch(() => ({ users: [] }))
+        ]);
+        storeAccessEntries = Array.isArray(accessResponse.access) ? accessResponse.access : [];
+        storeAccessUserOptions = Array.isArray(usersResponse.users) ? usersResponse.users : [];
+        renderStoreAccessPanel();
+    } catch (error) {
+        storeAccessEntries = [];
+        showToast(error.message || "Could not load Store access list");
+    }
+}
+
+function renderStoreAccessPanel() {
+    if (storeAccessStatus) storeAccessStatus.textContent = storeRoleLabel(currentStoreAccessRole);
+    updateAdminControls();
+    if (currentStoreAccessRole !== "admin") return;
+
+    if (storeAccessUsers) {
+        storeAccessUsers.innerHTML = storeAccessUserOptions
+            .filter((user) => user?.email)
+            .map((user) => '<option value="' + escapeHtml(user.email) + '">' + escapeHtml(user.name || user.email) + '</option>')
+            .join("");
+    }
+
+    if (!storeAccessList) return;
+    const rows = storeAccessEntries.filter((entry) => entry.email && entry.role);
+    if (!rows.length) {
+        storeAccessList.innerHTML = '<div class="store-empty">No Store users yet</div>';
+        return;
+    }
+
+    storeAccessList.innerHTML = "";
+    rows.forEach((entry) => {
+        const row = document.createElement("div");
+        row.className = "store-access-row";
+        row.innerHTML =
+            '<div class="store-access-user">' +
+                '<strong>' + escapeHtml(entry.name || entry.email) + '</strong>' +
+                '<span>' + escapeHtml(entry.email) + '</span>' +
+            '</div>' +
+            '<span class="store-access-role ' + escapeHtml(entry.role) + '">' + escapeHtml(storeRoleLabel(entry.role)) + '</span>' +
+            '<button type="button" data-store-access-edit="' + escapeHtml(entry.email) + '">Edit</button>' +
+            '<button type="button" data-store-access-remove="' + escapeHtml(entry.email) + '">Remove</button>';
+        storeAccessList.appendChild(row);
+    });
+}
+
+function fillStoreAccessForm(entry) {
+    if (!entry) return;
+    if (storeAccessEmail) storeAccessEmail.value = entry.email || "";
+    if (storeAccessName) storeAccessName.value = entry.name || "";
+    if (storeAccessRole) storeAccessRole.value = entry.role || "";
+}
+
+async function saveStoreAccess(event) {
+    event.preventDefault();
+    if (!isStoreAdmin()) return;
+
+    const email = (storeAccessEmail?.value || "").trim().toLowerCase();
+    const name = (storeAccessName?.value || "").trim();
+    const role = storeAccessRole?.value || "";
+    if (!email) {
+        showToast("User email required");
+        return;
+    }
+
+    try {
+        await storeRequest("setStoreAccess", {
+            email: currentUser.email,
+            targetEmail: email,
+            targetName: name,
+            role
+        });
+        if (storeAccessForm) storeAccessForm.reset();
+        await loadStoreAccessAdminData();
+        showToast(role ? "Store access saved" : "Store access removed");
+    } catch (error) {
+        showToast(error.message || "Could not save Store access");
+    }
+}
+
+async function removeStoreAccess(email) {
+    if (!isStoreAdmin() || !email) return;
+    try {
+        await storeRequest("setStoreAccess", {
+            email: currentUser.email,
+            targetEmail: email,
+            role: ""
+        });
+        await loadStoreAccessAdminData();
+        showToast("Store access removed");
+    } catch (error) {
+        showToast(error.message || "Could not remove Store access");
+    }
+}
+
 async function loadStoreRows(force = false) {
     if (storeLoading) return;
+    if (!canViewStore()) {
+        setStoreStatus("Access denied");
+        return;
+    }
     if (storeLoaded && !force) {
         renderStoreRows();
         return;
@@ -7028,7 +7641,9 @@ async function loadStoreRows(force = false) {
     }
 
     try {
-        const response = await storeRequest("getStoreData", {});
+        const response = await storeRequest("getStoreData", { email: currentUser?.email || "" });
+        currentStoreAccessRole = response.accessRole || currentStoreAccessRole;
+        renderStoreAccessPanel();
         storeRows = normalizeStoreRows(response.rows || response.data || []);
         storeLoaded = true;
         renderStoreRows();
@@ -7118,6 +7733,8 @@ function renderStoreRows() {
             '<option value="Stock">Stock</option>' +
             '<option value="Not Require">Not Require</option>';
         select.value = row.storeRemarks === "Stock" || row.storeRemarks === "Not Require" ? row.storeRemarks : "";
+        select.disabled = !canEditStore();
+        select.title = canEditStore() ? "Update Store Remarks" : "Viewer access only";
         select.addEventListener("change", () => updateStoreRemark(row, select));
         select.addEventListener("keydown", (event) => handleStoreRemarkKeydown(event, row, 6));
         select.addEventListener("focus", () => setActiveStoreCell(row.rowNumber, 6, false));
@@ -7129,7 +7746,7 @@ function renderStoreRows() {
         storeTableBody.appendChild(tr);
     });
 
-    setStoreStatus(filteredRows.length + " of " + storeRows.length + " rows" + (hasActiveStoreFilters() ? " filtered" : ""));
+    setStoreStatus(storeRoleLabel(currentStoreAccessRole) + " · " + filteredRows.length + " of " + storeRows.length + " rows" + (hasActiveStoreFilters() ? " filtered" : ""));
     updateStoreFilterButtons();
     syncStoreSelectionClasses();
     if (window.lucide) lucide.createIcons();
@@ -7579,6 +8196,10 @@ function getStoreRowByNumber(rowNumber) {
 }
 
 async function fillStoreRemarksFromActive(row) {
+    if (!canEditStore()) {
+        showToast("Viewer access cannot update Store Remarks");
+        return;
+    }
     const sourceValue = getStoreSelectByRowNumber(activeStoreRowNumber)?.value || row.storeRemarks || "";
     if (!sourceValue) {
         showToast("Select Stock or Not Require first");
@@ -7593,6 +8214,11 @@ async function fillStoreRemarksFromActive(row) {
 }
 
 async function updateStoreRemark(row, select) {
+    if (!canEditStore()) {
+        select.value = row.storeRemarks || "";
+        showToast("Viewer access cannot update Store Remarks");
+        return;
+    }
     const previous = row.storeRemarks || "";
     const next = select.value;
     select.classList.add("is-saving");
@@ -7601,6 +8227,7 @@ async function updateStoreRemark(row, select) {
 
     try {
         await storeRequest("updateStoreRemark", {
+            email: currentUser?.email || "",
             rowNumber: row.rowNumber,
             storeRemarks: next,
             itb: row.itb,
@@ -7632,6 +8259,10 @@ async function updateStoreRemark(row, select) {
 }
 
 async function updateStoreRemarksBulk(rows, value) {
+    if (!canEditStore()) {
+        showToast("Viewer access cannot update Store Remarks");
+        return;
+    }
     const normalizedRows = rows.filter((row) => row && row.storeRemarks !== value);
     if (!normalizedRows.length) {
         showToast("Selected cells already match");
@@ -7647,6 +8278,7 @@ async function updateStoreRemarksBulk(rows, value) {
         const chunks = chunkArray(normalizedRows, 35);
         for (const chunk of chunks) {
             await storeRequest("updateStoreRemarks", {
+                email: currentUser?.email || "",
                 storeRemarks: value,
                 updatedBy: currentUser?.name || "Unknown",
                 updatedEmail: currentUser?.email || "",
@@ -8194,10 +8826,33 @@ function bindEvents() {
 
     newChatButton.addEventListener("click", () => selectAiChat());
     if (storeButton) storeButton.addEventListener("click", openStorePanel);
+    if (storeAccessButton) storeAccessButton.addEventListener("click", openStoreAccessModal);
+    if (closeStoreAccessButton) closeStoreAccessButton.addEventListener("click", closeStoreAccessModal);
     const storeExcelButton = document.getElementById("storeExcelButton");
     if (storeExcelButton) storeExcelButton.addEventListener("click", downloadStoreExcel);
     if (storeRefreshButton) storeRefreshButton.addEventListener("click", () => loadStoreRows(true));
     if (storeClearFiltersButton) storeClearFiltersButton.addEventListener("click", clearStoreFilters);
+    if (storeAccessForm) storeAccessForm.addEventListener("submit", saveStoreAccess);
+    if (storeAccessEmail) {
+        storeAccessEmail.addEventListener("change", () => {
+            const email = storeAccessEmail.value.trim().toLowerCase();
+            const user = storeAccessUserOptions.find((item) => (item.email || "").toLowerCase() === email);
+            if (user && storeAccessName && !storeAccessName.value.trim()) storeAccessName.value = user.name || "";
+        });
+    }
+    if (storeAccessList) {
+        storeAccessList.addEventListener("click", (event) => {
+            const editButton = event.target.closest("[data-store-access-edit]");
+            const removeButton = event.target.closest("[data-store-access-remove]");
+            if (editButton) {
+                const entry = storeAccessEntries.find((item) => item.email === editButton.dataset.storeAccessEdit);
+                fillStoreAccessForm(entry);
+            }
+            if (removeButton) {
+                removeStoreAccess(removeButton.dataset.storeAccessRemove);
+            }
+        });
+    }
     document.querySelectorAll("[data-store-filter]").forEach((button) => {
         button.addEventListener("click", (event) => {
             event.stopPropagation();
@@ -8442,6 +9097,7 @@ function bindEvents() {
         if (!event.target.closest(".store-filter-popover") && !event.target.closest("[data-store-filter]")) closeStoreFilter();
         if (!event.target.closest(".store-context-menu")) closeStoreContextMenu();
         if (!event.target.closest(".store-history-popover") && !event.target.closest(".store-context-menu")) closeStoreHistory();
+        if (event.target === storeAccessPanel) closeStoreAccessModal();
         if (event.target === profileModal) closeProfileModal();
         if (event.target === activityModal) closeActivityModal();
         if (event.target === forwardModal) closeForwardModal();
@@ -8456,6 +9112,7 @@ function bindEvents() {
         closeStoreFilter();
         closeStoreContextMenu();
         closeStoreHistory();
+        closeStoreAccessModal();
         closeEmojiPanel();
         closeMessageSearchPanel();
         closeProfileModal();
@@ -8813,6 +9470,9 @@ function signOut() {
     persistBotMessages();
     goOffline();
     currentUser = null;
+    currentStoreAccessRole = "";
+    storeAccessLoaded = false;
+    storeAccessEntries = [];
     stopPolling();
     stopNotificationPolling();
     localStorage.removeItem("trioai_user");
@@ -9283,13 +9943,14 @@ function buildNotificationItem(item) {
 }
 
 async function loadSheetNotifications(showNewToast = false) {
-    if (!currentUser) return;
+    if (!currentUser) return false;
 
     try {
         const response = await apiRequest("getNotifications", { email: currentUser.email });
-        const incoming = response.notifications || [];
+        const incoming = Array.isArray(response.notifications) ? response.notifications : [];
         const freshUnread = incoming.filter((item) => !item.read && !notificationSeenIds.has(String(item.id)));
 
+        notificationLoadError = "";
         sheetNotifications = incoming;
         freshNotificationIds = new Set(freshUnread.map((item) => String(item.id)));
         incoming.forEach((item) => notificationSeenIds.add(String(item.id)));
@@ -9307,8 +9968,12 @@ async function loadSheetNotifications(showNewToast = false) {
                 renderNotifications();
             }, 2600);
         }
+        return true;
     } catch (error) {
         console.error("Failed to load notifications:", error);
+        notificationLoadError = error.message || "Could not load notifications";
+        renderNotifications();
+        return false;
     }
 }
 
@@ -9353,6 +10018,13 @@ function renderNotifications() {
     const emptyText = notificationSearchQuery
         ? "No matching notifications"
         : (showUnreadOnly ? "No unread notifications" : (notificationTypeFilter !== "all" ? "No " + notificationTypeFilter + " notifications" : "No notifications yet"));
+
+    if (notificationLoadError && !sheetNotifications.length) {
+        notificationList.innerHTML = '<div class="notification-empty">' + escapeHtml(notificationLoadError) + '</div>';
+        if (notificationSummary) notificationSummary.textContent = "Notifications unavailable";
+        if (window.lucide) lucide.createIcons();
+        return;
+    }
 
     if (!visibleNotifications.length) {
         notificationList.innerHTML = '<div class="notification-empty">' + emptyText + '</div>';
@@ -9400,9 +10072,10 @@ function refreshNotificationsNow(event) {
     if (event) event.stopPropagation();
     if (!currentUser) return;
     refreshNotificationsButton.classList.add("spinning");
-    loadSheetNotifications(false).finally(() => {
+    loadSheetNotifications(false).then((ok) => {
+        showToast(ok ? "Notifications refreshed" : "Could not load notifications");
+    }).finally(() => {
         refreshNotificationsButton.classList.remove("spinning");
-        showToast("Notifications refreshed");
     });
 }
 
