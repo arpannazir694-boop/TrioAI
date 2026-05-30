@@ -1135,6 +1135,22 @@ body.dark .notification-wrap.has-unread .icon-btn {
     animation: bellRing 900ms cubic-bezier(.36,.07,.19,.97) both;
 }
 
+.store-access-pending-wrap { margin-bottom: 8px; }
+.pending-section-title { font-size: 13px; font-weight: 600; color: var(--text-secondary); display: flex; align-items: center; gap: 6px; padding: 8px 0 4px; border-bottom: 1px solid var(--border); margin-bottom: 8px; }
+.pending-signup-card { display: flex; align-items: center; justify-content: space-between; padding: 8px 10px; border-radius: 8px; background: var(--surface-2, rgba(255,255,255,0.05)); margin-bottom: 6px; }
+.pending-user-info { display: flex; flex-direction: column; }
+.pending-user-info strong { font-size: 13px; }
+.pending-user-info span { font-size: 11px; color: var(--text-secondary); }
+.pending-actions { display: flex; gap: 6px; }
+.approve-btn, .deny-btn { width: 30px; height: 30px; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+.approve-btn { background: #22c55e22; color: #22c55e; }
+.approve-btn:hover { background: #22c55e44; }
+.deny-btn { background: #ef444422; color: #ef4444; }
+.deny-btn:hover { background: #ef444444; }
+#pendingApprovalView { display: none; flex-direction: column; align-items: center; text-align: center; gap: 14px; padding: 24px 0; }
+#pendingApprovalView.active { display: flex; }
+.pending-icon { width: 60px; height: 60px; border-radius: 50%; background: var(--accent-subtle, rgba(99,102,241,.15)); display: flex; align-items: center; justify-content: center; font-size: 28px; color: var(--accent, #6366f1); }
+.pending-msg { font-size: 14px; color: var(--text-secondary); max-width: 280px; line-height: 1.5; }
 .notification-wrap.ringing .notification-badge {
     animation: badgePop 700ms ease both;
 }
@@ -5978,6 +5994,13 @@ body.dark .call-card {
                 <div id="signupStatus" class="status-line"></div>
             </form>
 
+            <div class="auth-form" id="pendingApprovalView">
+                <div class="pending-icon"><i data-lucide="clock"></i></div>
+                <h2 class="form-title">Awaiting Approval</h2>
+                <p class="pending-msg">Your signup has been submitted. You can sign in once the admin approves your account.</p>
+                <button class="ghost-btn" type="button" onclick="showAuthForm('signin')">Back to Sign in</button>
+            </div>
+
             <form class="auth-form" id="forgotForm">
                 <h2 class="form-title">Reset password</h2>
                 <div id="forgotStepEmail">
@@ -6044,7 +6067,7 @@ body.dark .call-card {
                 <div class="icon-row">
                     <button class="icon-btn" id="newChatButton" type="button" title="TrioAI" aria-label="TrioAI"><i data-lucide="bot"></i></button>
                     <button class="icon-btn" id="storeButton" type="button" title="Store" aria-label="Store"><i data-lucide="store"></i></button>
-                    <button class="icon-btn" id="storeAccessButton" type="button" title="Store Access" aria-label="Store Access" hidden><i data-lucide="shield-check"></i></button>
+                    <button class="icon-btn" id="storeAccessButton" type="button" title="Store Access" aria-label="Store Access" hidden><i data-lucide="shield-check"></i><span class="notification-badge" id="accessBadge"></span></button>
                     <div class="notification-wrap">
                         <button class="icon-btn" id="sheetNotificationButton" type="button" title="Notifications" aria-label="Notifications" aria-haspopup="true" aria-expanded="false">
                             <i data-lucide="bell"></i>
@@ -6537,6 +6560,7 @@ body.dark .call-card {
             </label>
             <button type="submit"><i data-lucide="save"></i><span>Save</span></button>
         </form>
+        <div class="store-access-pending-wrap" id="storeAccessPending"></div>
         <div class="store-access-list" id="storeAccessList">
             <div class="store-empty">Open Store Access to load users</div>
         </div>
@@ -7463,7 +7487,7 @@ async function openStoreAccessModal() {
     storeAccessLoaded = true;
     if (storeAccessPanel) storeAccessPanel.classList.add("open");
     renderStoreAccessPanel();
-    await loadStoreAccessAdminData();
+    await Promise.all([loadStoreAccessAdminData(), loadPendingSignups()]);
     if (window.lucide) lucide.createIcons();
 }
 
@@ -9132,8 +9156,10 @@ function showAuthForm(name) {
     signinForm.classList.toggle("active", name === "signin");
     signupForm.classList.toggle("active", name === "signup");
     forgotForm.classList.toggle("active", name === "forgot");
+    const pendingView = document.getElementById("pendingApprovalView");
+    if (pendingView) pendingView.classList.toggle("active", name === "pending");
 
-    if (name === "forgot") {
+    if (name === "forgot" || name === "pending") {
         document.querySelectorAll("[data-auth-tab]").forEach((button) => button.classList.remove("active"));
     }
 }
@@ -9158,7 +9184,7 @@ async function handleSignin(event) {
             email: valueOf("signinEmail"),
             password: valueOf("signinPassword")
         });
-        startSession(response.user || fallbackUser(valueOf("signinEmail")));
+        startSession(response.user);
     } catch (error) {
         setStatus(signinStatus, error.message, "error");
     } finally {
@@ -9178,13 +9204,11 @@ async function handleSignup(event) {
             email: valueOf("signupEmail"),
             password: valueOf("signupPassword")
         });
-        setStatus(signupStatus, "Account created", "success");
-        startSession(response.user || {
-            name: valueOf("signupName"),
-            email: valueOf("signupEmail"),
-            avatarUrl: "",
-            bio: ""
-        });
+        if (response.approval === "pending") {
+            showAuthForm("pending");
+        } else {
+            startSession(response.user);
+        }
     } catch (error) {
         setStatus(signupStatus, error.message, "error");
     } finally {
@@ -9464,6 +9488,7 @@ function startSession(user, persist = true) {
     selectAiChat();
     startPolling();
     showToast("Signed in");
+    if (isStoreAdmin()) loadPendingSignupsCount();
 }
 
 function signOut() {
@@ -9484,6 +9509,81 @@ function signOut() {
     closeMenu();
     showAuthForm("signin");
     showToast("Signed out");
+}
+
+async function loadPendingSignupsCount() {
+    if (!currentUser) return;
+    try {
+        const data = await apiRequest("getPendingSignupsCount", { email: currentUser.email });
+        const badge = document.getElementById("accessBadge");
+        if (!badge) return;
+        if (data.count > 0) {
+            badge.textContent = data.count > 99 ? "99+" : String(data.count);
+            badge.classList.add("show");
+        } else {
+            badge.textContent = "";
+            badge.classList.remove("show");
+        }
+    } catch (_) {}
+}
+
+async function loadPendingSignups() {
+    const wrap = document.getElementById("storeAccessPending");
+    if (!wrap || !currentUser) return;
+    try {
+        const data = await apiRequest("getPendingSignups", { email: currentUser.email });
+        renderPendingSignups(data.users || []);
+    } catch (e) {
+        wrap.innerHTML = '<p class="store-empty">Could not load pending signups</p>';
+    }
+}
+
+function renderPendingSignups(users) {
+    const wrap = document.getElementById("storeAccessPending");
+    if (!wrap) return;
+    if (!users.length) {
+        wrap.innerHTML = "";
+        return;
+    }
+    const heading = '<h3 class="pending-section-title"><i data-lucide="user-plus"></i> Pending Approvals (' + users.length + ')</h3>';
+    const cards = users.map(u => {
+        return '<div class="pending-signup-card">'  +
+            '<div class="pending-user-info"><strong>' + escHtml(u.name) + '</strong><span>' + escHtml(u.email) + '</span></div>' +
+            '<div class="pending-actions">'  +
+            '  <button class="approve-btn" onclick="approveSignup(\'' + u.id + '\')" title="Approve"><i data-lucide="check"></i></button>' +
+            '  <button class="deny-btn" onclick="denySignup(\'' + u.id + '\')" title="Deny"><i data-lucide="x"></i></button>' +
+            '</div></div>';
+    }).join("");
+    wrap.innerHTML = heading + cards;
+    if (window.lucide) lucide.createIcons();
+}
+
+function escHtml(str) {
+    return String(str || "").replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+async function approveSignup(userId) {
+    if (!currentUser) return;
+    try {
+        await apiRequest("approveSignup", { email: currentUser.email, targetId: userId });
+        showToast("User approved");
+        await loadPendingSignups();
+        loadPendingSignupsCount();
+    } catch (e) {
+        showToast(e.message || "Failed to approve", "error");
+    }
+}
+
+async function denySignup(userId) {
+    if (!currentUser) return;
+    try {
+        await apiRequest("denySignup", { email: currentUser.email, targetId: userId });
+        showToast("User denied");
+        await loadPendingSignups();
+        loadPendingSignupsCount();
+    } catch (e) {
+        showToast(e.message || "Failed to deny", "error");
+    }
 }
 
 function normalizeUser(user) {
