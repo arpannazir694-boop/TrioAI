@@ -6632,7 +6632,380 @@ body.dark .call-card {
         max-height: 130px;
     }
 }
+
+
+/* === ChatGPT Enhanced Group Chat UI Override === */
+.group-chat-section{
+border-radius:20px!important;
+background:linear-gradient(180deg,rgba(255,255,255,.96),rgba(248,251,249,.98))!important;
+box-shadow:0 12px 32px rgba(0,128,105,.16)!important;
+}
+.group-chat-head{
+background:linear-gradient(135deg,#00a884,#008069)!important;
+}
+.group-chat-messages{
+background-image:
+radial-gradient(rgba(0,168,132,.05) 1px, transparent 1px),
+linear-gradient(180deg,#f6fffb,#eefaf4)!important;
+background-size:18px 18px,100% 100%!important;
+}
+.group-msg{
+border:1px solid rgba(0,168,132,.08);
+backdrop-filter:blur(8px);
+}
+.group-msg-wrap.own .group-msg{
+background:linear-gradient(135deg,#00a884,#008069)!important;
+}
+.gc-avatar{
+width:34px;height:34px;
+border:2px solid rgba(255,255,255,.7);
+}
+.group-msg-name{
+font-size:12px!important;
+letter-spacing:.2px;
+}
+.gc-reaction{
+box-shadow:0 2px 8px rgba(0,0,0,.08);
+}
+.group-online-badge{
+background:rgba(255,255,255,.22)!important;
+backdrop-filter:blur(8px);
+}
+
+
+/* ===== Stylish UI Upgrade ===== */
+:root{
+--green:#16a34a;
+--green-dark:#15803d;
+}
+body{
+background:linear-gradient(180deg,#e8fff2 0,#f5fff8 220px,#f8fafc 100%) !important;
+}
+.app,.auth-card{
+border-radius:24px !important;
+box-shadow:0 20px 60px rgba(0,0,0,.12) !important;
+}
+.group-chat-head{
+background:linear-gradient(135deg,#10b981,#22c55e,#14b8a6) !important;
+}
+.group-chat-section{
+border-radius:24px !important;
+box-shadow:0 10px 35px rgba(16,185,129,.18) !important;
+}
+.group-chat-messages{
+background:linear-gradient(180deg,#f8fffb,#eefcf4) !important;
+}
+.search-box,.field-row{
+border-radius:16px !important;
+backdrop-filter:blur(10px);
+}
+.primary-btn{
+border-radius:16px !important;
+background:linear-gradient(135deg,#10b981,#22c55e) !important;
+}
+.primary-btn:hover{
+filter:brightness(1.05);
+}
+.avatar{
+box-shadow:0 8px 20px rgba(16,185,129,.25);
+}
+
+
+.group-users-popup{position:absolute;top:70px;right:12px;width:320px;max-height:420px;overflow:auto;background:#fff;border-radius:18px;padding:12px;box-shadow:0 20px 50px rgba(0,0,0,.25);z-index:999;display:none}
+.group-users-popup.show{display:block;animation:fadeIn .2s}
+.group-user-card{display:flex;align-items:center;gap:12px;padding:10px;margin-bottom:8px;border-radius:14px;background:linear-gradient(135deg,#e8fff4,#eefaf7)}
+.group-user-avatar{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;color:#fff;font-weight:800}
+.group-user-name{font-weight:800}
+.group-user-email{font-size:12px;color:#666}
 </style>
+
+<style id="chatgpt-send-icon-unify">
+/* Make Group Chat + Chatbot send buttons identical */
+.gc-send-btn,
+.send-btn{
+    width:46px !important;
+    height:46px !important;
+    border-radius:50% !important;
+    background:#22c55e !important;
+    display:grid !important;
+    place-items:center !important;
+    box-shadow:0 8px 20px rgba(34,197,94,.25) !important;
+}
+
+.gc-send-btn svg,
+.send-btn svg{
+    width:18px !important;
+    height:18px !important;
+    stroke:#fff !important;
+    fill:none !important;
+    stroke-width:2 !important;
+    stroke-linecap:round !important;
+    stroke-linejoin:round !important;
+}
+
+/* Hide any filled icon and use same slim outline look */
+.gc-send-btn i,
+.send-btn i{
+    font-size:18px !important;
+}
+.group-msg-wrap.own .group-msg-time-own{
+    color:#4b5563 !important;
+    opacity:1 !important;
+    font-weight:600 !important;
+}
+
+.group-msg-wrap.own .group-msg-foot{
+    margin-top:4px !important;
+}
+</style>
+
+
+<style id="deep-green-send-buttons">
+.gc-send-btn,
+.send-btn,
+.chatbot-send-btn,
+.ai-send-btn{
+    background:#0a6e2d !important;
+    border:none !important;
+    box-shadow:0 8px 20px rgba(10,110,45,.35) !important;
+}
+.gc-send-btn:hover,
+.send-btn:hover,
+.chatbot-send-btn:hover,
+.ai-send-btn:hover{
+    background:#085824 !important;
+}
+.gc-send-btn svg,
+.send-btn svg,
+.chatbot-send-btn svg,
+.ai-send-btn svg,
+.gc-send-btn i,
+.send-btn i,
+.chatbot-send-btn i,
+.ai-send-btn i{
+    color:#ffffff !important;
+}
+</style>
+
+
+<style id="same-send-icon-fix">
+.gc-send-btn svg,
+.send-btn svg,
+.icon-btn svg[data-lucide="send-horizontal"]{
+    width:18px !important;
+    height:18px !important;
+    stroke-width:2 !important;
+}
+</style>
+
+
+<style id="mention-visibility-fix">
+/* Make mentions clearly visible on own messages */
+.group-msg-wrap.own .group-mention{
+    display:inline-flex !important;
+    align-items:center !important;
+    padding:3px 8px !important;
+    border-radius:999px !important;
+    background:#ffffff !important;
+    color:#128C7E !important;
+    font-weight:800 !important;
+    text-shadow:none !important;
+    opacity:1 !important;
+    margin-right:4px !important;
+}
+
+.group-msg-wrap.own .group-msg-text{
+    color:#111b21 !important;
+}
+
+.group-msg-wrap.own .group-msg{
+    background:#d9fdd3 !important;
+}
+</style>
+
+
+<style id="deep-green-group-header">
+.group-chat-head{
+    background:#0b6b37 !important;
+}
+.group-chat-head::before,
+.group-chat-head::after{
+    display:none !important;
+}
+.group-chat-icon-wrap{
+    background:rgba(255,255,255,.12) !important;
+    border:1px solid rgba(255,255,255,.25) !important;
+}
+.group-online-badge{
+    background:rgba(255,255,255,.14) !important;
+    border:1px solid rgba(255,255,255,.18) !important;
+}
+.group-online-dot{
+    background:#b7ff7a !important;
+}
+.group-chat-head-actions .icon-btn{
+    background:rgba(255,255,255,.10) !important;
+}
+</style>
+
+
+
+
+
+<style id="real-online-avatar-stack-patch">
+.group-online-badge{
+display:flex!important;
+align-items:center!important;
+gap:0!important;
+background:transparent!important;
+border:none!important;
+padding:0!important;
+}
+.group-online-dot{display:none!important;}
+.group-online-badge .avatar-stack{
+display:flex;
+align-items:center;
+}
+.group-online-badge .avatar-stack .mini-avatar{
+width:28px;height:28px;border-radius:50%;
+border:2px solid #0b6b37;
+margin-left:-8px;
+object-fit:cover;
+background:#fff;
+}
+.group-online-badge .avatar-stack .mini-avatar:first-child{margin-left:0;}
+.group-online-badge .more-count{
+width:28px;height:28px;border-radius:50%;
+background:rgba(255,255,255,.2);
+color:#fff;font-size:11px;font-weight:700;
+display:flex;align-items:center;justify-content:center;
+margin-left:-8px;border:2px solid #0b6b37;
+}
+</style>
+
+
+<style id="initial-avatar-stack-style">
+.group-online-badge{
+    display:flex !important;
+    align-items:center !important;
+    gap:0 !important;
+    background:transparent !important;
+    border:none !important;
+}
+.group-online-dot{display:none !important;}
+.online-initial{
+    width:30px;
+    height:30px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-left:-8px;
+    border:2px solid #0a6e2d;
+    color:#fff;
+    font-size:11px;
+    font-weight:800;
+}
+.online-initial:first-child{margin-left:0;}
+</style>
+
+<script>
+function getInitials(name){
+  if(!name) return "?";
+  const parts = String(name).trim().split(/\s+/);
+  if(parts.length === 1) return parts[0].charAt(0).toUpperCase();
+  return (parts[0].charAt(0)+parts[parts.length-1].charAt(0)).toUpperCase();
+}
+</script>
+
+
+<style id="real-initials-online-users">
+.group-online-badge{
+  display:flex!important;align-items:center!important;gap:0!important;
+  background:transparent!important;border:none!important;padding:0!important;
+}
+.group-online-dot{display:none!important;}
+.online-avatar-stack{display:flex;align-items:center;}
+.online-avatar-initial{
+ width:28px;height:28px;border-radius:50%;
+ margin-left:-7px;display:flex;align-items:center;justify-content:center;
+ border:2px solid #fff;color:#fff;font-size:11px;font-weight:800;
+ box-shadow:0 2px 6px rgba(0,0,0,.15)
+}
+.online-avatar-initial:first-child{margin-left:0}
+.online-more{
+ width:28px;height:28px;border-radius:50%;margin-left:-7px;
+ display:flex;align-items:center;justify-content:center;
+ background:#e5e7eb;color:#374151;font-size:11px;font-weight:800;
+ border:2px solid #fff;
+}
+.online-label{margin-left:6px;color:#fff;font-size:12px;font-weight:700}
+</style>
+
+<script>
+(function(){
+window.getInitials=function(name){
+ if(!name) return "?";
+ const p=String(name).trim().split(/\s+/);
+ return p.length===1 ? p[0][0].toUpperCase() :
+ (p[0][0]+p[p.length-1][0]).toUpperCase();
+};
+
+window.renderOnlineBadgeInitials=function(users){
+ const badge=document.getElementById('groupOnlineBadge');
+ if(!badge) return;
+ const arr=(users||[]).filter(Boolean).filter(u=>{
+        try{
+          const meEmail=((window.currentUser&&(currentUser.email||currentUser.userEmail))||'').toLowerCase();
+          const meName=((window.currentUser&&(currentUser.name||currentUser.displayName||currentUser.fullName))||'').toLowerCase();
+
+          const userEmail=((u.email||u.userEmail||'')+'').toLowerCase();
+          const userName=((u.name||u.displayName||u.fullName||u.username||'')+'').toLowerCase();
+
+          if(meEmail && userEmail && meEmail===userEmail) return false;
+          if(meName && userName && meName===userName) return false;
+
+          return true;
+        }catch(e){ return true; }
+    });
+ const colors=['#94a3b8','#f0d264','#f29ca3','#86efac'];
+ let html='<div class="online-avatar-stack">';
+ arr.slice(0,4).forEach((u,i)=>{
+   const n=(u.name||u.displayName||u.fullName||u.username||u.email||String(u));
+   html+='<div class="online-avatar-initial" style="background:'+colors[i%4]+'">'+getInitials(n)+'</div>';
+ });
+ if(arr.length>4){ html+='<div class="online-more">+'+(arr.length-4)+'</div>'; }
+ html+='</div>';
+ badge.innerHTML=html;
+};
+
+
+document.addEventListener('click',function(e){
+ const more=e.target.closest('.online-more');
+ if(!more) return;
+ const existing=document.getElementById('groupUsersPopup');
+ if(existing){existing.remove();return;}
+ const users=(window.groupMembers||window.onlineUsers||window.allUsers||[]);
+ const arr=(users||[]).filter(Boolean);
+ const popup=document.createElement('div');
+ popup.id='groupUsersPopup';
+ popup.style.cssText='position:absolute;top:70px;right:12px;width:320px;max-height:400px;overflow:auto;background:#fff;border-radius:16px;padding:12px;z-index:99999;box-shadow:0 20px 40px rgba(0,0,0,.25)';
+ popup.innerHTML='<div style="font-weight:800;margin-bottom:10px">👥 Group Members</div>'+
+ arr.map(u=>{
+   const n=u.name||u.displayName||u.fullName||u.username||u.email||'Unknown';
+   const em=u.email||u.userEmail||'';
+   return '<div style="display:flex;gap:10px;align-items:center;padding:8px 0;border-bottom:1px solid #eee"><div style="width:36px;height:36px;border-radius:50%;background:#16a34a;color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700">'+(n.charAt(0)||'?').toUpperCase()+'</div><div><div style="font-weight:700">'+n+'</div><div style="font-size:12px;color:#666">'+em+'</div></div></div>';
+ }).join('');
+ const head=document.querySelector('.group-chat-head');
+ if(head){head.style.position='relative';head.appendChild(popup);}
+});
+
+})();
+</script>
+
+
+
+
 </head>
 <body>
 <section class="auth-view" id="authView">
@@ -6936,7 +7309,7 @@ body.dark .call-card {
                         <input id="groupChatInput" type="text" autocomplete="off" placeholder="Message group or @ mention..." aria-label="Group chat message" maxlength="500">
                         <span class="gc-char-count" id="gcCharCount"></span>
                     </div>
-                    <button class="gc-send-btn" id="sendGroupChatButton" type="submit" title="Send group message" aria-label="Send group message"><i data-lucide="send"></i></button>
+                    <button class="gc-send-btn" id="sendGroupChatButton" type="submit" title="Send group message" aria-label="Send group message"><i data-lucide="send-horizontal"></i></button>
                 </form>
                 <button class="gc-scroll-btn" id="gcScrollBtn" type="button" title="Scroll to bottom" aria-label="Scroll to bottom"><i data-lucide="chevrons-down"></i></button>
             </div>
@@ -9206,9 +9579,18 @@ async function loadGroupChatUsers() {
     try {
         const response = await apiRequest("getAllUsers", {});
         groupChatUsers = (response.users || []).map(normalizeUser).filter((user) => user.email);
+
+        const myEmail = String((currentUser && currentUser.email) || "").toLowerCase();
+        groupChatUsers = groupChatUsers.filter(user =>
+            String(user.email || "").toLowerCase() !== myEmail
+        );
         if (groupChatMeta) groupChatMeta.textContent = groupChatUsers.length + " users in shared room";
         const onlineCountEl = document.getElementById("groupOnlineCount");
         if (onlineCountEl) onlineCountEl.textContent = groupChatUsers.length;
+
+        if (typeof renderOnlineBadgeInitials === "function") {
+            renderOnlineBadgeInitials(groupChatUsers);
+        }
     } catch (error) {
         groupChatUsers = currentUser ? [currentUser] : [];
     }
@@ -14808,6 +15190,32 @@ document.addEventListener("visibilitychange", () => {
 });
 
 init();
+</script>
+
+<script>
+document.addEventListener('click',function(e){
+ const more=e.target.closest('.online-more');
+ if(!more) return;
+ let pop=document.getElementById('groupUsersPopup');
+ if(!pop){
+   pop=document.createElement('div');
+   pop.id='groupUsersPopup';
+   pop.className='group-users-popup show';
+   const users=(window.groupChatUsers||window.users||[]);
+   const colors=['#8b5cf6','#06b6d4','#f59e0b','#ef4444','#10b981','#6366f1'];
+   pop.innerHTML='<h3 style="margin:4px 0 12px">👥 Group Members</h3>'+users.map((u,i)=>`
+      <div class="group-user-card">
+        <div class="group-user-avatar" style="background:${colors[i%colors.length]}">${(u.name||u.email||'?').charAt(0).toUpperCase()}</div>
+        <div>
+          <div class="group-user-name">${u.name||'Unknown User'}</div>
+          <div class="group-user-email">${u.email||''}</div>
+        </div>
+      </div>`).join('');
+   document.querySelector('.group-chat-head').appendChild(pop);
+ }else{
+   pop.classList.toggle('show');
+ }
+});
 </script>
 </body>
 </html>
